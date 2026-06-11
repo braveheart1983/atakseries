@@ -1,0 +1,472 @@
+[
+  {
+    "id": "rectv_673",
+    "name": "Cowboy Bebop",
+    "poster": "https://image.tmdb.org/t/p/w500/hbLDwYri1pyiEIMpICgftu7s8NE.jpg"
+  },
+  {
+    "id": "rectv_756",
+    "name": "BNA ビー・エヌ・エー",
+    "poster": "https://image.tmdb.org/t/p/w500/57tccw2UNqgTPxK8fScYTQ1SLrS.jpg"
+  },
+  {
+    "id": "rectv_991",
+    "name": "HIGH SCORE",
+    "poster": "https://image.tmdb.org/t/p/w500/5NYXyNKU9GyyTCsY7qIPSeeW0FH.jpg"
+  },
+  {
+    "id": "rectv_978",
+    "name": "Üç silahşörler  /  Basliyor Dizi Versiyonu  / The Three Musketeers",
+    "poster": "https://image.tmdb.org/t/p/w500/naZhFbxJX9YCbMkoe7rBmmi7IDA.jpg"
+  },
+  {
+    "id": "rectv_1378",
+    "name": "Kakegurui",
+    "poster": "https://image.tmdb.org/t/p/w500/h1MUwcwNjK3nkXFzeFowUqfy0Qw.jpg"
+  },
+  {
+    "id": "rectv_1343",
+    "name": "Dragons Dogma",
+    "poster": "https://image.tmdb.org/t/p/w500/vj0alCBuOutq55ZhmlLwEkalZpR.jpg"
+  },
+  {
+    "id": "rectv_1646",
+    "name": "Fullmetal Alchemist: Brotherhood",
+    "poster": "https://image.tmdb.org/t/p/w500/vIkH7fUQf8Olo8Apq56FQLGDXOo.jpg"
+  },
+  {
+    "id": "rectv_1645",
+    "name": "ゴールデンタイム",
+    "poster": "https://image.tmdb.org/t/p/w500/c0nvzvf2QuAfP7rMcwVfHdf68lA.jpg"
+  },
+  {
+    "id": "rectv_1660",
+    "name": "One Punch Man",
+    "poster": "https://image.tmdb.org/t/p/w500/a8BknzvFVK5EZ83rKg1a83iwaj0.jpg"
+  },
+  {
+    "id": "rectv_1644",
+    "name": "アブソリュート・デュオ",
+    "poster": "https://image.tmdb.org/t/p/w500/lbtRPdxPYwhzflTQRmQpKrskzJm.jpg"
+  },
+  {
+    "id": "rectv_2013",
+    "name": "The Seven Deadly Sins: Four Knights of the Apocalypse",
+    "poster": "https://image.tmdb.org/t/p/w500/knOEGRfSV8RTrBFbdd2eXF0w10q.jpg"
+  },
+  {
+    "id": "rectv_2129",
+    "name": "Elfen Lied",
+    "poster": "https://image.tmdb.org/t/p/w500/3UnmNPTDMOThd8Oi9L2pEXqfO0D.jpg"
+  },
+  {
+    "id": "rectv_2176",
+    "name": "Attack on Titan",
+    "poster": "https://image.tmdb.org/t/p/w500/qlbcGr0EYKRICD0MTrIwnIztQna.jpg"
+  },
+  {
+    "id": "rectv_2174",
+    "name": "Jujutsu Kaisen",
+    "poster": "https://image.tmdb.org/t/p/w500/zKFkzRn1UyE11Jv9CJjVmvmQFvR.jpg"
+  },
+  {
+    "id": "rectv_2189",
+    "name": "Dr. Stone",
+    "poster": "https://image.tmdb.org/t/p/w500/dLlnzbDCblBXcJqFLXyvN43NIwp.jpg"
+  },
+  {
+    "id": "rectv_2175",
+    "name": "Vaat Edilen Neverland",
+    "poster": "https://image.tmdb.org/t/p/w500/8RWcKSmCbwsN8porFyTOB5e2cDG.jpg"
+  },
+  {
+    "id": "rectv_2342",
+    "name": "Vinland Saga",
+    "poster": "https://image.tmdb.org/t/p/w500/ySPYLN1sHmgRdqdfLOE092JlNTp.jpg"
+  },
+  {
+    "id": "rectv_2421",
+    "name": "Goblin Slayer",
+    "poster": "https://image.tmdb.org/t/p/w500/nUiT0whRDuUJKkk74L1pn8xUE2z.jpg"
+  },
+  {
+    "id": "rectv_2484",
+    "name": "天空侵犯",
+    "poster": "https://image.tmdb.org/t/p/w500/7ogA7uUy5lrOKLFavk3ddIWRKtg.jpg"
+  },
+  {
+    "id": "rectv_2601",
+    "name": "怪物事変",
+    "poster": "https://image.tmdb.org/t/p/w500/1ON3UrcmyECZAMug7htkszoNoMC.jpg"
+  },
+  {
+    "id": "rectv_2602",
+    "name": "天狼 Sirius the Jaeger",
+    "poster": "https://image.tmdb.org/t/p/w500/z4Eriu63E6U4JPWLCUpn3QbavaQ.jpg"
+  },
+  {
+    "id": "rectv_2662",
+    "name": "Yasuke",
+    "poster": "https://image.tmdb.org/t/p/w500/EyrE3HJsMArVSORCnP0ooiAd9T.jpg"
+  },
+  {
+    "id": "rectv_2864",
+    "name": "Record of Ragnarok",
+    "poster": "https://image.tmdb.org/t/p/w500/m28Ey0LYoeqzx7mdJ25NVUqRueB.jpg"
+  },
+  {
+    "id": "rectv_2978",
+    "name": "バイオハザード: インフィニット ダークネス",
+    "poster": "https://image.tmdb.org/t/p/w500/lYP6TTlgXaBI9hOLtKlheQJi2BO.jpg"
+  },
+  {
+    "id": "rectv_2994",
+    "name": "Bungou Stray Dogs",
+    "poster": "https://image.tmdb.org/t/p/w500/4WlY8Wflsa4ySLxwQzBSLORBQPy.jpg"
+  },
+  {
+    "id": "rectv_3015",
+    "name": "BEASTARS",
+    "poster": "https://image.tmdb.org/t/p/w500/fSIsY78Kd07uD4fNIH0obxWxoGB.jpg"
+  },
+  {
+    "id": "rectv_3146",
+    "name": "Naruto",
+    "poster": "https://image.tmdb.org/t/p/w500/mErFfyQuQ9kkbsR30d8CkZf0Z6s.jpg"
+  },
+  {
+    "id": "rectv_3150",
+    "name": "SHAMAN KING",
+    "poster": "https://image.tmdb.org/t/p/w500/tAOwHV9gwx3leW26Xch5gi16aII.jpg"
+  },
+  {
+    "id": "rectv_3149",
+    "name": "Boruto: Naruto Next Generations",
+    "poster": "https://image.tmdb.org/t/p/w500/n4OLeeHqP4tpdvDxiloV65N6M5h.jpg"
+  },
+  {
+    "id": "rectv_3202",
+    "name": "EDENS ZERO",
+    "poster": "https://image.tmdb.org/t/p/w500/2sJPpcEd83mILobIlDG1Jexu9bj.jpg"
+  },
+  {
+    "id": "rectv_3271",
+    "name": "Star Wars: Visions",
+    "poster": "https://image.tmdb.org/t/p/w500/lG9ltUP4FwvsQBcwOJYceDbP48E.jpg"
+  },
+  {
+    "id": "rectv_3428",
+    "name": "アグレッシブ烈子",
+    "poster": "https://image.tmdb.org/t/p/w500/bOGx0ySGwkRrwYetoIScvB90RxQ.jpg"
+  },
+  {
+    "id": "rectv_3541",
+    "name": "The Orbital Children",
+    "poster": "https://image.tmdb.org/t/p/w500/i1ROfeOW34wJ2vaOSgf0GHGlR8h.jpg"
+  },
+  {
+    "id": "rectv_3855",
+    "name": "TIGER & BUNNY",
+    "poster": "https://image.tmdb.org/t/p/w500/zHMtytj08QR8NkP8Nj9JBid21uD.jpg"
+  },
+  {
+    "id": "rectv_3924",
+    "name": "ツヨシしっかりしなさい",
+    "poster": "https://image.tmdb.org/t/p/w500/s2pi74LYcWGVrhQGSvi1WTMnctA.jpg"
+  },
+  {
+    "id": "rectv_4064",
+    "name": "Vampire in the Garden",
+    "poster": "https://image.tmdb.org/t/p/w500/xFrEiJxI0PUZHC6NmfjSrOXfQ4v.jpg"
+  },
+  {
+    "id": "rectv_4212",
+    "name": "SPRIGGAN",
+    "poster": "https://image.tmdb.org/t/p/w500/18by4OjqBPl5TKUHNdjlqThmsUr.jpg"
+  },
+  {
+    "id": "rectv_4414",
+    "name": "Cyberpunk: Edgerunners",
+    "poster": "https://image.tmdb.org/t/p/w500/rNkilVmALgaIb4SenfbaecRStDD.jpg"
+  },
+  {
+    "id": "rectv_4600",
+    "name": "Chainsaw Man",
+    "poster": "https://image.tmdb.org/t/p/w500/mIz0eKhzHuSPeRSePCyoCt9bKVp.jpg"
+  },
+  {
+    "id": "rectv_4529",
+    "name": "Romantic Killer",
+    "poster": "https://image.tmdb.org/t/p/w500/b6nww3xaBSi9pQWfePBbKb5PTnj.jpg"
+  },
+  {
+    "id": "rectv_4605",
+    "name": "Blue Lock",
+    "poster": "https://image.tmdb.org/t/p/w500/9aICTTHECyRwB2pBHm3rAj1SgGg.jpg"
+  },
+  {
+    "id": "rectv_4606",
+    "name": "Bleach",
+    "poster": "https://image.tmdb.org/t/p/w500/e0kKmeM8R7Kersh5N2PPzIRNRhr.jpg"
+  },
+  {
+    "id": "rectv_4906",
+    "name": "SPY×FAMILY",
+    "poster": "https://image.tmdb.org/t/p/w500/vaIREdPGZOnW9Jrs86mheVVlIQQ.jpg"
+  },
+  {
+    "id": "rectv_5948",
+    "name": "Neon Genesis Evangelion",
+    "poster": "https://image.tmdb.org/t/p/w500/AhtWPHqIT1cWdrKTZVDMZD4Ca4F.jpg"
+  },
+  {
+    "id": "rectv_5898",
+    "name": "Good Night World",
+    "poster": "https://image.tmdb.org/t/p/w500/s8FvuD1IMIpvoTLHUrKP3jBwxwe.jpg"
+  },
+  {
+    "id": "rectv_5982",
+    "name": "PLUTO",
+    "poster": "https://image.tmdb.org/t/p/w500/am5dDa8GZrfxNP3Y6IV4IqjnaqV.jpg"
+  },
+  {
+    "id": "rectv_5953",
+    "name": "カミエラビ",
+    "poster": "https://image.tmdb.org/t/p/w500/nj14OOLCAy2npiXwUhNJzmPEIbh.jpg"
+  },
+  {
+    "id": "rectv_6020",
+    "name": "Onimusha",
+    "poster": "https://image.tmdb.org/t/p/w500/ei2Ugx4VK0S70aRZz3dGXlF8pi1.jpg"
+  },
+  {
+    "id": "rectv_6100",
+    "name": "Scott Pilgrim Takes Off",
+    "poster": "https://image.tmdb.org/t/p/w500/nHROk2C6bv8LqtvyYd0tCMURbxC.jpg"
+  },
+  {
+    "id": "rectv_6059",
+    "name": "Akuma-kun",
+    "poster": "https://image.tmdb.org/t/p/w500/3frWTreENCV0ZQfLnNRYnCBwRUC.jpg"
+  },
+  {
+    "id": "rectv_6138",
+    "name": "Onmyoji",
+    "poster": "https://image.tmdb.org/t/p/w500/2tFbeZRrSnP3pUBmXU9MxAtQpLk.jpg"
+  },
+  {
+    "id": "rectv_6429",
+    "name": "望まぬ不死の冒険者",
+    "poster": "https://image.tmdb.org/t/p/w500/krnR0ANlwtlNEX7jgO8NJtj7QiB.jpg"
+  },
+  {
+    "id": "rectv_6527",
+    "name": "Solo Leveling",
+    "poster": "https://image.tmdb.org/t/p/w500/eCD7WS9h4lCT8N4Xavc9u8R1IGk.jpg"
+  },
+  {
+    "id": "rectv_6541",
+    "name": "メタリックルージュ",
+    "poster": "https://image.tmdb.org/t/p/w500/oLMLxZBmIFE6tWg5s8UwuYOWTVI.jpg"
+  },
+  {
+    "id": "rectv_6705",
+    "name": "葬送のフリーレン",
+    "poster": "https://image.tmdb.org/t/p/w500/dhzbCznEzU67RXWYb53fyPe9Keb.jpg"
+  },
+  {
+    "id": "rectv_6626",
+    "name": "ループ7回目の悪役令嬢は、元敵国で自由気ままな花嫁生活を満喫する",
+    "poster": "https://image.tmdb.org/t/p/w500/1ttxQPgX6HJqUsXuC2HgnQRv7wZ.jpg"
+  },
+  {
+    "id": "rectv_6704",
+    "name": "外科医エリーゼ",
+    "poster": "https://image.tmdb.org/t/p/w500/7WfU7lHVTS5kEPTZrglfChlkOBs.jpg"
+  },
+  {
+    "id": "rectv_6664",
+    "name": "Pokémon Yeni Ufuklar: Dizi",
+    "poster": "https://image.tmdb.org/t/p/w500/4Jmdw8Hg6988ogDE9X2b93loPLY.jpg"
+  },
+  {
+    "id": "rectv_6706",
+    "name": "The Apothecary Diaries",
+    "poster": "https://image.tmdb.org/t/p/w500/sUep3kEPjvXp3VKAfNikpzBZmzw.jpg"
+  },
+  {
+    "id": "rectv_6699",
+    "name": "Delicious in Dungeon",
+    "poster": "https://image.tmdb.org/t/p/w500/q8gN7dsgBVxYtX3fGqTTogckVnD.jpg"
+  },
+  {
+    "id": "rectv_7009",
+    "name": "The Grimm Variations",
+    "poster": "https://image.tmdb.org/t/p/w500/lmwK3t35OFht8zQQ1XvWWwgQn9P.jpg"
+  },
+  {
+    "id": "rectv_7201",
+    "name": "Garouden: The Way of the Lone Wolf",
+    "poster": "https://image.tmdb.org/t/p/w500/oErcrWuqjHqigYuovMhqym5VmzW.jpg"
+  },
+  {
+    "id": "rectv_7682",
+    "name": "Terminator Zero",
+    "poster": "https://image.tmdb.org/t/p/w500/d8RpFojl1kDaNtxkZHPA5T0E7dH.jpg"
+  },
+  {
+    "id": "rectv_7872",
+    "name": "The Tatami Time Machine Blues",
+    "poster": "https://image.tmdb.org/t/p/w500/f2aJ4vHz1hnKFjtfF5YFD0hj6HY.jpg"
+  },
+  {
+    "id": "rectv_7989",
+    "name": "Blue Box",
+    "poster": "https://image.tmdb.org/t/p/w500/v33ztxB7YfXd0QXs1qwUTuwltjY.jpg"
+  },
+  {
+    "id": "rectv_8052",
+    "name": "DAN DA DAN",
+    "poster": "https://image.tmdb.org/t/p/w500/dse3OM0apuA6HZt4gznRMmUirM3.jpg"
+  },
+  {
+    "id": "rectv_8324",
+    "name": "Sakamoto Days",
+    "poster": "https://image.tmdb.org/t/p/w500/qTNIxDIzKjLLuS17fxdXjcKAlW7.jpg"
+  },
+  {
+    "id": "rectv_8611",
+    "name": "Lazarus",
+    "poster": "https://image.tmdb.org/t/p/w500/8ViqUWPWh6aPZGQA57FMRVmaXZ1.jpg"
+  },
+  {
+    "id": "rectv_8625",
+    "name": "Moonrise",
+    "poster": "https://image.tmdb.org/t/p/w500/5VYnwbRAZFjotkDlhWNij8JGPhw.jpg"
+  },
+  {
+    "id": "rectv_8671",
+    "name": "Mobile Suit Gundam GQuuuuuuX",
+    "poster": "https://image.tmdb.org/t/p/w500/fyPkuoqllQX6k8KbjJvkkEAIgpq.jpg"
+  },
+  {
+    "id": "rectv_9057",
+    "name": "Leviathan",
+    "poster": "https://image.tmdb.org/t/p/w500/dSo7tUQQ4gneagQ43DfL9t37CKj.jpg"
+  },
+  {
+    "id": "rectv_9067",
+    "name": "TOGEN EZBERLEME",
+    "poster": "https://image.tmdb.org/t/p/w500/hY2hMqvfkUNi5Qcez8piN15zA5Q.jpg"
+  },
+  {
+    "id": "rectv_9587",
+    "name": "PERSONA -trinity soul-",
+    "poster": "https://image.tmdb.org/t/p/w500/hREYXGPAijGwAAhw5pd5kOOGybW.jpg"
+  },
+  {
+    "id": "rectv_10101",
+    "name": "BAKI-DOU: The Invincible Samurai",
+    "poster": "https://image.tmdb.org/t/p/w500/wViuuy27uauEs3A8Vn69Q43MFAQ.jpg"
+  },
+  {
+    "id": "rectv_10139",
+    "name": "Darwin Hadisesi",
+    "poster": "https://image.tmdb.org/t/p/w500/v1OsB3SHsn3YlPDy4bVxkJPsoEJ.jpg"
+  },
+  {
+    "id": "rectv_10197",
+    "name": "Medalist",
+    "poster": "https://image.tmdb.org/t/p/w500/7DXsDnyOTTlqcj1fKrNQz8Ftxco.jpg"
+  },
+  {
+    "id": "rectv_10189",
+    "name": "カヤちゃんはコワくない",
+    "poster": "https://image.tmdb.org/t/p/w500/jfWdGJ2HcaCMVRdOUBPd6ayYgz2.jpg"
+  },
+  {
+    "id": "rectv_10154",
+    "name": "死亡遊戯で飯を食う。",
+    "poster": "https://image.tmdb.org/t/p/w500/4EswDHj9GVcSNmKwWcxvQDynTVJ.jpg"
+  },
+  {
+    "id": "rectv_10199",
+    "name": "Fate/strange Fake",
+    "poster": "https://image.tmdb.org/t/p/w500/lBsBJIGYV7c1Yizva8LpZhghY4j.jpg"
+  },
+  {
+    "id": "rectv_10200",
+    "name": "デッドアカウント",
+    "poster": "https://image.tmdb.org/t/p/w500/3KxyECISY5arB72ADxUuY4DUwJL.jpg"
+  },
+  {
+    "id": "rectv_10223",
+    "name": "ヴィジランテ -僕のヒーローアカデミア ILLEGALS-",
+    "poster": "https://image.tmdb.org/t/p/w500/xSYojwle5RdwhglSTqR1HSm3lA4.jpg"
+  },
+  {
+    "id": "rectv_10286",
+    "name": "不滅のあなたへ",
+    "poster": "https://image.tmdb.org/t/p/w500/bohMYRVSIG68md0zQobyWbV4S8e.jpg"
+  },
+  {
+    "id": "rectv_10273",
+    "name": "蟲師",
+    "poster": "https://image.tmdb.org/t/p/w500/kA6A2xTk5QctNAQXWX0TZHH6pzy.jpg"
+  },
+  {
+    "id": "rectv_10316",
+    "name": "Hunter x Hunter",
+    "poster": "https://image.tmdb.org/t/p/w500/9WxfAQquTun9ATkV6iAeFHMkqxv.jpg"
+  },
+  {
+    "id": "rectv_10398",
+    "name": "増田こうすけ劇場 ギャグマンガ日和",
+    "poster": "https://image.tmdb.org/t/p/w500/6hlrFRazhjN1DySL7NHgzBgEvSQ.jpg"
+  },
+  {
+    "id": "rectv_10412",
+    "name": "DIGIMON BEATBREAK",
+    "poster": "https://image.tmdb.org/t/p/w500/bdKO0jm7Bwp6ft2JEg7DiVHCON3.jpg"
+  },
+  {
+    "id": "rectv_10411",
+    "name": "勇者パーティーにかわいい子がいたので、告白してみた。",
+    "poster": "https://image.tmdb.org/t/p/w500/hlprcIJFyWVkCNOxU7UySb1ECLe.jpg"
+  },
+  {
+    "id": "rectv_10397",
+    "name": "MAO",
+    "poster": "https://image.tmdb.org/t/p/w500/kdti4Dm7XPV0Os2Jjzd188AWTQ3.jpg"
+  },
+  {
+    "id": "rectv_10452",
+    "name": "Jigokuraku",
+    "poster": "https://image.tmdb.org/t/p/w500/fusvI9NECr7T97JpRwV50BKTk9p.jpg"
+  },
+  {
+    "id": "rectv_10455",
+    "name": "日本三國",
+    "poster": "https://image.tmdb.org/t/p/w500/qHQnNHefuHI8N4lCoRQQP6pckMr.jpg"
+  },
+  {
+    "id": "rectv_10454",
+    "name": "杖と剣のウィストリア",
+    "poster": "https://image.tmdb.org/t/p/w500/v8gkKx1BvD3AH0MjwgCPbHTwxPE.jpg"
+  },
+  {
+    "id": "rectv_10453",
+    "name": "夜桜さんちの大作戦",
+    "poster": "https://image.tmdb.org/t/p/w500/ld8DpQKpM4T1wRAiBjgReV0mQcK.jpg"
+  },
+  {
+    "id": "rectv_10484",
+    "name": "Sentenced to Be a Hero",
+    "poster": "https://image.tmdb.org/t/p/w500/juGNOhRx7MXg3i2NuZ9lR6arVQw.jpg"
+  },
+  {
+    "id": "rectv_10468",
+    "name": "re zero kara hajimeru isekai seikatsu",
+    "poster": "https://image.tmdb.org/t/p/w500/ccG0ZfXOQ0834bIus4SwZrXtkyM.jpg"
+  }
+]

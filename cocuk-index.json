@@ -1,0 +1,747 @@
+[
+  {
+    "id": "rectv_490",
+    "name": "Solar Opposites",
+    "poster": "https://image.tmdb.org/t/p/w500/nuBD4dlO7gfg4RhW0sS0pTeiYRc.jpg"
+  },
+  {
+    "id": "rectv_519",
+    "name": "Rick and Morty",
+    "poster": "https://image.tmdb.org/t/p/w500/WGRQ8FpjkDTzivQJ43t94bOuY0.jpg"
+  },
+  {
+    "id": "rectv_602",
+    "name": "Harley Quinn",
+    "poster": "https://image.tmdb.org/t/p/w500/9Dm1SEh8Wxt8LNNg02exHQ595zg.jpg"
+  },
+  {
+    "id": "rectv_748",
+    "name": "Adventure Time: Uzak Diyarlar",
+    "poster": "https://image.tmdb.org/t/p/w500/qoxFg9236pkpkBuUbqudPTIHlnW.jpg"
+  },
+  {
+    "id": "rectv_730",
+    "name": "Looney Tunes Cartoons",
+    "poster": "https://image.tmdb.org/t/p/w500/2pDQfZMJq95hckoaez9ou93Hmqy.jpg"
+  },
+  {
+    "id": "rectv_802",
+    "name": "Close Enough",
+    "poster": "https://image.tmdb.org/t/p/w500/8aNYMcMyhv1m0MKibgCVmJrAeLs.jpg"
+  },
+  {
+    "id": "rectv_860",
+    "name": "Transformers: War for Cybertron: Siege",
+    "poster": "https://image.tmdb.org/t/p/w500/lBUPQLk9gEg8Mg6noHcew8Aag0M.jpg"
+  },
+  {
+    "id": "rectv_867",
+    "name": "Kafadar Ayıcıklar",
+    "poster": "https://image.tmdb.org/t/p/w500/cXJ1m6f8KORhoIcrPSOYap56aAe.jpg"
+  },
+  {
+    "id": "rectv_824",
+    "name": "Crossing Swords",
+    "poster": "https://image.tmdb.org/t/p/w500/l3jSJcrXTcXK1ibq7vM4GPDGSrk.jpg"
+  },
+  {
+    "id": "rectv_915",
+    "name": "Büyücüler: Arcadia Hikâyeleri",
+    "poster": "https://image.tmdb.org/t/p/w500/aAMcPNLzCML40q7qmuB0jrZIcsI.jpg"
+  },
+  {
+    "id": "rectv_898",
+    "name": "Transformers: Prime",
+    "poster": "https://image.tmdb.org/t/p/w500/ilOKsGRHYc78R2tSMusAd3xGJWq.jpg"
+  },
+  {
+    "id": "rectv_956",
+    "name": "Tuca & Bertie",
+    "poster": "https://image.tmdb.org/t/p/w500/vZIJVEZn9RnimJjKL370dy1bEBu.jpg"
+  },
+  {
+    "id": "rectv_995",
+    "name": "Hoops",
+    "poster": "https://image.tmdb.org/t/p/w500/3umUQ5DcZe7mSZGImCAStl2FRbm.jpg"
+  },
+  {
+    "id": "rectv_1004",
+    "name": "Dinozorlar Dünyası",
+    "poster": "https://image.tmdb.org/t/p/w500/j1hQdzQvOeZN84N8FTYTcS1YZ8S.jpg"
+  },
+  {
+    "id": "rectv_1064",
+    "name": "Love, Death & Robots",
+    "poster": "https://image.tmdb.org/t/p/w500/yukmN2nkaqUcZ5Un6aprkC9Vh7P.jpg"
+  },
+  {
+    "id": "rectv_1005",
+    "name": "Walking with Beasts",
+    "poster": "https://image.tmdb.org/t/p/w500/eYg3iV5T4X08BUBq8wyruTMFk1b.jpg"
+  },
+  {
+    "id": "rectv_1002",
+    "name": "Alien TV",
+    "poster": "https://image.tmdb.org/t/p/w500/qqSDgXn18t1j3OUPem92vfUd7CU.jpg"
+  },
+  {
+    "id": "rectv_1006",
+    "name": "Walking with Monsters",
+    "poster": "https://image.tmdb.org/t/p/w500/e2EtIcPc4SY34dnP3G0u9uLghLU.jpg"
+  },
+  {
+    "id": "rectv_1106",
+    "name": "Patron Bebek: Yine İş Başında",
+    "poster": "https://image.tmdb.org/t/p/w500/mUVZHkJPKDYgDy1dbDdi0Esj9eB.jpg"
+  },
+  {
+    "id": "rectv_1252",
+    "name": "Idhun Günlükleri",
+    "poster": "https://image.tmdb.org/t/p/w500/a3krj7LThH1Ktumbs2qnzkuozeq.jpg"
+  },
+  {
+    "id": "rectv_1251",
+    "name": "Star Trek: Lower Decks",
+    "poster": "https://image.tmdb.org/t/p/w500/i7Em3r7KCyNfkOwMkyqN8UMvK8S.jpg"
+  },
+  {
+    "id": "rectv_1345",
+    "name": "Jurassic World Kretase Kampı",
+    "poster": "https://image.tmdb.org/t/p/w500/nkCbCmlwjwT6QL44DqG7qE9ch8H.jpg"
+  },
+  {
+    "id": "rectv_1501",
+    "name": "Hızlı ve Öfkeli: Casus Yarışları",
+    "poster": "https://image.tmdb.org/t/p/w500/e1hjmSt11yhbNm57fP6rrbbyjs.jpg"
+  },
+  {
+    "id": "rectv_1696",
+    "name": "Genç Kahramanlar",
+    "poster": "https://image.tmdb.org/t/p/w500/zMJw34G4OJhcd9NjKSRjJdDqjbR.jpg"
+  },
+  {
+    "id": "rectv_1695",
+    "name": "Blood of Zeus",
+    "poster": "https://image.tmdb.org/t/p/w500/zXRR5tgGLtKrRmuN4ko9SLAdCiZ.jpg"
+  },
+  {
+    "id": "rectv_1865",
+    "name": "Big Mouth",
+    "poster": "https://image.tmdb.org/t/p/w500/nQM8Lq5URBCOqbnEmGrgxOZhwvR.jpg"
+  },
+  {
+    "id": "rectv_1987",
+    "name": "Disenchantment",
+    "poster": "https://image.tmdb.org/t/p/w500/qQrMvkF2CoQBCAJHpml158Cmxvz.jpg"
+  },
+  {
+    "id": "rectv_1977",
+    "name": "Cadılar Okulu",
+    "poster": "https://image.tmdb.org/t/p/w500/fLhJKgPKeBsQaSe0i7VOnRQl37r.jpg"
+  },
+  {
+    "id": "rectv_2049",
+    "name": "Avatar: The Legend of Korra",
+    "poster": "https://image.tmdb.org/t/p/w500/dZgYvSfuh1YHDrJuILlVQ5oA2hF.jpg"
+  },
+  {
+    "id": "rectv_2117",
+    "name": "Gabby'nin Hayal Evi",
+    "poster": "https://image.tmdb.org/t/p/w500/lyLvpLsC2WzBFZm2cIEn3VgKwEf.jpg"
+  },
+  {
+    "id": "rectv_2153",
+    "name": "Adventure Time",
+    "poster": "https://image.tmdb.org/t/p/w500/qk3eQ8jW4opJ48gFWYUXWaMT4l.jpg"
+  },
+  {
+    "id": "rectv_2166",
+    "name": "Carmen Sandiego",
+    "poster": "https://image.tmdb.org/t/p/w500/jpis9X6awQ1X5MBm9eHRUc0N0pu.jpg"
+  },
+  {
+    "id": "rectv_2187",
+    "name": "Hello Ninja",
+    "poster": "https://image.tmdb.org/t/p/w500/cHJT7OPB71EnMry8FM92iyNwpHE.jpg"
+  },
+  {
+    "id": "rectv_2223",
+    "name": "Hadi, Kuçu. Hadi!",
+    "poster": "https://image.tmdb.org/t/p/w500/qHwkhQZ8YpHS3Wz7EWUzwp5WEpR.jpg"
+  },
+  {
+    "id": "rectv_2211",
+    "name": "The Simpsons",
+    "poster": "https://image.tmdb.org/t/p/w500/uWpG7GqfKGQqX4YMAo3nv5OrglV.jpg"
+  },
+  {
+    "id": "rectv_2316",
+    "name": "The Snoopy Show",
+    "poster": "https://image.tmdb.org/t/p/w500/qgB5CZwqrnZ99f8NHUL7ogPrgi3.jpg"
+  },
+  {
+    "id": "rectv_2296",
+    "name": "Mighty Express",
+    "poster": "https://image.tmdb.org/t/p/w500/3gTMeeuiiAhiUmnyxwKeMSz5vcl.jpg"
+  },
+  {
+    "id": "rectv_2333",
+    "name": "BoJack Horseman",
+    "poster": "https://image.tmdb.org/t/p/w500/6JFWzlChcGgLiIUo2COgNlWGFKy.jpg"
+  },
+  {
+    "id": "rectv_2470",
+    "name": "The Healing Powers of Dude",
+    "poster": "https://image.tmdb.org/t/p/w500/oM3TaNKBnq8O8cDcuhrDUtY6pDk.jpg"
+  },
+  {
+    "id": "rectv_2520",
+    "name": "Pacific Rim: The Black",
+    "poster": "https://image.tmdb.org/t/p/w500/wz2tUYzlUnfQWpBpoerFDbEZdzz.jpg"
+  },
+  {
+    "id": "rectv_2585",
+    "name": "DOTA: Ejder'in Kanı",
+    "poster": "https://image.tmdb.org/t/p/w500/s1wP1YeQS9fgSHiXZ3yJb2ufB2D.jpg"
+  },
+  {
+    "id": "rectv_2565",
+    "name": "Paradise PD",
+    "poster": "https://image.tmdb.org/t/p/w500/desSj4kx0y9p61vm9QBE3Wm8GxK.jpg"
+  },
+  {
+    "id": "rectv_2611",
+    "name": "INVINCIBLE",
+    "poster": "https://image.tmdb.org/t/p/w500/4tblBrslcKSifMVZ3TmtT2ukMor.jpg"
+  },
+  {
+    "id": "rectv_2647",
+    "name": "She-Ra ve Güç Prensesleri",
+    "poster": "https://image.tmdb.org/t/p/w500/y6YLtlnV5FGh3Mhs5SUc80IQSV5.jpg"
+  },
+  {
+    "id": "rectv_2701",
+    "name": "Star Wars: The Bad Batch",
+    "poster": "https://image.tmdb.org/t/p/w500/5mHus672nuinyaE0FtqvD0AddcY.jpg"
+  },
+  {
+    "id": "rectv_2772",
+    "name": "Çılgın Çocuklar: Kritik Görev",
+    "poster": "https://image.tmdb.org/t/p/w500/op86yciY6JJiH5PyE2VjNe1OUi8.jpg"
+  },
+  {
+    "id": "rectv_2813",
+    "name": "Eden",
+    "poster": "https://image.tmdb.org/t/p/w500/AkXC8EuJCjuonHZIkxkUmiCdSGe.jpg"
+  },
+  {
+    "id": "rectv_2849",
+    "name": "Trese",
+    "poster": "https://image.tmdb.org/t/p/w500/zNYPSo9nhrLyy453s5SsC0MCTuz.jpg"
+  },
+  {
+    "id": "rectv_2829",
+    "name": "Battle of the Planets",
+    "poster": "https://image.tmdb.org/t/p/w500/gYvvllQQ7Hb8hgm0PcqVstzFKcb.jpg"
+  },
+  {
+    "id": "rectv_2916",
+    "name": "iCarly",
+    "poster": "https://image.tmdb.org/t/p/w500/zswxst53aM8g2LysdVbtQNJAiKM.jpg"
+  },
+  {
+    "id": "rectv_2979",
+    "name": "Adventure Time",
+    "poster": "https://image.tmdb.org/t/p/w500/qk3eQ8jW4opJ48gFWYUXWaMT4l.jpg"
+  },
+  {
+    "id": "rectv_3052",
+    "name": "Kâinatın Hâkimleri: Keşif",
+    "poster": "https://image.tmdb.org/t/p/w500/vIhyANmvTiBjlmX0Uy48Z9AD24j.jpg"
+  },
+  {
+    "id": "rectv_3032",
+    "name": "What If...?",
+    "poster": "https://image.tmdb.org/t/p/w500/lztz5XBMG1x6Y5ubz7CxfPFsAcW.jpg"
+  },
+  {
+    "id": "rectv_3152",
+    "name": "What If...?",
+    "poster": "https://image.tmdb.org/t/p/w500/lztz5XBMG1x6Y5ubz7CxfPFsAcW.jpg"
+  },
+  {
+    "id": "rectv_3063",
+    "name": "Johnny Test",
+    "poster": "https://image.tmdb.org/t/p/w500/cGceNrHpUl3utUzE502xSY8l9ST.jpg"
+  },
+  {
+    "id": "rectv_3232",
+    "name": "Sharkdog",
+    "poster": "https://image.tmdb.org/t/p/w500/cdkeBd7XZ6CmSE1a36rGG4bjqbb.jpg"
+  },
+  {
+    "id": "rectv_3218",
+    "name": "Oggy ve Hamam Böcekleri",
+    "poster": "https://image.tmdb.org/t/p/w500/mA2apmkA0GZiPxBWDNjhVZb8SOE.jpg"
+  },
+  {
+    "id": "rectv_3206",
+    "name": "I Heart Arlo",
+    "poster": "https://image.tmdb.org/t/p/w500/ecaxpn3pIxM0PtKr6ltSblO2Gel.jpg"
+  },
+  {
+    "id": "rectv_3259",
+    "name": "Chicago Party Aunt",
+    "poster": "https://image.tmdb.org/t/p/w500/2iGvVnhvIpzyPLqK18LvgQ3PgPk.jpg"
+  },
+  {
+    "id": "rectv_3354",
+    "name": "Arcane",
+    "poster": "https://image.tmdb.org/t/p/w500/abf8tHznhSvl9BAElD2cQeRr7do.jpg"
+  },
+  {
+    "id": "rectv_3271",
+    "name": "Star Wars: Visions",
+    "poster": "https://image.tmdb.org/t/p/w500/lG9ltUP4FwvsQBcwOJYceDbP48E.jpg"
+  },
+  {
+    "id": "rectv_3347",
+    "name": "Mickey Farenin Kulüp Evi",
+    "poster": "https://image.tmdb.org/t/p/w500/gHtEhlAZHxMawOiPq7JoKwkmETQ.jpg"
+  },
+  {
+    "id": "rectv_3658",
+    "name": "The Guardians of Justice",
+    "poster": "https://image.tmdb.org/t/p/w500/ezZDQ8neVO4GK1CizSdFt1IhsUE.jpg"
+  },
+  {
+    "id": "rectv_3671",
+    "name": "The Boys Sunar: Şeytani",
+    "poster": "https://image.tmdb.org/t/p/w500/5DEa1LG6unDfOyHh8D5yjvJJSft.jpg"
+  },
+  {
+    "id": "rectv_3811",
+    "name": "The Cuphead Show!",
+    "poster": "https://image.tmdb.org/t/p/w500/l6nGUyxKCi7ODvyfc8qQShliVEd.jpg"
+  },
+  {
+    "id": "rectv_3735",
+    "name": "Human Resources",
+    "poster": "https://image.tmdb.org/t/p/w500/9uEmYSgYIMBEIN82VAlqZnatpxJ.jpg"
+  },
+  {
+    "id": "rectv_3930",
+    "name": "Pinecone & Pony",
+    "poster": "https://image.tmdb.org/t/p/w500/98qW6e6rKVG8doUkuezYOpkd8eJ.jpg"
+  },
+  {
+    "id": "rectv_4067",
+    "name": "Patron Bebek: Beşiğe Dönüş",
+    "poster": "https://image.tmdb.org/t/p/w500/18f8ASmigtrQTm8MARHD8Af47db.jpg"
+  },
+  {
+    "id": "rectv_4283",
+    "name": "Kung Fu Panda: Ejderha Şövalye",
+    "poster": "https://image.tmdb.org/t/p/w500/koGgYlxVKkEtPok5DHKWfB2lX1O.jpg"
+  },
+  {
+    "id": "rectv_4449",
+    "name": "The Simpsons",
+    "poster": "https://image.tmdb.org/t/p/w500/uWpG7GqfKGQqX4YMAo3nv5OrglV.jpg"
+  },
+  {
+    "id": "rectv_4339",
+    "name": "I Am Groot",
+    "poster": "https://image.tmdb.org/t/p/w500/lYwFSsP4KsoRhOLhJvBFp3GEGEm.jpg"
+  },
+  {
+    "id": "rectv_4424",
+    "name": "Santo Bugito",
+    "poster": "https://image.tmdb.org/t/p/w500/luwuvm9xO6R4QaWuhVNEamUmBci.jpg"
+  },
+  {
+    "id": "rectv_4607",
+    "name": "Star Trek: Prodigy",
+    "poster": "https://image.tmdb.org/t/p/w500/Aqub3PSzLm2F398vitkbkxjopjO.jpg"
+  },
+  {
+    "id": "rectv_4632",
+    "name": "Inside Job",
+    "poster": "https://image.tmdb.org/t/p/w500/qwJUDMJ4i3KBYjeUFK9Js87iJEa.jpg"
+  },
+  {
+    "id": "rectv_4626",
+    "name": "Ghostwriter",
+    "poster": "https://image.tmdb.org/t/p/w500/1enj0PMkMBUtRYbWZbfsmv7DUrO.jpg"
+  },
+  {
+    "id": "rectv_4804",
+    "name": "Sonic Prime",
+    "poster": "https://image.tmdb.org/t/p/w500/mlDVnjgx89bmGvtXnKYDbowpadV.jpg"
+  },
+  {
+    "id": "rectv_4913",
+    "name": "Velma",
+    "poster": "https://image.tmdb.org/t/p/w500/zxkNhuPSHeDv3yA7sFu2RuEOGgR.jpg"
+  },
+  {
+    "id": "rectv_4908",
+    "name": "Yaz Kampı Adası",
+    "poster": "https://image.tmdb.org/t/p/w500/syipk7iIpV4DTvGuBuEqrVbAbaY.jpg"
+  },
+  {
+    "id": "rectv_4992",
+    "name": "Babam Bir Ödül Avcısı",
+    "poster": "https://image.tmdb.org/t/p/w500/cWSPHOTFFf5hs77gamKeLDhxNvm.jpg"
+  },
+  {
+    "id": "rectv_4944",
+    "name": "Shape Island",
+    "poster": "https://image.tmdb.org/t/p/w500/bJu8gM5eso8It2uPNbvGV7A95VN.jpg"
+  },
+  {
+    "id": "rectv_5198",
+    "name": "Love, Death & Robots",
+    "poster": "https://image.tmdb.org/t/p/w500/yukmN2nkaqUcZ5Un6aprkC9Vh7P.jpg"
+  },
+  {
+    "id": "rectv_5279",
+    "name": "Süper Kediler",
+    "poster": "https://image.tmdb.org/t/p/w500/JwSHc3lUnfcMB0XJrX3BvRvAa.jpg"
+  },
+  {
+    "id": "rectv_5343",
+    "name": "Hey Arnold!",
+    "poster": "https://image.tmdb.org/t/p/w500/c1Yv042okfvMdT1Ulwlat9Tj70B.jpg"
+  },
+  {
+    "id": "rectv_5504",
+    "name": "Stranger Things: Sene 1985",
+    "poster": "https://image.tmdb.org/t/p/w500/nHgk5QOvPbMHNT3K4unaSrfj07B.jpg"
+  },
+  {
+    "id": "rectv_5497",
+    "name": "Kizazi Moto: Generation Fire",
+    "poster": "https://image.tmdb.org/t/p/w500/8nmfXtwEHQF2iZUJn76Pz7d5KZa.jpg"
+  },
+  {
+    "id": "rectv_5777",
+    "name": "Castlevania: Nocturne",
+    "poster": "https://image.tmdb.org/t/p/w500/4XJwo95ktJ7xupw1bCMuP91kyYr.jpg"
+  },
+  {
+    "id": "rectv_6027",
+    "name": "BLUE EYE SAMURAI",
+    "poster": "https://image.tmdb.org/t/p/w500/fXm3JT4WLQVnwukdvghtAblc1wc.jpg"
+  },
+  {
+    "id": "rectv_6021",
+    "name": "Unicorn Akademisi",
+    "poster": "https://image.tmdb.org/t/p/w500/5aex9xH2Tq9G9m9WyhPJiyVOJol.jpg"
+  },
+  {
+    "id": "rectv_6057",
+    "name": "The Buccaneers",
+    "poster": "https://image.tmdb.org/t/p/w500/z085lWTy2t9t1P1LKdRd6SKlYdF.jpg"
+  },
+  {
+    "id": "rectv_6100",
+    "name": "Scott Pilgrim Takes Off",
+    "poster": "https://image.tmdb.org/t/p/w500/nHROk2C6bv8LqtvyYd0tCMURbxC.jpg"
+  },
+  {
+    "id": "rectv_6608",
+    "name": "Avatar: Son Havabükücü",
+    "poster": "https://image.tmdb.org/t/p/w500/owWlw5ZfWTnpGPOyszgLJQcDNgP.jpg"
+  },
+  {
+    "id": "rectv_6471",
+    "name": "Hazbin Hotel",
+    "poster": "https://image.tmdb.org/t/p/w500/aVYHMW8pdzJ9qG1OGRMKyGy9xor.jpg"
+  },
+  {
+    "id": "rectv_6612",
+    "name": "Ninja Kamui",
+    "poster": "https://image.tmdb.org/t/p/w500/A7mYSloFonDcQtHTqyLqEg9rIkh.jpg"
+  },
+  {
+    "id": "rectv_6618",
+    "name": "Galaksideki En İyi İkinci Hastane",
+    "poster": "https://image.tmdb.org/t/p/w500/4AJYNWOd0aTY9PXJUCxUc4W0YLp.jpg"
+  },
+  {
+    "id": "rectv_6664",
+    "name": "Pokémon Yeni Ufuklar: Dizi",
+    "poster": "https://image.tmdb.org/t/p/w500/4Jmdw8Hg6988ogDE9X2b93loPLY.jpg"
+  },
+  {
+    "id": "rectv_6735",
+    "name": "X-Men '97",
+    "poster": "https://image.tmdb.org/t/p/w500/9Ycz7yYRf9V4jk3YXwcZhFtbNcF.jpg"
+  },
+  {
+    "id": "rectv_6680",
+    "name": "Iwájú",
+    "poster": "https://image.tmdb.org/t/p/w500/pu1J9Fn8gQW0JvTVB8CheQ0Tw3p.jpg"
+  },
+  {
+    "id": "rectv_6748",
+    "name": "ARK: The Animated Series",
+    "poster": "https://image.tmdb.org/t/p/w500/3qzBCXJLifxund1QMa8BiXmH3xp.jpg"
+  },
+  {
+    "id": "rectv_7031",
+    "name": "El Deafo",
+    "poster": "https://image.tmdb.org/t/p/w500/uVlojXidNz6CHpkEXuj0rt4ealz.jpg"
+  },
+  {
+    "id": "rectv_7030",
+    "name": "Snoopy in Space: The Search for Life",
+    "poster": "https://image.tmdb.org/t/p/w500/ssAYRDytRsA8S0TAYMrr8dJgrlT.jpg"
+  },
+  {
+    "id": "rectv_7040",
+    "name": "Doug Unplugs",
+    "poster": "https://image.tmdb.org/t/p/w500/iIDiGOoeupsWvPDbi6qfikgjngm.jpg"
+  },
+  {
+    "id": "rectv_7132",
+    "name": "Star Wars: Tales of the Empire",
+    "poster": "https://image.tmdb.org/t/p/w500/qA28nLteurVboSSzltuyYt1lvlC.jpg"
+  },
+  {
+    "id": "rectv_7335",
+    "name": "WondLa",
+    "poster": "https://image.tmdb.org/t/p/w500/nacwwHnoCz1MX9tIrFTnnNqLmax.jpg"
+  },
+  {
+    "id": "rectv_7617",
+    "name": "Rick and Morty: The Anime",
+    "poster": "https://image.tmdb.org/t/p/w500/kQFPw9W3EO6ZLhg3TI782edq9Fr.jpg"
+  },
+  {
+    "id": "rectv_7639",
+    "name": "Undone",
+    "poster": "https://image.tmdb.org/t/p/w500/s1TZYhSTk6Bv7qqGc0233P3KQrA.jpg"
+  },
+  {
+    "id": "rectv_7652",
+    "name": "Batman: Pelerinli Savaşçı",
+    "poster": "https://image.tmdb.org/t/p/w500/3h1nDGIcmj5cRynFi3Hdc2AzC1Z.jpg"
+  },
+  {
+    "id": "rectv_7736",
+    "name": "Kite Man: Hell Yeah!",
+    "poster": "https://image.tmdb.org/t/p/w500/cebce4aQiO4gRLiILxoZbzWUoEJ.jpg"
+  },
+  {
+    "id": "rectv_7770",
+    "name": "Twilight of the Gods",
+    "poster": "https://image.tmdb.org/t/p/w500/n0rqWDT1oYGcNIuLydZD4J4JpwK.jpg"
+  },
+  {
+    "id": "rectv_7833",
+    "name": "Austin & Ally",
+    "poster": "https://image.tmdb.org/t/p/w500/73LDHDdvpKNc8RXNPciTWFTEDIV.jpg"
+  },
+  {
+    "id": "rectv_7859",
+    "name": "Vox Machina Efsanesi",
+    "poster": "https://image.tmdb.org/t/p/w500/tVBhWTTkouT8uzEl9AmXwbkmVL2.jpg"
+  },
+  {
+    "id": "rectv_7873",
+    "name": "Tomb Raider: The Legend of Lara Croft",
+    "poster": "https://image.tmdb.org/t/p/w500/hBqYte464epKcSaOufl3SXPqKfj.jpg"
+  },
+  {
+    "id": "rectv_7919",
+    "name": "Jurassic World: Kaos Teorisi",
+    "poster": "https://image.tmdb.org/t/p/w500/c2Od0cY2IeayDj5osUxZSAD1QK.jpg"
+  },
+  {
+    "id": "rectv_8128",
+    "name": "Gizli Seviye",
+    "poster": "https://image.tmdb.org/t/p/w500/1iNdSrZDDiET0qoROd3bXcedBmI.jpg"
+  },
+  {
+    "id": "rectv_8233",
+    "name": "Ters Yüz'ün Yaratıcılarından: Dream Productions",
+    "poster": "https://image.tmdb.org/t/p/w500/vOSXACF2ygPDJaxdi00wdfMdGpP.jpg"
+  },
+  {
+    "id": "rectv_8367",
+    "name": "Your Friendly Neighborhood Spider-Man",
+    "poster": "https://image.tmdb.org/t/p/w500/kjcsNeqF52YUQ2rUBGLMHwLkxvR.jpg"
+  },
+  {
+    "id": "rectv_8403",
+    "name": "Grimsburg",
+    "poster": "https://image.tmdb.org/t/p/w500/91KT0G2yCRJGIvsP5rZqzAOA5d8.jpg"
+  },
+  {
+    "id": "rectv_8534",
+    "name": "Kurt Kral",
+    "poster": "https://image.tmdb.org/t/p/w500/jgs2AtxtOMRuVHYjSofbv3P9WnN.jpg"
+  },
+  {
+    "id": "rectv_8611",
+    "name": "Lazarus",
+    "poster": "https://image.tmdb.org/t/p/w500/8ViqUWPWh6aPZGQA57FMRVmaXZ1.jpg"
+  },
+  {
+    "id": "rectv_8593",
+    "name": "Devil May Cry",
+    "poster": "https://image.tmdb.org/t/p/w500/mX9tqfpjqwreONJHhap7SnSSowe.jpg"
+  },
+  {
+    "id": "rectv_8737",
+    "name": "Asteriks ve Oburiks: Şefler Savaşı",
+    "poster": "https://image.tmdb.org/t/p/w500/hqfDMxW32mUXvyw8tVACpNb3oTU.jpg"
+  },
+  {
+    "id": "rectv_8755",
+    "name": "Star Wars: Tales of the Underworld",
+    "poster": "https://image.tmdb.org/t/p/w500/qv1hagzp08cDJF6C04LyJVhcI1x.jpg"
+  },
+  {
+    "id": "rectv_8813",
+    "name": "Murder Drones",
+    "poster": "https://image.tmdb.org/t/p/w500/z6fAKaN2F9jogQIdcHUHNVsiFNV.jpg"
+  },
+  {
+    "id": "rectv_9053",
+    "name": "Yedi Ayıcık",
+    "poster": "https://image.tmdb.org/t/p/w500/7cOa8t4yFX55O2DQpFBMpNgTbzY.jpg"
+  },
+  {
+    "id": "rectv_9099",
+    "name": "Tales of the Teenage Mutant Ninja Turtles",
+    "poster": "https://image.tmdb.org/t/p/w500/o0ZlpvK0Ewd3iJYUyYPfwAAeR88.jpg"
+  },
+  {
+    "id": "rectv_9140",
+    "name": "Eyes of Wakanda",
+    "poster": "https://image.tmdb.org/t/p/w500/bG23nZW96LxmWkJjsagRZI9hF6t.jpg"
+  },
+  {
+    "id": "rectv_9308",
+    "name": "Dr. Seuss: Kırmızı Balık, Mavi Balık",
+    "poster": "https://image.tmdb.org/t/p/w500/fhtkX44A4cTYMNKNcosEFYX7zfq.jpg"
+  },
+  {
+    "id": "rectv_9329",
+    "name": "Atomic Betty",
+    "poster": "https://image.tmdb.org/t/p/w500/2yhMWAmzKcCTgTSh1UkdFxTMLke.jpg"
+  },
+  {
+    "id": "rectv_9411",
+    "name": "Marvel Zombies",
+    "poster": "https://image.tmdb.org/t/p/w500/mwKj9ERGFXsWot0nXgQ5yMQf9I7.jpg"
+  },
+  {
+    "id": "rectv_9341",
+    "name": "Lord of Mysteries",
+    "poster": "https://image.tmdb.org/t/p/w500/kBRyCCZWipMO5Gu9Y02nE3iMgr0.jpg"
+  },
+  {
+    "id": "rectv_9379",
+    "name": "Haunted Hotel",
+    "poster": "https://image.tmdb.org/t/p/w500/4arTlVw8oceZDOhGv9GFrgGztUq.jpg"
+  },
+  {
+    "id": "rectv_9462",
+    "name": "LEGO City - No Limits",
+    "poster": "https://image.tmdb.org/t/p/w500/gk1ImDR0Um1fQOrcT9idUaw5Lmv.jpg"
+  },
+  {
+    "id": "rectv_9496",
+    "name": "Helluva Boss",
+    "poster": "https://image.tmdb.org/t/p/w500/dgtuBsG2F4cGiumtHBKDru7PW9j.jpg"
+  },
+  {
+    "id": "rectv_9506",
+    "name": "Splinter Cell: Deathwatch",
+    "poster": "https://image.tmdb.org/t/p/w500/38XJlQAYMcPjgqVhBO8VjkufSEx.jpg"
+  },
+  {
+    "id": "rectv_9584",
+    "name": "Gupi",
+    "poster": "https://image.tmdb.org/t/p/w500/4yfVzVduVckj2D5oYqnjIQnVJn7.jpg"
+  },
+  {
+    "id": "rectv_9642",
+    "name": "BAT-FAM",
+    "poster": "https://image.tmdb.org/t/p/w500/8C34YTylNBt4DWM1a9oAAXqmTSr.jpg"
+  },
+  {
+    "id": "rectv_9681",
+    "name": "The Mighty Nein",
+    "poster": "https://image.tmdb.org/t/p/w500/qJTZanXDiJKABLNGRM9LmSg8YT7.jpg"
+  },
+  {
+    "id": "rectv_10141",
+    "name": "Primal",
+    "poster": "https://image.tmdb.org/t/p/w500/mf12pRakr3eYdJtv6klQtoznnbU.jpg"
+  },
+  {
+    "id": "rectv_10184",
+    "name": "Dinozorlar",
+    "poster": "https://image.tmdb.org/t/p/w500/x37IK9WWhuzi7tgyMT4ff3kiT5X.jpg"
+  },
+  {
+    "id": "rectv_10156",
+    "name": "Family Guy",
+    "poster": "https://image.tmdb.org/t/p/w500/ad75MS8xP2EmkYXy4101ljmpIfn.jpg"
+  },
+  {
+    "id": "rectv_10211",
+    "name": "Keçi Kız",
+    "poster": "https://image.tmdb.org/t/p/w500/1Fb0EMk3Ml7YQfHL7IKx6srGs4X.jpg"
+  },
+  {
+    "id": "rectv_10251",
+    "name": "Kun Tun Tianxia Zhi Zhang Men Guilai",
+    "poster": "https://image.tmdb.org/t/p/w500/e14Zu75OTIYLyvYAz5UQqwrOJli.jpg"
+  },
+  {
+    "id": "rectv_10247",
+    "name": "Kraliyet Dedektifi Mira",
+    "poster": "https://image.tmdb.org/t/p/w500/AjZuTNfz82ogbabj8NsVkWkFmyL.jpg"
+  },
+  {
+    "id": "rectv_10252",
+    "name": "Foster'ın Hayalî Dostlar Mekânı",
+    "poster": "https://image.tmdb.org/t/p/w500/kj6oGL4qqFDY8PGmTloqGQ2TblS.jpg"
+  },
+  {
+    "id": "rectv_10329",
+    "name": "Red Kit",
+    "poster": "https://image.tmdb.org/t/p/w500/xQHgWqCCQe4KgLsaF9292eTrZ4Q.jpg"
+  },
+  {
+    "id": "rectv_10325",
+    "name": "Iyanu",
+    "poster": "https://image.tmdb.org/t/p/w500/tiiEuCEaxE5FfkB3Dt42BWhodak.jpg"
+  },
+  {
+    "id": "rectv_10400",
+    "name": "Star Wars: Maul - Shadow Lord",
+    "poster": "https://image.tmdb.org/t/p/w500/fTfLd3s9yBNOzbFHD2aXvwEs93H.jpg"
+  },
+  {
+    "id": "rectv_10412",
+    "name": "DIGIMON BEATBREAK",
+    "poster": "https://image.tmdb.org/t/p/w500/bdKO0jm7Bwp6ft2JEg7DiVHCON3.jpg"
+  },
+  {
+    "id": "rectv_10446",
+    "name": "Sürekli Dizi",
+    "poster": "https://image.tmdb.org/t/p/w500/rZonPNG3Arx4G40MZCiOH2GK05V.jpg"
+  },
+  {
+    "id": "rectv_10496",
+    "name": "Stranger Things: Sene 1985",
+    "poster": "https://image.tmdb.org/t/p/w500/nHgk5QOvPbMHNT3K4unaSrfj07B.jpg"
+  }
+]
