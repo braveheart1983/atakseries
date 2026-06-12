@@ -6,16 +6,34 @@
     "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/amazon.png"
   },
   {
-    "name": "Animeler",
-    "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/animeler-index.json",
-    "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/animeler-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/anime.png"
-  },
-  {
     "name": "Apple TV",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/apple-tv-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/apple-tv-detay.json",
     "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/apple.png"
+  },
+  {
+    "name": "Netflix",
+    "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/netflix-index.json",
+    "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/netflix-detay.json",
+    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/netflix.png"
+  },
+  {
+    "name": "Disney+",
+    "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/disney-index.json",
+    "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/disney-detay.json",
+    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/disney.png"
+  },
+  {
+    "name": "HBO Max",
+    "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/hbo-index.json",
+    "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/hbo-detay.json",
+    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/hbo.png"
+  },
+  {
+    "name": "Yerli Diziler",
+    "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/yerli-diziler-index.json",
+    "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/yerli-diziler-detay.json",
+    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/domestic.png"
   },
   {
     "name": "Asya Dizileri",
@@ -36,28 +54,10 @@
     "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/kids.png"
   },
   {
-    "name": "Disney+",
-    "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/disney-index.json",
-    "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/disney-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/disney.png"
-  },
-  {
     "name": "EXXEN",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/exxen-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/exxen-detay.json",
     "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/exxen.png"
-  },
-  {
-    "name": "HBO Max",
-    "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/hbo-index.json",
-    "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/hbo-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/hbo.png"
-  },
-  {
-    "name": "Netflix",
-    "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/netflix-index.json",
-    "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/netflix-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/netflix.png"
   },
   {
     "name": "PuhuTV",
@@ -84,9 +84,9 @@
     "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/tod.png"
   },
   {
-    "name": "Yerli Diziler",
-    "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/yerli-diziler-index.json",
-    "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/yerli-diziler-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/domestic.png"
+    "name": "Animeler",
+    "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/animeler-index.json",
+    "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/animeler-detay.json",
+    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/anime.png"
   }
 ]
