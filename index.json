@@ -3,90 +3,90 @@
     "name": "Amazon Prime",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/amazon-prime-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/amazon-prime-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/amazon.png"
+    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/amazon.png"
   },
   {
     "name": "Apple TV",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/apple-tv-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/apple-tv-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/apple.png"
+    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/apple.png"
   },
   {
     "name": "Netflix",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/netflix-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/netflix-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/netflix.png"
+    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/netflix.png"
   },
   {
     "name": "Disney+",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/disney-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/disney-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/disney.png"
+    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/disney+.png"
   },
   {
     "name": "HBO Max",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/hbo-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/hbo-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/hbo.png"
+    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/hbo.png"
   },
   {
     "name": "Yerli Diziler",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/yerli-diziler-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/yerli-diziler-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/domestic.png"
+    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/yerli.png"
   },
   {
     "name": "Asya Dizileri",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/asya-dizileri-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/asya-dizileri-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/asia.png"
+    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/asyadiziler.jpg"
   },
   {
     "name": "BluTV",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/blutv-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/blutv-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/blutv.png"
+    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/blutv.png"
   },
   {
     "name": "Çocuk",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/cocuk-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/cocuk-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/kids.png"
+    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/kids.png"
   },
   {
     "name": "EXXEN",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/exxen-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/exxen-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/exxen.png"
+    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/exxen.jpg"
   },
   {
     "name": "PuhuTV",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/puhutv-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/puhutv-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/puhutv.png"
+    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/Puhutv.jpg"
   },
   {
     "name": "Star TV",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/star-tv-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/star-tv-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/startv.png"
+    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/Startv.png"
   },
   {
     "name": "Tabii",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/tabii-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/tabii-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/tabii.png"
+    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/tabii.png"
   },
   {
     "name": "TOD",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/tod-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/tod-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/tod.png"
+    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/tod.png"
   },
   {
     "name": "Animeler",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/animeler-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/animeler-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logos/anime.png"
+    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/anime.jpg"
   }
 ]
