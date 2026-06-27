@@ -21,9 +21,7 @@ CATEGORY_MAP = {
     "hbo": ("HBO Max", "hbo"),
     "netflix": ("Netflix", "netflix"),
     "puhutv": ("PuhuTV", "puhutv"),
-    "atv": ("ATV", "atv"),
     "star-tv": ("Star TV", "star-tv"),
-    "showtv": ("Show TV", "showtv"),
     "tabii": ("Tabii", "tabii"),
     "tod": ("TOD", "tod"),
     "yerli-diziler": ("Yerli Diziler", "yerli-diziler")
