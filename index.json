@@ -20,11 +20,6 @@
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/asya-dizileri-detay.json"
   },
   {
-    "name": "atv",
-    "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/atv-index.json",
-    "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/atv-detay.json"
-  },
-  {
     "name": "blutv",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/blutv-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/blutv-detay.json"
@@ -60,19 +55,9 @@
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/puhutv-detay.json"
   },
   {
-    "name": "showtv",
-    "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/showtv-index.json",
-    "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/showtv-detay.json"
-  },
-  {
     "name": "Star TV",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/star-tv-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/star-tv-detay.json"
-  },
-  {
-  "name": "atv",
-  "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/diziler/atv-tv-index.json",
-  "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/diziler/atv-tv-detay.json"
   },
   {
     "name": "Tabii",
