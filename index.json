@@ -70,6 +70,11 @@
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/star-tv-detay.json"
   },
   {
+  "name": "atv",
+  "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/diziler/atv.json",
+  "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/diziler/atv.json"
+  },
+  {
     "name": "Tabii",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/tabii-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/tabii-detay.json"
