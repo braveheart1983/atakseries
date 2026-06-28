@@ -8,27 +8,28 @@ import time
 GITHUB_USER = "braveheart1983"
 REPO_NAME = "atakseries"
 BRANCH = "main"
-SOURCE_FOLDER = "diziler"  # Orijinal JSON'ların olduğu klasör
+SOURCE_FOLDER = "diziler"
 
-# Platform adı -> (Görünen Kategori Adı, Dosya Öneki, Logo URL) eşlemesi
+# Platform adı -> (Görünen Kategori Adı, Dosya Öneki, Logo URL)
 CATEGORY_MAP = {
-    "amazon-prime": ("Amazon Prime", "amazon-prime", ""),
-    "animeker": ("Anime", "animeker", ""),
-    "asya-dizileri": ("Asya Dizileri", "asya-dizileri", ""),
-    "cocuk": ("Çocuk", "cocuk", ""),
-    "disney": ("Disney+", "disney", ""),
-    "exen": ("Exen", "exen", ""),
-    "hbo": ("HBO Max", "hbo", ""),
-    "netflix": ("Netflix", "netflix", ""),
-    "puhutv": ("PuhuTV", "puhutv", ""),
-    "star-tv": ("Star TV", "star-tv", ""),
-    "tabii": ("Tabii", "tabii", ""),
-    "tod": ("TOD", "tod", ""),
-    "yerli-diziler": ("Yerli Diziler", "yerli-diziler", ""),
-    "atv": ("ATV", "atv", ""),
-    "showtv": ("Show TV", "showtv", "")
+    "amazon-prime": ("Amazon Prime", "amazon-prime", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/amazon.png"),
+    "animeker": ("Anime", "animeker", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/anime.jpg"),
+    "asya-dizileri": ("Asya Dizileri", "asya-dizileri", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/asyadiziler.jpg"),
+    "cocuk": ("Çocuk", "cocuk", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/kids.png"),
+    "disney": ("Disney+", "disney", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/disney+.png"),
+    "exen": ("Exen", "exen", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/exxen.jpg"),
+    "hbo": ("HBO Max", "hbo", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/hbo.png"),
+    "netflix": ("Netflix", "netflix", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/netflix.png"),
+    "puhutv": ("PuhuTV", "puhutv", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/Puhutv.jpg"),
+    "star-tv": ("Star TV", "star-tv", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/Startv.png"),
+    "tabii": ("Tabii", "tabii", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/tabii.png"),
+    "tod": ("TOD", "tod", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/tod.png"),
+    "yerli-diziler": ("Yerli Diziler", "yerli-diziler", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/yerli.png"),
+    "atv": ("ATV", "atv", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/atv.png"),
+    "showtv": ("Show TV", "showtv", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/showtv.png"),
+    "apple-tv": ("Apple TV", "apple-tv", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/appletv.png"),
+    "blutv": ("BluTV", "blutv", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/blutv.png")
 }
-
 # ================================================
 
 def get_json_from_github(file_path):
@@ -79,7 +80,6 @@ def fix_poster_url(url):
     if not url:
         return ""
     if isinstance(url, str):
-        # Bazı URL'lerde tırnak işareti veya boşluk olabilir
         url = url.strip().strip('"').strip("'")
         return url
     return ""
@@ -102,21 +102,19 @@ def main():
     print("=" * 60)
     start_time = time.time()
     
-    # GitHub'dan dosya listesini al
     json_files = get_file_list_from_github()
     if not json_files:
         print("❌ Hiç JSON dosyası bulunamadı!")
         return
     
-    all_series = []  # Tüm diziler buraya eklenecek
-    main_index = []  # Ana index.json için
+    all_series = []
+    main_index = []
     processed_count = 0
     error_count = 0
     
     for file_name in json_files:
         platform_name = file_name.replace(".json", "")
         
-        # Kategori bilgilerini al
         if platform_name in CATEGORY_MAP:
             category_name, file_prefix, logo_url = CATEGORY_MAP[platform_name]
         else:
@@ -127,7 +125,6 @@ def main():
         print(f"\n📄 İşleniyor: {file_name}")
         print(f"   🏷️  Kategori: {category_name}")
         
-        # GitHub'dan JSON'u çek
         file_path = f"{SOURCE_FOLDER}/{file_name}"
         data = get_json_from_github(file_path)
         
@@ -146,7 +143,6 @@ def main():
             error_count += 1
             continue
         
-        # Verileri temizle ve doğrula
         valid_series = []
         index_data = []
         
@@ -154,19 +150,16 @@ def main():
             if not validate_series_item(series):
                 continue
             
-            # ID kontrolü
             series_id = series.get("id")
             if not series_id:
                 series_id = f"{file_prefix}_{len(valid_series)}"
                 series["id"] = series_id
             
-            # Poster URL kontrolü
             if series.get("poster"):
                 series["poster"] = fix_poster_url(series["poster"])
             
             valid_series.append(series)
             
-            # Index için hafif veri
             index_data.append({
                 "id": series_id,
                 "name": series.get("name"),
@@ -178,42 +171,38 @@ def main():
             error_count += 1
             continue
         
-        # Tüm dizileri ana listeye ekle
         all_series.extend(valid_series)
         processed_count += 1
         
         print(f"   ✅ {len(valid_series)} geçerli dizi işlendi")
         
-        # Dosyaları kaydet
-        # index dosyası
         if save_json_file(index_data, f"{file_prefix}-index.json"):
             print(f"   📁 {file_prefix}-index.json oluşturuldu ({len(index_data)} dizi)")
         
-        # detay dosyası
         if save_json_file(valid_series, f"{file_prefix}-detay.json"):
             print(f"   📁 {file_prefix}-detay.json oluşturuldu")
         
-        # Ana index'e ekle (logoUrl EKLENDİ - ÇÖZÜM!)
+        # ⭐ BURASI ÖNEMLİ: logoUrl EKLENİYOR!
         main_index.append({
             "name": category_name,
             "indexUrl": f"https://raw.githubusercontent.com/{GITHUB_USER}/{REPO_NAME}/{BRANCH}/{file_prefix}-index.json",
             "detailUrl": f"https://raw.githubusercontent.com/{GITHUB_USER}/{REPO_NAME}/{BRANCH}/{file_prefix}-detay.json",
-            "logoUrl": logo_url  # BOŞ STRING - NULL DEĞİL!
+            "logoUrl": logo_url  # ✅ LOGO URL EKLENDİ - NULL DEĞİL!
         })
         
-        # Biraz bekle (GitHub API rate limit için)
         time.sleep(0.5)
     
-    # Tüm dizileri tek bir dosyada birleştir
     if all_series:
         if save_json_file(all_series, "tum_diziler.json"):
             print(f"\n📦 tum_diziler.json oluşturuldu (Toplam {len(all_series)} dizi)")
     
-    # Ana index.json'u oluştur
+    # ⭐ BURASI DA ÖNEMLİ: index.json logoUrl ile birlikte kaydediliyor
     if save_json_file(main_index, "index.json"):
         print(f"\n✅ index.json oluşturuldu ({len(main_index)} kategori)")
+        print("\n📋 index.json içeriği (ilk 2 kategori):")
+        for i, cat in enumerate(main_index[:2]):
+            print(f"   {i+1}. {cat.get('name')} -> logoUrl: {cat.get('logoUrl', 'MISSING!')}")
     
-    # Sonuçları göster
     elapsed_time = time.time() - start_time
     print("\n" + "=" * 60)
     print("🎉 İŞLEM TAMAMLANDI!")
