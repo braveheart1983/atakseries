@@ -6,10 +6,10 @@
     "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/amazon.png"
   },
   {
-    "name": "Anime",
+    "name": "animeler",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/animeler-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/animeler-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/anime.jpg"
+    "logoUrl": ""
   },
   {
     "name": "Apple TV",
@@ -48,10 +48,10 @@
     "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/disney+.png"
   },
   {
-    "name": "Exxen",
+    "name": "exxen",
     "indexUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/exxen-index.json",
     "detailUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/exxen-detay.json",
-    "logoUrl": "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/exxen.jpg"
+    "logoUrl": ""
   },
   {
     "name": "HBO Max",
