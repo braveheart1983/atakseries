@@ -24,7 +24,9 @@ CATEGORY_MAP = {
     "star-tv": ("Star TV", "star-tv"),
     "tabii": ("Tabii", "tabii"),
     "tod": ("TOD", "tod"),
-    "yerli-diziler": ("Yerli Diziler", "yerli-diziler")
+    "yerli-diziler": ("Yerli Diziler", "yerli-diziler"),
+    "atv": ("ATV", "atv"),
+    "showtv": ("Show TV", "showtv")
 }
 # ================================================
 
