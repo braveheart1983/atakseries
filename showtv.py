@@ -157,9 +157,22 @@ def get_video_url(series_name, episode_num):
         print(f"      Video URL hatası: {e}")
         return None
 
+def create_episode_object(number, title, url):
+    """Bölüm nesnesini yeni formatta oluşturur"""
+    return {
+        "number": number,
+        "name": title,
+        "sources": [
+            {
+                "url": url,
+                "label": "İzleme Kaynağı"
+            }
+        ]
+    }
+
 def update_showtv():
     """ShowTV JSON'ını güncelle (GitHub'dan oku, güncelle, kaydet)"""
-    print("🚀 ShowTV GÜNCELLEYİCİ (GitHub Uyumlu)")
+    print("🚀 ShowTV GÜNCELLEYİCİ (GitHub Uyumlu - Yeni Format)")
     print("=" * 60)
     start_time = time.time()
     
@@ -168,16 +181,15 @@ def update_showtv():
     print(f"📂 Mevcut JSON'da {len(existing_data)} dizi var")
     
     # Mevcut dizilerin ID'lerini ve son bölüm numaralarını al
-    existing_series_ids = {series.get("id") for series in existing_data}
     existing_series_map = {}
     for series in existing_data:
         series_id = series.get("id")
         if series_id:
             episodes = series.get("episodes", [])
-            last_ep = max(episodes, key=lambda x: x["number"]) if episodes else None
+            last_ep = max(episodes, key=lambda x: x.get("number", 0)) if episodes else None
             existing_series_map[series_id] = {
                 "data": series,
-                "last_episode": last_ep["number"] if last_ep else 0
+                "last_episode": last_ep.get("number", 0) if last_ep else 0
             }
     
     print("\n🔍 Web sitesi taranıyor...")
@@ -217,20 +229,23 @@ def update_showtv():
                 if video_url:
                     video_url = video_url.replace("//ht/", "/ht/").replace("com//", "com/")
                     
-                    existing_series_map[series_id]["data"]["episodes"].append({
-                        "number": last_episode,
-                        "title": f"{last_episode}. Bölüm",
-                        "url": video_url
-                    })
+                    # ⭐ YENİ FORMATTA BÖLÜM EKLE
+                    new_episode = create_episode_object(
+                        number=last_episode,
+                        title=f"{last_episode}. Bölüm",
+                        url=video_url
+                    )
+                    existing_series_map[series_id]["data"]["episodes"].append(new_episode)
                     
+                    # Bölümleri sırala
                     existing_series_map[series_id]["data"]["episodes"] = sorted(
                         existing_series_map[series_id]["data"]["episodes"], 
-                        key=lambda x: x["number"]
+                        key=lambda x: x.get("number", 0)
                     )
                     
                     updated_count += 1
                     total_new_episodes += 1
-                    print(f"          ✅ {last_episode}. Bölüm eklendi!")
+                    print(f"          ✅ {last_episode}. Bölüm eklendi (Yeni Format)!")
                 else:
                     print(f"          ❌ Video bulunamadı")
             else:
@@ -244,6 +259,7 @@ def update_showtv():
             if video_url:
                 video_url = video_url.replace("//ht/", "/ht/").replace("com//", "com/")
                 
+                # ⭐ YENİ FORMATTA DİZİ OLUŞTUR
                 new_series = {
                     "id": series_id,
                     "name": series['name'],
@@ -256,16 +272,18 @@ def update_showtv():
                     "genres": ["Dram", "Aile", "Komedi"],
                     "categories": ["Show TV"],
                     "cast": [],
-                    "episodes": [{
-                        "number": last_episode,
-                        "title": f"{last_episode}. Bölüm",
-                        "url": video_url
-                    }]
+                    "episodes": [
+                        create_episode_object(
+                            number=last_episode,
+                            title=f"{last_episode}. Bölüm",
+                            url=video_url
+                        )
+                    ]
                 }
                 existing_data.append(new_series)
                 new_series_count += 1
                 total_new_episodes += 1
-                print(f"          ✅ Yeni dizi eklendi! ({last_episode}. Bölüm)")
+                print(f"          ✅ Yeni dizi eklendi! ({last_episode}. Bölüm - Yeni Format)")
             else:
                 print(f"          ❌ Video bulunamadı")
         
