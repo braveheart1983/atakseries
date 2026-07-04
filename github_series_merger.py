@@ -17,7 +17,7 @@ CATEGORY_MAP = {
     "asya-dizileri": ("Asya Dizileri", "asya-dizileri", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/asyadiziler.jpg"),
     "cocuk": ("Çocuk", "cocuk", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/kids.png"),
     "disney": ("Disney+", "disney", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/disney+.png"),
-    "exxen": ("Exxen", "exxen", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/exxen.jpg"),
+    "exxen": ("EXXEN", "exxen", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/exxen.jpg"),
     "hbo": ("HBO Max", "hbo", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/hbo.png"),
     "netflix": ("Netflix", "netflix", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/netflix.png"),
     "puhutv": ("PuhuTV", "puhutv", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/Puhutv.jpg"),
