@@ -13,7 +13,7 @@ SOURCE_FOLDER = "diziler"
 # Platform adı -> (Görünen Kategori Adı, Dosya Öneki, Logo URL)
 CATEGORY_MAP = {
     "amazon-prime": ("Amazon Prime", "amazon-prime", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/amazon.png"),
-    "animeker": ("Anime", "animeker", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/anime.jpg"),
+    "animeler": ("Anime", "animeler", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/anime.jpg"),
     "asya-dizileri": ("Asya Dizileri", "asya-dizileri", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/asyadiziler.jpg"),
     "cocuk": ("Çocuk", "cocuk", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/kids.png"),
     "disney": ("Disney+", "disney", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/disney+.png"),
