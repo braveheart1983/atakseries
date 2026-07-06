@@ -93,12 +93,13 @@ def get_series_list_fast():
         return []
 
 def get_last_episode_number(series_url, series_name):
-    """Sadece son bölüm numarasını al - GELİŞTİRİLMİŞ VERSİYON"""
+    """Sadece gerçekten yayınlanmış son bölüm numarasını al"""
     try:
         r = requests.get(series_url, headers=HEADERS, timeout=8)
         soup = BeautifulSoup(r.content, "html.parser")
         
         episode_numbers = []
+        verified_episodes = []
         
         # 1. YÖNTEM: Option etiketlerinden bölüm numaralarını al
         options = soup.find_all("option", attrs={"data-href": True})
@@ -108,7 +109,7 @@ def get_last_episode_number(series_url, series_name):
             if match:
                 episode_numbers.append(int(match.group(1)))
         
-        # 2. YÖNTEM: "Son Bölüm" butonunu kontrol et
+        # 2. YÖNTEM: "Son Bölüm" butonunu kontrol et (en güvenilir)
         son_bolum_span = soup.find("span", string="Son Bölüm")
         if son_bolum_span:
             parent_a = son_bolum_span.find_parent("a")
@@ -121,58 +122,85 @@ def get_last_episode_number(series_url, series_name):
                     match = re.search(r'(\d+)\.?\s*Bölüm', title)
                     if match:
                         ep_num = int(match.group(1))
-                        if ep_num not in episode_numbers:
-                            episode_numbers.append(ep_num)
+                        # Bu bölümün gerçekten yayınlandığını doğrula (video var mı kontrol et)
+                        if verify_episode_exists(series_name, ep_num):
+                            verified_episodes.append(ep_num)
                 except:
                     pass
         
-        # 3. YÖNTEM: Sayfadaki tüm linkleri kontrol et (YENİ)
-        if not episode_numbers:
-            # Tüm <a> etiketlerini kontrol et
-            for a_tag in soup.find_all('a', href=True):
-                href = a_tag.get('href', '')
-                # Bölüm linki pattern'leri
-                patterns = [
-                    r'/(\d+)-bolum',
-                    r'bolum-(\d+)',
-                    r'bolum/(\d+)',
-                    r'episode-(\d+)'
-                ]
-                for pattern in patterns:
-                    match = re.search(pattern, href)
-                    if match:
-                        ep_num = int(match.group(1))
-                        if ep_num not in episode_numbers:
-                            episode_numbers.append(ep_num)
-                
-                # Link text'indeki bölüm numarasını kontrol et
-                link_text = a_tag.get_text(strip=True)
-                match = re.search(r'(\d+)\.?\s*Bölüm', link_text)
-                if match:
-                    ep_num = int(match.group(1))
-                    if ep_num not in episode_numbers:
-                        episode_numbers.append(ep_num)
-        
-        # 4. YÖNTEM: Sayfa title'ından bölüm numarasını al (YENİ)
-        if not episode_numbers:
+        # 3. YÖNTEM: Sayfa title'ından bölüm numarasını al
+        if not verified_episodes:
             title = soup.title.string if soup.title else ""
             match = re.search(r'(\d+)\.?\s*Bölüm', title)
             if match:
                 ep_num = int(match.group(1))
-                episode_numbers.append(ep_num)
+                if verify_episode_exists(series_name, ep_num):
+                    verified_episodes.append(ep_num)
         
-        if episode_numbers:
-            return max(episode_numbers)
+        # 4. YÖNTEM: Eğer hiç doğrulanmış bölüm yoksa, bölüm numaralarını sırayla kontrol et
+        if not verified_episodes and episode_numbers:
+            # En yüksekten başlayarak geriye doğru kontrol et
+            for ep_num in sorted(episode_numbers, reverse=True):
+                if verify_episode_exists(series_name, ep_num):
+                    verified_episodes.append(ep_num)
+                    break
+        
+        # 5. YÖNTEM: Hiç bölüm bulunamazsa, manuel URL kontrolü
+        if not verified_episodes:
+            # Son 5 bölümü kontrol et
+            for i in range(50, 0, -1):
+                if verify_episode_exists(series_name, i):
+                    verified_episodes.append(i)
+                    break
+        
+        if verified_episodes:
+            return max(verified_episodes)
         
         return None
     except Exception as e:
         print(f"    Hata: {e}")
         return None
 
-def get_video_url(series_name, episode_num):
-    """Video URL'sini al - GELİŞTİRİLMİŞ VERSİYON"""
+def verify_episode_exists(series_name, episode_num):
+    """Bölümün gerçekten yayınlanıp yayınlanmadığını kontrol eder"""
     try:
         # URL formatlarını dene
+        slug = slugify(series_name)
+        url_formats = [
+            f"{BASE_URL}/{slug}/{episode_num}-bolum/izle",
+            f"{BASE_URL}/dizi/tum_bolumler/{slug}-sezon-1-bolum-{episode_num}-izle",
+            f"{BASE_URL}/dizi/tum_bolumler/{slug}-bolum-{episode_num}-izle"
+        ]
+        
+        for ep_url in url_formats:
+            try:
+                r = requests.get(ep_url, headers=HEADERS, timeout=5)
+                if r.status_code == 200:
+                    soup = BeautifulSoup(r.content, "html.parser")
+                    
+                    # Video varsa bölüm yayınlanmıştır
+                    video_div = soup.find("div", class_="hope-video")
+                    if video_div and video_div.get("data-hope-video"):
+                        try:
+                            v_data = json.loads(video_div.get("data-hope-video"))
+                            if "media" in v_data and v_data["media"]:
+                                return True
+                        except:
+                            pass
+                    
+                    # video-src varsa
+                    if soup.find("div", {"data-hope-video": True}):
+                        return True
+            except:
+                continue
+        
+        return False
+    except:
+        return False
+
+def get_video_url(series_name, episode_num):
+    """Video URL'sini al"""
+    try:
         slug = slugify(series_name)
         url_formats = [
             f"{BASE_URL}/{slug}/{episode_num}-bolum/izle",
@@ -200,7 +228,6 @@ def get_video_url(series_name, episode_num):
                         except:
                             pass
                     
-                    # Video iframe'ini kontrol et
                     iframe = soup.find("iframe", src=re.compile(r'\.(m3u8|mp4)'))
                     if iframe and iframe.get("src"):
                         return iframe.get("src")
