@@ -68,7 +68,7 @@ def get_series_list_fast():
         return []
 
 def verify_episode_exists(series_name, episode_num):
-    """Bölümün gerçekten yayınlanıp yayınlanmadığını kontrol et"""
+    """Bölümün gerçekten yayınlanıp yayınlanmadığını kontrol et - GELİŞTİRİLMİŞ"""
     try:
         slug = slugify(series_name)
         url_formats = [
@@ -79,11 +79,18 @@ def verify_episode_exists(series_name, episode_num):
         
         for ep_url in url_formats:
             try:
-                r = requests.get(ep_url, headers=HEADERS, timeout=5)
-                if r.status_code == 200:
+                headers = HEADERS.copy()
+                headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+                headers["Pragma"] = "no-cache"
+                
+                r = requests.get(ep_url, headers=headers, timeout=8)
+                
+                # 200 veya 304 başarılı kabul ediliyor
+                if r.status_code in [200, 304]:
                     soup = BeautifulSoup(r.content, "html.parser")
+                    page_html = str(soup)
                     
-                    # data-hope-video kontrol et
+                    # 1. data-hope-video kontrol et
                     video_div = soup.find("div", class_="hope-video")
                     if video_div and video_div.get("data-hope-video"):
                         try:
@@ -95,17 +102,35 @@ def verify_episode_exists(series_name, episode_num):
                         except:
                             pass
                     
-                    # Video URL'lerini ara
-                    video_patterns = [
-                        r'(https?://[^\s"\']+\.m3u8[^\s"\']*)',
-                        r'(https?://[^\s"\']+\.mp4[^\s"\']*)',
-                        r'file"\s*:\s*"([^"]+\.(?:m3u8|mp4))"',
-                        r'src="([^"]+\.(?:m3u8|mp4))"'
+                    # 2. Video ile ilgili anahtar kelimeleri ara
+                    video_keywords = [
+                        'hope-video',
+                        'data-hope-video',
+                        'player',
+                        'video',
+                        '.m3u8',
+                        '.mp4',
+                        'media',
+                        'source',
+                        'files',
+                        'stream'
                     ]
-                    for pattern in video_patterns:
-                        matches = re.findall(pattern, str(soup), re.IGNORECASE)
-                        if matches:
+                    
+                    for keyword in video_keywords:
+                        if keyword in page_html.lower():
                             return True
+                    
+                    # 3. Sayfada video var mı (Bölüm sayfası ise)
+                    if 'Bölüm' in page_html and episode_num:
+                        # Özel bölüm veya tanıtım değilse
+                        if 'Özel Bölüm' not in page_html and 'Tanıtım' not in page_html:
+                            # Sayfa başlığı bölüm bilgisi içeriyorsa
+                            title = soup.title.string if soup.title else ""
+                            if f"{episode_num}. Bölüm" in title or f"Bölüm {episode_num}" in title:
+                                return True
+                else:
+                    # 404 veya başka hata → bölüm yok
+                    continue
             except:
                 continue
         
@@ -129,7 +154,7 @@ def get_last_episode_number(series_url, series_name):
             if match:
                 episode_numbers.append(int(match.group(1)))
         
-        # 2. YÖNTEM: "Son Bölüm" butonunu kontrol et
+        # 2. YÖNTEM: "Son Bölüm" butonunu kontrol et (EN GÜVENİLİR)
         son_bolum_span = soup.find("span", string="Son Bölüm")
         if son_bolum_span:
             parent_a = son_bolum_span.find_parent("a")
@@ -147,10 +172,18 @@ def get_last_episode_number(series_url, series_name):
                 except:
                     pass
         
+        # 3. YÖNTEM: Sayfadaki tüm linkleri tara
+        if not episode_numbers:
+            for a_tag in soup.find_all('a', href=True):
+                href = a_tag.get('href', '')
+                match = re.search(r'/(\d+)-bolum', href)
+                if match:
+                    episode_numbers.append(int(match.group(1)))
+        
         if episode_numbers:
             return max(episode_numbers)
         
-        # 3. YÖNTEM: Sayfa title'ından al
+        # 4. YÖNTEM: Sayfa title'ından al
         title = soup.title.string if soup.title else ""
         match = re.search(r'(\d+)\.?\s*Bölüm', title)
         if match:
@@ -162,7 +195,7 @@ def get_last_episode_number(series_url, series_name):
         return None
 
 def get_video_url(series_name, episode_num):
-    """Video URL'sini al"""
+    """Video URL'sini al - GELİŞTİRİLMİŞ"""
     try:
         slug = slugify(series_name)
         url_formats = [
@@ -173,11 +206,16 @@ def get_video_url(series_name, episode_num):
         
         for ep_url in url_formats:
             try:
-                r = requests.get(ep_url, headers=HEADERS, timeout=10)
-                if r.status_code == 200:
+                headers = HEADERS.copy()
+                headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+                headers["Pragma"] = "no-cache"
+                
+                r = requests.get(ep_url, headers=headers, timeout=10)
+                if r.status_code in [200, 304]:
                     soup = BeautifulSoup(r.content, "html.parser")
+                    page_html = str(soup)
                     
-                    # data-hope-video
+                    # 1. data-hope-video
                     video_div = soup.find("div", class_="hope-video")
                     if video_div and video_div.get("data-hope-video"):
                         try:
@@ -191,17 +229,18 @@ def get_video_url(series_name, episode_num):
                         except:
                             pass
                     
-                    # Video URL'lerini ara
+                    # 2. Video URL'lerini ara
                     video_patterns = [
                         r'(https?://[^\s"\']+\.m3u8[^\s"\']*)',
                         r'(https?://[^\s"\']+\.mp4[^\s"\']*)',
                         r'file"\s*:\s*"([^"]+\.(?:m3u8|mp4))"',
-                        r'src="([^"]+\.(?:m3u8|mp4))"'
+                        r'src="([^"]+\.(?:m3u8|mp4))"',
+                        r'(https?://[^\s"\']+/[^\s"\']+\.(?:m3u8|mp4)[^\s"\']*)'
                     ]
                     for pattern in video_patterns:
-                        matches = re.findall(pattern, str(soup), re.IGNORECASE)
+                        matches = re.findall(pattern, page_html, re.IGNORECASE)
                         for url in matches:
-                            if 'fragman' not in url.lower():
+                            if 'fragman' not in url.lower() and 'tanitim' not in url.lower():
                                 return url
             except:
                 continue
