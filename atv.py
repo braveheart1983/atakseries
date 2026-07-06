@@ -36,8 +36,11 @@ def load_existing_data():
         return []
 
 def save_data(data):
-    """JSON dosyasını local'e kaydeder (GitHub Actions ile commit edilecek)"""
-    filename = "atv.json"
+    """JSON dosyasını diziler klasörüne kaydeder (GitHub Actions ile commit edilecek)"""
+    # 📌 DÜZELTİLDİ: diziler klasörüne kaydet
+    os.makedirs("diziler", exist_ok=True)  # Klasör yoksa oluştur
+    filename = "diziler/atv.json"
+    
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
     
@@ -238,7 +241,7 @@ def update_atv():
                 video_url = get_video_url(series['slug'], last_episode)
                 
                 if video_url:
-                    # ⭐ YENİ FORMATTA BÖLÜM EKLE
+                    # YENİ FORMATTA BÖLÜM EKLE
                     new_episode = create_episode_object(
                         number=last_episode,
                         title=f"{last_episode}. Bölüm",
@@ -270,7 +273,7 @@ def update_atv():
                 if not poster_url:
                     poster_url = f"https://via.placeholder.com/300x450/15161a/ffffff?text={series['name'].replace(' ', '+')}"
                 
-                # ⭐ YENİ FORMATTA DİZİ OLUŞTUR
+                # YENİ FORMATTA DİZİ OLUŞTUR
                 new_series = {
                     "id": series_id,
                     "name": series['name'],
@@ -314,7 +317,7 @@ def update_atv():
         print(f"   • Yeni Bölüm Eklenen Dizi: {updated_count}")
         print(f"   • Toplam Yeni Bölüm: {total_new_episodes}")
         print(f"   • Süre: {elapsed_time:.2f} saniye")
-        print(f"   • JSON Dosyası: 'atv.json'")
+        print(f"   • JSON Dosyası: 'diziler/atv.json'")
         print("=" * 60)
     else:
         print(f"\n✅ Hiç değişiklik yok! (Süre: {time.time() - start_time:.2f} saniye)")
