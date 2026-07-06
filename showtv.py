@@ -36,7 +36,6 @@ def load_existing_data():
 
 def save_data(data):
     """JSON dosyasını diziler klasörüne kaydeder"""
-    # 📌 DÜZELTİLDİ: diziler klasörüne kaydet
     os.makedirs("diziler", exist_ok=True)
     filename = "diziler/showtv.json"
     
@@ -45,7 +44,6 @@ def save_data(data):
     
     print(f"   💾 {filename} dosyası local'e kaydedildi")
     
-    # GitHub Actions için çıktı oluştur
     try:
         with open(os.environ.get('GITHUB_OUTPUT', 'output.txt'), 'a') as f:
             f.write(f"updated=true\n")
@@ -95,13 +93,14 @@ def get_series_list_fast():
         return []
 
 def get_last_episode_number(series_url, series_name):
-    """Sadece son bölüm numarasını al"""
+    """Sadece son bölüm numarasını al - GELİŞTİRİLMİŞ VERSİYON"""
     try:
         r = requests.get(series_url, headers=HEADERS, timeout=8)
         soup = BeautifulSoup(r.content, "html.parser")
         
         episode_numbers = []
         
+        # 1. YÖNTEM: Option etiketlerinden bölüm numaralarını al
         options = soup.find_all("option", attrs={"data-href": True})
         for opt in options:
             text = opt.text.strip()
@@ -109,9 +108,7 @@ def get_last_episode_number(series_url, series_name):
             if match:
                 episode_numbers.append(int(match.group(1)))
         
-        if episode_numbers:
-            return max(episode_numbers)
-        
+        # 2. YÖNTEM: "Son Bölüm" butonunu kontrol et
         son_bolum_span = soup.find("span", string="Son Bölüm")
         if son_bolum_span:
             parent_a = son_bolum_span.find_parent("a")
@@ -123,9 +120,49 @@ def get_last_episode_number(series_url, series_name):
                     title = soup2.title.string if soup2.title else ""
                     match = re.search(r'(\d+)\.?\s*Bölüm', title)
                     if match:
-                        return int(match.group(1))
+                        ep_num = int(match.group(1))
+                        if ep_num not in episode_numbers:
+                            episode_numbers.append(ep_num)
                 except:
                     pass
+        
+        # 3. YÖNTEM: Sayfadaki tüm linkleri kontrol et (YENİ)
+        if not episode_numbers:
+            # Tüm <a> etiketlerini kontrol et
+            for a_tag in soup.find_all('a', href=True):
+                href = a_tag.get('href', '')
+                # Bölüm linki pattern'leri
+                patterns = [
+                    r'/(\d+)-bolum',
+                    r'bolum-(\d+)',
+                    r'bolum/(\d+)',
+                    r'episode-(\d+)'
+                ]
+                for pattern in patterns:
+                    match = re.search(pattern, href)
+                    if match:
+                        ep_num = int(match.group(1))
+                        if ep_num not in episode_numbers:
+                            episode_numbers.append(ep_num)
+                
+                # Link text'indeki bölüm numarasını kontrol et
+                link_text = a_tag.get_text(strip=True)
+                match = re.search(r'(\d+)\.?\s*Bölüm', link_text)
+                if match:
+                    ep_num = int(match.group(1))
+                    if ep_num not in episode_numbers:
+                        episode_numbers.append(ep_num)
+        
+        # 4. YÖNTEM: Sayfa title'ından bölüm numarasını al (YENİ)
+        if not episode_numbers:
+            title = soup.title.string if soup.title else ""
+            match = re.search(r'(\d+)\.?\s*Bölüm', title)
+            if match:
+                ep_num = int(match.group(1))
+                episode_numbers.append(ep_num)
+        
+        if episode_numbers:
+            return max(episode_numbers)
         
         return None
     except Exception as e:
@@ -133,27 +170,42 @@ def get_last_episode_number(series_url, series_name):
         return None
 
 def get_video_url(series_name, episode_num):
-    """Video URL'sini al"""
+    """Video URL'sini al - GELİŞTİRİLMİŞ VERSİYON"""
     try:
+        # URL formatlarını dene
         slug = slugify(series_name)
-        ep_url = f"{BASE_URL}/{slug}/{episode_num}-bolum/izle"
+        url_formats = [
+            f"{BASE_URL}/{slug}/{episode_num}-bolum/izle",
+            f"{BASE_URL}/dizi/tum_bolumler/{slug}-sezon-1-bolum-{episode_num}-izle",
+            f"{BASE_URL}/dizi/tum_bolumler/{slug}-bolum-{episode_num}-izle"
+        ]
         
-        r = requests.get(ep_url, headers=HEADERS, timeout=10)
-        soup = BeautifulSoup(r.content, "html.parser")
-        
-        video_div = soup.find("div", class_="hope-video")
-        if video_div and video_div.get("data-hope-video"):
+        for ep_url in url_formats:
             try:
-                v_data = json.loads(video_div.get("data-hope-video"))
-                
-                if "media" in v_data:
-                    media = v_data["media"]
-                    if "m3u8" in media and len(media["m3u8"]) > 0:
-                        return media["m3u8"][0]["src"]
-                    elif "mp4" in media and len(media["mp4"]) > 0:
-                        return media["mp4"][0]["src"]
+                r = requests.get(ep_url, headers=HEADERS, timeout=10)
+                if r.status_code == 200:
+                    soup = BeautifulSoup(r.content, "html.parser")
+                    
+                    video_div = soup.find("div", class_="hope-video")
+                    if video_div and video_div.get("data-hope-video"):
+                        try:
+                            v_data = json.loads(video_div.get("data-hope-video"))
+                            
+                            if "media" in v_data:
+                                media = v_data["media"]
+                                if "m3u8" in media and len(media["m3u8"]) > 0:
+                                    return media["m3u8"][0]["src"]
+                                elif "mp4" in media and len(media["mp4"]) > 0:
+                                    return media["mp4"][0]["src"]
+                        except:
+                            pass
+                    
+                    # Video iframe'ini kontrol et
+                    iframe = soup.find("iframe", src=re.compile(r'\.(m3u8|mp4)'))
+                    if iframe and iframe.get("src"):
+                        return iframe.get("src")
             except:
-                pass
+                continue
         
         return None
     except Exception as e:
@@ -174,7 +226,7 @@ def create_episode_object(number, title, url):
     }
 
 def update_showtv():
-    """ShowTV JSON'ını güncelle (GitHub'dan oku, güncelle, kaydet)"""
+    """ShowTV JSON'ını güncelle"""
     print("🚀 ShowTV GÜNCELLEYİCİ (GitHub Uyumlu - Yeni Format)")
     print("=" * 60)
     start_time = time.time()
@@ -232,7 +284,6 @@ def update_showtv():
                 if video_url:
                     video_url = video_url.replace("//ht/", "/ht/").replace("com//", "com/")
                     
-                    # YENİ FORMATTA BÖLÜM EKLE
                     new_episode = create_episode_object(
                         number=last_episode,
                         title=f"{last_episode}. Bölüm",
@@ -240,7 +291,6 @@ def update_showtv():
                     )
                     existing_series_map[series_id]["data"]["episodes"].append(new_episode)
                     
-                    # Bölümleri sırala
                     existing_series_map[series_id]["data"]["episodes"] = sorted(
                         existing_series_map[series_id]["data"]["episodes"], 
                         key=lambda x: x.get("number", 0)
@@ -262,7 +312,6 @@ def update_showtv():
             if video_url:
                 video_url = video_url.replace("//ht/", "/ht/").replace("com//", "com/")
                 
-                # YENİ FORMATTA DİZİ OLUŞTUR
                 new_series = {
                     "id": series_id,
                     "name": series['name'],
