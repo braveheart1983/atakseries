@@ -71,59 +71,28 @@ def verify_episode_exists(series_name, episode_num):
     """Bölümün gerçekten yayınlanıp yayınlanmadığını kontrol et"""
     try:
         slug = slugify(series_name)
-        url_formats = [
-            f"{BASE_URL}/{slug}/{episode_num}-bolum/izle",
-            f"{BASE_URL}/dizi/tum_bolumler/{slug}-sezon-1-bolum-{episode_num}-izle",
-            f"{BASE_URL}/dizi/tum_bolumler/{slug}-bolum-{episode_num}-izle"
-        ]
+        ep_url = f"{BASE_URL}/{slug}/{episode_num}-bolum/izle"
         
-        for ep_url in url_formats:
-            try:
-                headers = HEADERS.copy()
-                headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-                headers["Pragma"] = "no-cache"
-                
-                r = requests.get(ep_url, headers=headers, timeout=8)
-                
-                if r.status_code in [200, 304]:
-                    soup = BeautifulSoup(r.content, "html.parser")
-                    page_html = str(soup)
-                    
-                    # 1. hope-video div'i ve data-hope-video kontrolü
-                    video_div = soup.find("div", class_="hope-video")
-                    if video_div:
-                        data_attr = video_div.get("data-hope-video")
-                        if data_attr:
-                            try:
-                                v_data = json.loads(data_attr)
-                                if "media" in v_data:
-                                    media = v_data["media"]
-                                    if ("m3u8" in media and len(media["m3u8"]) > 0) or \
-                                       ("mp4" in media and len(media["mp4"]) > 0):
-                                        return True
-                            except:
-                                pass
-                    
-                    # 2. JSON-LD VideoObject kontrolü
-                    if '"@type":"VideoObject"' in page_html:
-                        return True
-                    
-                    # 3. Video URL'leri kontrolü
-                    video_patterns = [
-                        r'vmcdn\.ciner\.com\.tr/[^\s"\']+\.(?:m3u8|mp4)',
-                        r'https?://[^\s"\']+\.m3u8[^\s"\']*',
-                        r'https?://[^\s"\']+\.mp4[^\s"\']*'
-                    ]
-                    for pattern in video_patterns:
-                        if re.search(pattern, page_html, re.IGNORECASE):
-                            return True
-                    
-                    # 4. Sayfa başlığında bölüm bilgisi varsa (yayınlanmış demektir)
-                    title = soup.title.string if soup.title else ""
-                    if f"{episode_num}. Bölüm" in title or f"Bölüm {episode_num}" in title:
-                        return True
-            except:
-                continue
+        headers = HEADERS.copy()
+        headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        headers["Pragma"] = "no-cache"
+        
+        r = requests.get(ep_url, headers=headers, timeout=8)
+        
+        if r.status_code in [200, 304]:
+            page_html = r.text
+            
+            # Video URL'lerini ara
+            if 'vmcdn.ciner.com.tr' in page_html:
+                return True
+            if '.m3u8' in page_html or '.mp4' in page_html:
+                return True
+            if 'hope-video' in page_html:
+                return True
+            
+            # Sayfa başlığı kontrolü
+            if f"{episode_num}. Bölüm" in page_html:
+                return True
         
         return False
     except:
@@ -137,7 +106,6 @@ def get_last_episode_number(series_url, series_name):
         
         episode_numbers = []
         
-        # Dropdown'dan bölüm numaralarını al
         options = soup.find_all("option", attrs={"data-href": True})
         for opt in options:
             text = opt.text.strip()
@@ -145,7 +113,6 @@ def get_last_episode_number(series_url, series_name):
             if match:
                 episode_numbers.append(int(match.group(1)))
         
-        # "Son Bölüm" butonunu kontrol et
         son_bolum_span = soup.find("span", string="Son Bölüm")
         if son_bolum_span:
             parent_a = son_bolum_span.find_parent("a")
@@ -175,67 +142,48 @@ def get_video_url(series_name, episode_num):
     """Video URL'sini al"""
     try:
         slug = slugify(series_name)
-        url_formats = [
-            f"{BASE_URL}/{slug}/{episode_num}-bolum/izle",
-            f"{BASE_URL}/dizi/tum_bolumler/{slug}-sezon-1-bolum-{episode_num}-izle",
-            f"{BASE_URL}/dizi/tum_bolumler/{slug}-bolum-{episode_num}-izle"
-        ]
+        ep_url = f"{BASE_URL}/{slug}/{episode_num}-bolum/izle"
         
-        for ep_url in url_formats:
-            try:
-                headers = HEADERS.copy()
-                headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-                headers["Pragma"] = "no-cache"
-                
-                r = requests.get(ep_url, headers=headers, timeout=10)
-                if r.status_code in [200, 304]:
-                    soup = BeautifulSoup(r.content, "html.parser")
-                    page_html = str(soup)
-                    
-                    # 1. hope-video div'inden data-hope-video al
-                    video_div = soup.find("div", class_="hope-video")
-                    if video_div:
-                        data_attr = video_div.get("data-hope-video")
-                        if data_attr:
-                            try:
-                                v_data = json.loads(data_attr)
-                                if "media" in v_data:
-                                    media = v_data["media"]
-                                    if "m3u8" in media and len(media["m3u8"]) > 0:
-                                        return media["m3u8"][0]["src"]
-                                    elif "mp4" in media and len(media["mp4"]) > 0:
-                                        return media["mp4"][0]["src"]
-                            except:
-                                pass
-                    
-                    # 2. JSON-LD'den video URL'si al
-                    json_ld_match = re.search(r'<script type="application/ld\+json">(.*?)</script>', page_html, re.DOTALL)
-                    if json_ld_match:
-                        try:
-                            json_str = json_ld_match.group(1)
-                            data = json.loads(json_str)
-                            if isinstance(data, dict) and data.get("@type") == "VideoObject":
-                                if "contentUrl" in data:
-                                    return data["contentUrl"]
-                                if "embedUrl" in data:
-                                    return data["embedUrl"]
-                        except:
-                            pass
-                    
-                    # 3. Video URL'lerini ara
-                    video_patterns = [
-                        r'(https?://[^\s"\']+\.m3u8[^\s"\']*)',
-                        r'(https?://[^\s"\']+\.mp4[^\s"\']*)',
-                        r'contentUrl":"([^"]+\.(?:m3u8|mp4))',
-                        r'src="([^"]+\.(?:m3u8|mp4))"'
-                    ]
-                    for pattern in video_patterns:
-                        matches = re.findall(pattern, page_html, re.IGNORECASE)
-                        for url in matches:
-                            if 'fragman' not in url.lower() and 'tanitim' not in url.lower():
-                                return url
-            except:
-                continue
+        headers = HEADERS.copy()
+        headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        headers["Pragma"] = "no-cache"
+        
+        r = requests.get(ep_url, headers=headers, timeout=10)
+        if r.status_code in [200, 304]:
+            page_html = r.text
+            
+            # 1. data-hope-video içindeki JSON'u bul
+            pattern = r'data-hope-video="([^"]+)"'
+            match = re.search(pattern, page_html)
+            if match:
+                try:
+                    data_str = match.group(1)
+                    data_str = data_str.replace('&quot;', '"').replace('&#39;', "'")
+                    v_data = json.loads(data_str)
+                    if "media" in v_data:
+                        media = v_data["media"]
+                        if "m3u8" in media and len(media["m3u8"]) > 0:
+                            return media["m3u8"][0]["src"]
+                        elif "mp4" in media and len(media["mp4"]) > 0:
+                            return media["mp4"][0]["src"]
+                except:
+                    pass
+            
+            # 2. Doğrudan video URL'lerini ara
+            video_patterns = [
+                r'(https?://[^\s"\']+\.m3u8[^\s"\']*)',
+                r'(https?://[^\s"\']+\.mp4[^\s"\']*)',
+                r'vmcdn\.ciner\.com\.tr/[^\s"\']+\.(?:m3u8|mp4)',
+                r'https?://vmcdn\.ciner\.com\.tr/[^\s"\']+'
+            ]
+            for pattern in video_patterns:
+                matches = re.findall(pattern, page_html, re.IGNORECASE)
+                for url in matches:
+                    if 'fragman' not in url.lower() and 'tanitim' not in url.lower():
+                        # URL'yi temizle
+                        if url.startswith('//'):
+                            url = 'https:' + url
+                        return url
         
         return None
     except Exception as e:
@@ -274,7 +222,6 @@ def update_showtv():
     print(f"   {len(all_series)} dizi bulundu")
     print("-" * 40)
     
-    # Son 5 dizi + Yeni diziler
     series_to_check = []
     
     new_series = []
@@ -333,7 +280,6 @@ def update_showtv():
             existing_last = existing_series_map[series_id]["last_episode"]
             
             if last_episode > existing_last:
-                # Atlama kontrolü
                 target_episode = last_episode
                 if last_episode > existing_last + 1:
                     possible_next = existing_last + 1
@@ -381,7 +327,6 @@ def update_showtv():
             else:
                 print(f"    ℹ️  Yeni bölüm yok")
         else:
-            # YENİ DİZİ
             print(f"    🆕 Yeni dizi ekleniyor...")
             
             target_episode = last_episode
