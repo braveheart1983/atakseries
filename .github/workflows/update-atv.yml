@@ -30,6 +30,8 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git add diziler/atv.json
-          git diff --quiet && git diff --staged --quiet || git commit -m "🤖 ATV: Otomatik güncelleme"
+          # 📌 DÜZELTİLDİ: Python'un kaydettiği dosyayı ekle
+          git add atv.json
+          # Değişiklik varsa commit et
+          git diff --quiet && git diff --staged --quiet || git commit -m "🤖 ATV: Otomatik güncelleme - $(date +'%Y-%m-%d %H:%M')"
           git push
