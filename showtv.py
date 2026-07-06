@@ -35,8 +35,11 @@ def load_existing_data():
         return []
 
 def save_data(data):
-    """JSON dosyasını local'e kaydeder (GitHub Actions ile commit edilecek)"""
-    filename = "showtv.json"
+    """JSON dosyasını diziler klasörüne kaydeder"""
+    # 📌 DÜZELTİLDİ: diziler klasörüne kaydet
+    os.makedirs("diziler", exist_ok=True)
+    filename = "diziler/showtv.json"
+    
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
     
@@ -229,7 +232,7 @@ def update_showtv():
                 if video_url:
                     video_url = video_url.replace("//ht/", "/ht/").replace("com//", "com/")
                     
-                    # ⭐ YENİ FORMATTA BÖLÜM EKLE
+                    # YENİ FORMATTA BÖLÜM EKLE
                     new_episode = create_episode_object(
                         number=last_episode,
                         title=f"{last_episode}. Bölüm",
@@ -259,7 +262,7 @@ def update_showtv():
             if video_url:
                 video_url = video_url.replace("//ht/", "/ht/").replace("com//", "com/")
                 
-                # ⭐ YENİ FORMATTA DİZİ OLUŞTUR
+                # YENİ FORMATTA DİZİ OLUŞTUR
                 new_series = {
                     "id": series_id,
                     "name": series['name'],
@@ -302,7 +305,7 @@ def update_showtv():
         print(f"   • Yeni Bölüm Eklenen Dizi: {updated_count}")
         print(f"   • Toplam Yeni Bölüm: {total_new_episodes}")
         print(f"   • Süre: {elapsed_time:.2f} saniye")
-        print(f"   • JSON Dosyası: 'showtv.json'")
+        print(f"   • JSON Dosyası: 'diziler/showtv.json'")
         print("=" * 60)
     else:
         print(f"\n✅ Hiç değişiklik yok! (Süre: {time.time() - start_time:.2f} saniye)")
