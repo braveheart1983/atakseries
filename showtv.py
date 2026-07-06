@@ -16,13 +16,13 @@ GITHUB_RAW_URL = "https://raw.githubusercontent.com/braveheart1983/atakseries/ma
 def load_existing_data():
     try:
         print(f"📥 JSON dosyası GitHub'dan indiriliyor...")
-        response = requests.get(GITHUB_RAW_URL, timeout=15)
+        response = requests.get(GITHUB_RAW_URL, timeout=10)
         if response.status_code == 200:
             data = response.json()
             print(f"   ✅ {len(data)} dizi yüklendi")
             return data
         else:
-            print(f"   ⚠️  Dosya bulunamadı (HTTP {response.status_code})")
+            print(f"   ⚠️  Dosya bulunamadı")
             return []
     except:
         return []
@@ -32,7 +32,7 @@ def save_data(data):
     filename = "diziler/showtv.json"
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
-    print(f"   💾 {filename} dosyası local'e kaydedildi")
+    print(f"   💾 {filename} kaydedildi")
     return True
 
 def slugify(text):
@@ -43,7 +43,7 @@ def slugify(text):
 
 def get_series_list_fast():
     try:
-        r = requests.get(f"{BASE_URL}/diziler", headers=HEADERS, timeout=10)
+        r = requests.get(f"{BASE_URL}/diziler", headers=HEADERS, timeout=8)
         soup = BeautifulSoup(r.content, "html.parser")
         series_list = []
         dizi_kutulari = soup.find_all("div", attrs={"data-name": "box-type6"})
@@ -67,41 +67,10 @@ def get_series_list_fast():
         print(f"Hata: {e}")
         return []
 
-def verify_episode_exists(series_name, episode_num):
-    """Bölümün gerçekten yayınlanıp yayınlanmadığını kontrol et"""
+def get_last_episode_number(series_url):
+    """Sadece son bölüm numarasını al (HIZLI)"""
     try:
-        slug = slugify(series_name)
-        ep_url = f"{BASE_URL}/{slug}/{episode_num}-bolum/izle"
-        
-        headers = HEADERS.copy()
-        headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-        headers["Pragma"] = "no-cache"
-        
-        r = requests.get(ep_url, headers=headers, timeout=8)
-        
-        if r.status_code in [200, 304]:
-            page_html = r.text
-            
-            # Video URL'lerini ara
-            if 'vmcdn.ciner.com.tr' in page_html:
-                return True
-            if '.m3u8' in page_html or '.mp4' in page_html:
-                return True
-            if 'hope-video' in page_html:
-                return True
-            
-            # Sayfa başlığı kontrolü
-            if f"{episode_num}. Bölüm" in page_html:
-                return True
-        
-        return False
-    except:
-        return False
-
-def get_last_episode_number(series_url, series_name):
-    """Doğru son bölüm numarasını bul"""
-    try:
-        r = requests.get(series_url, headers=HEADERS, timeout=8)
+        r = requests.get(series_url, headers=HEADERS, timeout=5)
         soup = BeautifulSoup(r.content, "html.parser")
         
         episode_numbers = []
@@ -113,46 +82,44 @@ def get_last_episode_number(series_url, series_name):
             if match:
                 episode_numbers.append(int(match.group(1)))
         
+        if episode_numbers:
+            return max(episode_numbers)
+        
+        # Son bölüm butonu
         son_bolum_span = soup.find("span", string="Son Bölüm")
         if son_bolum_span:
             parent_a = son_bolum_span.find_parent("a")
             if parent_a and parent_a.get("href"):
                 son_bolum_url = BASE_URL + parent_a.get("href")
                 try:
-                    r2 = requests.get(son_bolum_url, headers=HEADERS, timeout=5)
+                    r2 = requests.get(son_bolum_url, headers=HEADERS, timeout=3)
                     soup2 = BeautifulSoup(r2.content, "html.parser")
                     title = soup2.title.string if soup2.title else ""
                     match = re.search(r'(\d+)\.?\s*Bölüm', title)
                     if match:
-                        son_ep = int(match.group(1))
-                        if son_ep in episode_numbers or not episode_numbers:
-                            return son_ep
+                        return int(match.group(1))
                 except:
                     pass
         
-        if episode_numbers:
-            return max(episode_numbers)
-        
         return None
-    except Exception as e:
-        print(f"    Hata: {e}")
+    except:
         return None
 
-def get_video_url(series_name, episode_num):
-    """Video URL'sini al"""
+def verify_and_get_video_url(series_name, episode_num):
+    """Bölümü kontrol et ve video URL'sini al (TEK SEFERDE)"""
     try:
         slug = slugify(series_name)
         ep_url = f"{BASE_URL}/{slug}/{episode_num}-bolum/izle"
         
         headers = HEADERS.copy()
         headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-        headers["Pragma"] = "no-cache"
         
-        r = requests.get(ep_url, headers=headers, timeout=10)
+        r = requests.get(ep_url, headers=headers, timeout=8)
         if r.status_code in [200, 304]:
             page_html = r.text
             
-            # 1. data-hope-video içindeki JSON'u bul
+            # Video URL'sini ara
+            # 1. data-hope-video
             pattern = r'data-hope-video="([^"]+)"'
             match = re.search(pattern, page_html)
             if match:
@@ -169,25 +136,22 @@ def get_video_url(series_name, episode_num):
                 except:
                     pass
             
-            # 2. Doğrudan video URL'lerini ara
+            # 2. Doğrudan video URL'leri
             video_patterns = [
-                r'(https?://[^\s"\']+\.m3u8[^\s"\']*)',
-                r'(https?://[^\s"\']+\.mp4[^\s"\']*)',
-                r'vmcdn\.ciner\.com\.tr/[^\s"\']+\.(?:m3u8|mp4)',
-                r'https?://vmcdn\.ciner\.com\.tr/[^\s"\']+'
+                r'(https?://vmcdn\.ciner\.com\.tr/[^\s"\']+\.m3u8[^\s"\']*)',
+                r'(https?://vmcdn\.ciner\.com\.tr/[^\s"\']+\.mp4[^\s"\']*)',
+                r'vmcdn\.ciner\.com\.tr/[^\s"\']+\.(?:m3u8|mp4)'
             ]
             for pattern in video_patterns:
                 matches = re.findall(pattern, page_html, re.IGNORECASE)
                 for url in matches:
                     if 'fragman' not in url.lower() and 'tanitim' not in url.lower():
-                        # URL'yi temizle
                         if url.startswith('//'):
                             url = 'https:' + url
                         return url
         
         return None
-    except Exception as e:
-        print(f"      Video URL hatası: {e}")
+    except:
         return None
 
 def create_episode_object(number, title, url):
@@ -198,13 +162,15 @@ def create_episode_object(number, title, url):
     }
 
 def update_showtv():
-    print("🚀 ShowTV GÜNCELLEYİCİ")
+    print("🚀 ShowTV HIZLI GÜNCELLEYİCİ")
     print("=" * 60)
     start_time = time.time()
     
+    # Mevcut veriyi yükle
     existing_data = load_existing_data()
     print(f"📂 Mevcut JSON'da {len(existing_data)} dizi var")
     
+    # Mevcut dizilerin ID'lerini ve son bölümlerini al
     existing_series_ids = {series.get("id") for series in existing_data}
     existing_series_map = {}
     for series in existing_data:
@@ -217,13 +183,16 @@ def update_showtv():
                 "last_episode": last_ep.get("number", 0) if last_ep else 0
             }
     
+    # Tüm dizileri al
     print("\n🔍 Web sitesi taranıyor...")
     all_series = get_series_list_fast()
     print(f"   {len(all_series)} dizi bulundu")
     print("-" * 40)
     
+    # 📌 SADECE KONTROL EDİLECEK DİZİLER
     series_to_check = []
     
+    # 1. Yeni diziler
     new_series = []
     for series in all_series:
         series_id = f"showtv_{slugify(series['name'])}"
@@ -234,6 +203,7 @@ def update_showtv():
         print(f"🆕 {len(new_series)} yeni dizi bulundu!")
         series_to_check.extend(new_series)
     
+    # 2. Son 5 güncel dizi
     existing_series_list = [s for s in all_series if f"showtv_{slugify(s['name'])}" in existing_series_ids]
     last_five = existing_series_list[:5]
     
@@ -245,6 +215,7 @@ def update_showtv():
             if series_id not in new_series_ids:
                 series_to_check.append(series)
     
+    # Benzersiz yap
     seen_names = set()
     unique_series = []
     for s in series_to_check:
@@ -268,7 +239,8 @@ def update_showtv():
         else:
             print(f"\n[{idx}/{len(series_to_check)}] 🆕 {series['name']} (YENİ DİZİ!)")
         
-        last_episode = get_last_episode_number(series['url'], series['name'])
+        # Son bölüm numarasını al
+        last_episode = get_last_episode_number(series['url'])
         
         if not last_episode:
             print(f"    ⚠️  Bölüm bulunamadı")
@@ -280,64 +252,73 @@ def update_showtv():
             existing_last = existing_series_map[series_id]["last_episode"]
             
             if last_episode > existing_last:
+                # Yeni bölüm var!
                 target_episode = last_episode
+                
+                # Atlama kontrolü (2->4 atlamasın)
                 if last_episode > existing_last + 1:
                     possible_next = existing_last + 1
                     print(f"    🔍 {possible_next}. bölüm kontrol ediliyor...")
                     
-                    if verify_episode_exists(series['name'], possible_next):
+                    video_url = verify_and_get_video_url(series['name'], possible_next)
+                    if video_url:
                         target_episode = possible_next
                         print(f"    ✅ {possible_next}. bölüm yayınlanmış!")
                     else:
                         print(f"    ⚠️ {possible_next}. bölüm yayınlanmamış, {last_episode}. bölüm kontrol ediliyor...")
-                        if verify_episode_exists(series['name'], last_episode):
+                        video_url = verify_and_get_video_url(series['name'], last_episode)
+                        if video_url:
                             target_episode = last_episode
                         else:
                             print(f"    ℹ️  Yeni bölüm yok")
                             continue
                 
-                if target_episode > existing_last:
-                    print(f"    ✅ YENİ BÖLÜM! (Eski: {existing_last} -> Yeni: {target_episode})")
-                    print(f"       🎬 {target_episode}. Bölüm video alınıyor...")
-                    
-                    video_url = get_video_url(series['name'], target_episode)
-                    
-                    if video_url:
-                        video_url = video_url.replace("//ht/", "/ht/").replace("com//", "com/")
-                        
-                        new_episode = create_episode_object(
-                            number=target_episode,
-                            title=f"{target_episode}. Bölüm",
-                            url=video_url
-                        )
-                        existing_series_map[series_id]["data"]["episodes"].append(new_episode)
-                        
-                        existing_series_map[series_id]["data"]["episodes"] = sorted(
-                            existing_series_map[series_id]["data"]["episodes"], 
-                            key=lambda x: x.get("number", 0)
-                        )
-                        
-                        updated_count += 1
-                        total_new_episodes += 1
-                        print(f"          ✅ {target_episode}. Bölüm eklendi!")
-                    else:
-                        print(f"          ❌ Video bulunamadı")
+                # Video URL'sini al (eğer alınmadıysa)
+                if target_episode == last_episode and target_episode > existing_last:
+                    video_url = verify_and_get_video_url(series['name'], target_episode)
+                elif target_episode == existing_last + 1:
+                    # Zaten video_url alındı
+                    pass
                 else:
-                    print(f"    ℹ️  Yeni bölüm yok")
+                    video_url = verify_and_get_video_url(series['name'], target_episode)
+                
+                if video_url:
+                    video_url = video_url.replace("//ht/", "/ht/").replace("com//", "com/")
+                    
+                    new_episode = create_episode_object(
+                        number=target_episode,
+                        title=f"{target_episode}. Bölüm",
+                        url=video_url
+                    )
+                    existing_series_map[series_id]["data"]["episodes"].append(new_episode)
+                    
+                    existing_series_map[series_id]["data"]["episodes"] = sorted(
+                        existing_series_map[series_id]["data"]["episodes"], 
+                        key=lambda x: x.get("number", 0)
+                    )
+                    
+                    updated_count += 1
+                    total_new_episodes += 1
+                    print(f"          ✅ {target_episode}. Bölüm eklendi!")
+                else:
+                    print(f"          ❌ Video bulunamadı")
             else:
                 print(f"    ℹ️  Yeni bölüm yok")
         else:
+            # YENİ DİZİ
             print(f"    🆕 Yeni dizi ekleniyor...")
             
             target_episode = last_episode
-            if not verify_episode_exists(series['name'], target_episode):
-                for ep in range(target_episode - 1, target_episode - 6, -1):
-                    if ep > 0 and verify_episode_exists(series['name'], ep):
-                        target_episode = ep
-                        break
+            video_url = verify_and_get_video_url(series['name'], target_episode)
             
-            print(f"       🎬 {target_episode}. Bölüm video alınıyor...")
-            video_url = get_video_url(series['name'], target_episode)
+            # Eğer son bölüm yoksa geriye doğru kontrol et
+            if not video_url:
+                for ep in range(target_episode - 1, target_episode - 6, -1):
+                    if ep > 0:
+                        video_url = verify_and_get_video_url(series['name'], ep)
+                        if video_url:
+                            target_episode = ep
+                            break
             
             if video_url:
                 video_url = video_url.replace("//ht/", "/ht/").replace("com//", "com/")
@@ -384,7 +365,6 @@ def update_showtv():
         print(f"   • Yeni Bölüm Eklenen Dizi: {updated_count}")
         print(f"   • Toplam Yeni Bölüm: {total_new_episodes}")
         print(f"   • Süre: {elapsed_time:.2f} saniye")
-        print(f"   • JSON Dosyası: 'diziler/showtv.json'")
         print("=" * 60)
     else:
         print(f"\n✅ Hiç değişiklik yok! (Süre: {time.time() - start_time:.2f} saniye)")
