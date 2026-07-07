@@ -70,18 +70,13 @@ def get_series_list_fast():
 def get_last_episode_number(series_url):
     """Show TV güncel ld+json yapısından gerçek en son bölüm numarasını çeker"""
     try:
-        # URL'den dizi adını çıkarıp "tum_bolumler" sayfasına yönlendiriyoruz (en güncel liste oradadır)
-        # Örn: https://www.showtv.com.tr/dizi/tanitim/muhtemel-ask -> /dizi/tum_bolumler/muhtemel-ask
         clean_url = series_url.replace("/dizi/tanitim/", "/dizi/tum_bolumler/")
-        
         r = requests.get(clean_url, headers=HEADERS, timeout=6)
         if r.status_code != 200:
-            # Yedek olarak gelen orijinal URL'yi dene
             r = requests.get(series_url, headers=HEADERS, timeout=5)
             
         episode_numbers = []
         
-        # 1. Yöntem: ld+json içindeki tüm bölümlerin URL'lerinden sayıları topla
         json_blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', r.text, re.DOTALL)
         for block in json_blocks:
             try:
@@ -89,7 +84,6 @@ def get_last_episode_number(series_url):
                 if data.get("@type") == "ItemList":
                     for item in data.get("itemListElement", []):
                         item_url = item.get("url", "")
-                        # URL'den 'bolum-X-izle' kısmındaki X sayısını yakala
                         match = re.search(r'bolum-(\d+)-izle', item_url)
                         if match:
                             episode_numbers.append(int(match.group(1)))
@@ -99,7 +93,6 @@ def get_last_episode_number(series_url):
         if episode_numbers:
             return max(episode_numbers)
             
-        # 2. Yöntem: HTML içindeki klasik seçeneğe geri dön (Orijinal yedek)
         soup = BeautifulSoup(r.content, "html.parser")
         options = soup.find_all("option", attrs={"data-href": True})
         for opt in options:
@@ -116,7 +109,7 @@ def get_last_episode_number(series_url):
         return None
 
 def verify_and_get_video_url(series_name, episode_num):
-    """Bölümü kontrol et ve video URL'sini al"""
+    """Bölümü kontrol et ve video URL'sini al (GELİŞMİŞ TARAMA)"""
     try:
         clean_slug = re.sub(r'[^a-z0-9]', '-', series_name.lower().replace('ı', 'i').replace('ğ', 'g').replace('ü', 'u').replace('ş', 's').replace('ö', 'o').replace('ç', 'c'))
         clean_slug = re.sub(r'-+', '-', clean_slug).strip('-')
@@ -151,13 +144,41 @@ def verify_and_get_video_url(series_name, episode_num):
         if r_ep.status_code in [200, 304]:
             page_html = r_ep.text
             
-            content_url_match = re.search(r'"contentUrl":\s*"(.*?)"', page_html)
+            # 1. YÖNTEM: ld+json VideoObject Taraması (contentUrl veya embedUrl)
+            json_blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', page_html, re.DOTALL)
+            for block in json_blocks:
+                try:
+                    data = json.loads(block.strip())
+                    # Tekil obje veya liste olabilir
+                    if isinstance(data, dict):
+                        objects = [data]
+                    elif isinstance(data, list):
+                        objects = data
+                    else:
+                        objects = []
+                        
+                    for obj in objects:
+                        if obj.get("@type") == "VideoObject" or "contentUrl" in obj:
+                            v_url = obj.get("contentUrl") or obj.get("embedUrl")
+                            if v_url:
+                                v_url = v_url.replace("\\/", "/")
+                                if v_url.startswith('//'):
+                                    v_url = 'https:' + v_url
+                                if 'fragman' not in v_url.lower() and 'tanitim' not in v_url.lower():
+                                    return v_url
+                except:
+                    continue
+
+            # 2. YÖNTEM: HTML İçindeki Ham "contentUrl" Metin Taraması
+            content_url_match = re.search(r'"contentUrl"\s*:\s*"([^"]+)"', page_html)
             if content_url_match:
                 video_url = content_url_match.group(1).replace("\\/", "/")
                 if video_url.startswith('//'):
                     video_url = 'https:' + video_url
-                return video_url
-            
+                if 'fragman' not in video_url.lower() and 'tanitim' not in video_url.lower():
+                    return video_url
+
+            # 3. YÖNTEM: Orijinal data-hope-video Kontrolü
             pattern = r'data-hope-video="([^"]+)"'
             match = re.search(pattern, page_html)
             if match:
@@ -174,14 +195,17 @@ def verify_and_get_video_url(series_name, episode_num):
                 except:
                     pass
             
+            # 4. YÖNTEM: Ciner/ShowTV CDN URL Desenleri için Agresif Regex Taraması
             video_patterns = [
                 r'(https?://vmcdn\.ciner\.com\.tr/[^\s"\']+\.m3u8[^\s"\']*)',
                 r'(https?://vmcdn\.ciner\.com\.tr/[^\s"\']+\.mp4[^\s"\']*)',
+                r'(https?://ht\.ciner\.com\.tr/[^\s"\']+\.m3u8[^\s"\']*)',
                 r'vmcdn\.ciner\.com\.tr/[^\s"\']+\.(?:m3u8|mp4)'
             ]
             for pattern in video_patterns:
                 matches = re.findall(pattern, page_html, re.IGNORECASE)
                 for url in matches:
+                    url = url.replace("\\/", "/")
                     if 'fragman' not in url.lower() and 'tanitim' not in url.lower():
                         if url.startswith('//'):
                             url = 'https:' + url
