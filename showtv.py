@@ -8,7 +8,9 @@ import os
 BASE_URL = "https://www.showtv.com.tr"
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+    "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7"
 }
 
 GITHUB_RAW_URL = "https://raw.githubusercontent.com/braveheart1983/atakseries/main/diziler/showtv.json"
@@ -70,7 +72,6 @@ def get_series_list_fast():
 def get_last_episode_number(series_url, series_name):
     """Show TV güncel sayfasından sadece O DİZİYE AİT gerçek en son bölüm numarasını çeker"""
     try:
-        # Diziye ait temiz slug
         series_slug = re.sub(r'[^a-z0-9]', '-', series_name.lower().replace('ı', 'i').replace('ğ', 'g').replace('ü', 'u').replace('ş', 's').replace('ö', 'o').replace('ç', 'c'))
         series_slug = re.sub(r'-+', '-', series_slug).strip('-')
         
@@ -82,7 +83,6 @@ def get_last_episode_number(series_url, series_name):
         episode_numbers = []
         soup = BeautifulSoup(r.content, "html.parser")
         
-        # 1. Aşama: HTML Linklerini tara (Sadece bu dizinin slug'ını içeren linkler)
         for a_tag in soup.find_all("a", href=True):
             href = a_tag["href"].lower()
             if series_slug in href and "bolum-" in href:
@@ -90,7 +90,6 @@ def get_last_episode_number(series_url, series_name):
                 if match:
                     episode_numbers.append(int(match.group(1)))
                     
-        # 2. Aşama: ld+json taraması (Sadece bu dizinin slug'ını içeren linkler)
         json_blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', r.text, re.DOTALL)
         for block in json_blocks:
             try:
@@ -108,7 +107,6 @@ def get_last_episode_number(series_url, series_name):
         if episode_numbers:
             return max(episode_numbers)
             
-        # 3. Aşama: Seçenek kutuları (Option) kontrolü
         options = soup.find_all("option", attrs={"data-href": True})
         for opt in options:
             if series_slug in opt["data-href"].lower():
@@ -125,114 +123,125 @@ def get_last_episode_number(series_url, series_name):
         return None
 
 def verify_and_get_video_url(series_name, episode_num):
-    """Bölüm sayfasını HTML içinden dinamik olarak bulur ve video kaynağını kazıyıp temiz m3u8'e dönüştürür"""
+    """Bölüm sayfasındaki her şeyi kazıyarak video kaynağını temiz m3u8'e dönüştürür"""
     try:
         clean_slug = re.sub(r'[^a-z0-9]', '-', series_name.lower().replace('ı', 'i').replace('ğ', 'g').replace('ü', 'u').replace('ş', 's').replace('ö', 'o').replace('ç', 'c'))
         clean_slug = re.sub(r'-+', '-', clean_slug).strip('-')
         
+        # Olası tüm alternatif url kombinasyonları (Show TV bazen rota değiştiriyor)
+        target_urls = [
+            f"{BASE_URL}/dizi/tum_bolumler/{clean_slug}/bolum-{episode_num}-izle",
+            f"{BASE_URL}/{clean_slug}/{episode_num}-bolum/izle",
+            f"{BASE_URL}/dizi/{clean_slug}/bolumler/{episode_num}-bolum",
+            f"{BASE_URL}/dizi/{clean_slug}/bolum-{episode_num}-izle"
+        ]
+        
+        # İlk olarak dinamik listeden gerçeğini aramaya çalışalım
         list_url = f"{BASE_URL}/dizi/tum_bolumler/{clean_slug}"
-        
-        r = requests.get(list_url, headers=HEADERS, timeout=8)
-        target_url = None
-        
-        if r.status_code == 200:
-            soup = BeautifulSoup(r.content, "html.parser")
-            for a_tag in soup.find_all("a", href=True):
+        r_list = requests.get(list_url, headers=HEADERS, timeout=6)
+        if r_list.status_code == 200:
+            soup_list = BeautifulSoup(r_list.content, "html.parser")
+            for a_tag in soup_list.find_all("a", href=True):
                 href = a_tag["href"]
                 if f"bolum-{episode_num}-izle" in href.lower():
-                    target_url = f"{BASE_URL}{href}" if href.startswith("/") else href
-                    break
+                    full_href = f"{BASE_URL}{href}" if href.startswith("/") else href
+                    if full_href not in target_urls:
+                        target_urls.insert(0, full_href)
+                        break
+
+        def clean_and_convert_url(raw_url):
+            """Ham girdiyi m3u8 formatına güvenli bir şekilde dönüştürür"""
+            if not raw_url:
+                return None
+            raw_url = raw_url.replace("\\/", "/").strip()
+            if raw_url.startswith('//'): 
+                raw_url = 'https:' + raw_url
             
-            if not target_url:
-                json_blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', r.text, re.DOTALL)
+            # Kalite uzantılarını temizle (_1920x1080 vb.)
+            if ".mp4" in raw_url or ".m3u8" in raw_url:
+                raw_url = re.sub(r'_\d+x\d+', '', raw_url)
+            
+            if raw_url.endswith(".mp4"):
+                raw_url = raw_url[:-4] + ".m3u8"
+                
+            # Adres düzeltmeleri
+            raw_url = raw_url.replace("//ht/", "/ht/").replace("com//", "com/")
+            return raw_url
+
+        # Belirlenen tüm hedef sayfaları sırayla dene
+        for url in target_urls:
+            try:
+                r_ep = requests.get(url, headers=HEADERS, timeout=8)
+                if r_ep.status_code not in [200, 304]:
+                    continue
+                    
+                page_html = r_ep.text
+                
+                # ULTRA AGRESİF FİLTRELER
+                
+                # Filtre 1: Next.js __NEXT_DATA__ Bloğu Kontrolü (Yeni modern web mimarisi)
+                next_data_match = re.search(r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>', page_html, re.DOTALL)
+                if next_data_match:
+                    try:
+                        next_json = json.loads(next_data_match.group(1).strip())
+                        # Derinlemesine video url tara
+                        json_str = json.dumps(next_json)
+                        found_urls = re.findall(r'(https?://[^\s"\']+\.(?:m3u8|mp4))', json_str)
+                        for f_url in found_urls:
+                            if 'fragman' not in f_url.lower() and 'tanitim' not in f_url.lower():
+                                return clean_and_convert_url(f_url)
+                    except:
+                        pass
+
+                # Filtre 2: ld+json içerisindeki VideoObject Yapıları
+                json_blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', page_html, re.DOTALL)
                 for block in json_blocks:
                     try:
                         data = json.loads(block.strip())
-                        if data.get("@type") == "ItemList":
-                            for item in data.get("itemListElement", []):
-                                item_url = item.get("url", "")
-                                if f"bolum-{episode_num}-izle" in item_url.lower():
-                                    target_url = f"{BASE_URL}{item_url}" if item_url.startswith("/") else item_url
-                                    break
+                        objects = [data] if isinstance(data, dict) else (data if isinstance(data, list) else [])
+                        for obj in objects:
+                            if "contentUrl" in obj or obj.get("@type") == "VideoObject":
+                                v_url = obj.get("contentUrl") or obj.get("embedUrl")
+                                if v_url:
+                                    video_url = clean_and_convert_url(v_url)
+                                    if 'fragman' not in video_url.lower() and 'tanitim' not in video_url.lower():
+                                        return video_url
                     except:
                         continue
 
-        if not target_url:
-            slug = slugify(series_name)
-            target_url = f"{BASE_URL}/{slug}/{episode_num}-bolum/izle"
-        
-        r_ep = requests.get(target_url, headers=HEADERS, timeout=8)
-        if r_ep.status_code in [200, 304]:
-            page_html = r_ep.text
-            
-            def clean_and_convert_url(raw_url):
-                """Gelen ham MP4 veya çözünürlük ekli linki temiz m3u8 formatına çevirir"""
-                raw_url = raw_url.replace("\\/", "/").strip()
-                if raw_url.startswith('//'): 
-                    raw_url = 'https:' + raw_url
+                # Filtre 3: data-hope-video Özniteliği (Show TV Player Verisi)
+                if 'data-hope-video' in page_html:
+                    soup_ep = BeautifulSoup(page_html, "html.parser")
+                    hope_div = soup_ep.find(attrs={"data-hope-video": True})
+                    if hope_div:
+                        try:
+                            data_str = hope_div["data-hope-video"].replace('&quot;', '"').replace('&#39;', "'")
+                            v_data = json.loads(data_str)
+                            media = v_data.get("media", {})
+                            if "m3u8" in media and media["m3u8"]:
+                                return clean_and_convert_url(media["m3u8"][0]["src"])
+                            elif "mp4" in media and media["mp4"]:
+                                return clean_and_convert_url(media["mp4"][0]["src"])
+                        except:
+                            pass
+
+                # Filtre 4: Doğrudan Ciner/HT CDN URL Eşleşmeleri (Regex)
+                video_patterns = [
+                    r'(https?://vmcdn\.ciner\.com\.tr/[^\s"\']+\.m3u8[^\s"\']*)',
+                    r'(https?://vmcdn\.ciner\.com\.tr/[^\s"\']+\.mp4[^\s"\']*)',
+                    r'(https?://ht\.ciner\.com\.tr/[^\s"\']+\.m3u8[^\s"\']*)',
+                    r'(https?://ht\.ciner\.com\.tr/[^\s"\']+\.mp4[^\s"\']*)'
+                ]
+                for pattern in video_patterns:
+                    matches = re.findall(pattern, page_html, re.IGNORECASE)
+                    for match_url in matches:
+                        video_url = clean_and_convert_url(match_url)
+                        if 'fragman' not in video_url.lower() and 'tanitim' not in video_url.lower():
+                            return video_url
+                            
+            except:
+                continue
                 
-                # Çözünürlük ve kalite eklerini temizle (Örn: _1920x1080.mp4 veya _640x360.jpg gibi yapıları koruma amaçlı)
-                if ".mp4" in raw_url:
-                    raw_url = re.sub(r'_\d+x\d+', '', raw_url)
-                    raw_url = raw_url.replace(".mp4", ".m3u8")
-                    
-                return raw_url
-
-            # VİDEO YAKALAMA FİLTRELERİ (AGRESİF)
-            
-            # Filtre A: ld+json içerisindeki VideoObject yapıları (Gönderdiğin HTML için tam isabet)
-            json_blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', page_html, re.DOTALL)
-            for block in json_blocks:
-                try:
-                    data = json.loads(block.strip())
-                    objects = [data] if isinstance(data, dict) else (data if isinstance(data, list) else [])
-                    for obj in objects:
-                        if obj.get("@type") == "VideoObject" or "contentUrl" in obj:
-                            v_url = obj.get("contentUrl") or obj.get("embedUrl")
-                            if v_url:
-                                video_url = clean_and_convert_url(v_url)
-                                if 'fragman' not in video_url.lower() and 'tanitim' not in video_url.lower():
-                                    return video_url
-                except:
-                    continue
-
-            # Filtre B: HTML içindeki ham contentUrl alanları
-            content_url_match = re.search(r'"contentUrl"\s*:\s*"([^"]+)"', page_html)
-            if content_url_match:
-                video_url = clean_and_convert_url(content_url_match.group(1))
-                if 'fragman' not in video_url.lower() and 'tanitim' not in video_url.lower():
-                    return video_url
-
-            # Filtre C: data-hope-video özniteliği
-            pattern = r'data-hope-video="([^"]+)"'
-            match = re.search(pattern, page_html)
-            if match:
-                try:
-                    data_str = match.group(1).replace('&quot;', '"').replace('&#39;', "'")
-                    v_data = json.loads(data_str)
-                    if "media" in v_data:
-                        media = v_data["media"]
-                        if "m3u8" in media and len(media["m3u8"]) > 0:
-                            return media["m3u8"][0]["src"]
-                        elif "mp4" in media and len(media["mp4"]) > 0:
-                            return clean_and_convert_url(media["mp4"][0]["src"])
-                except:
-                    pass
-            
-            # Filtre D: Genel CDN Link Kalıpları
-            video_patterns = [
-                r'(https?://vmcdn\.ciner\.com\.tr/[^\s"\']+\.m3u8[^\s"\']*)',
-                r'(https?://vmcdn\.ciner\.com\.tr/[^\s"\']+\.mp4[^\s"\']*)',
-                r'(https?://ht\.ciner\.com\.tr/[^\s"\']+\.m3u8[^\s"\']*)',
-                r'vmcdn\.ciner\.com\.tr/[^\s"\']+\.(?:m3u8|mp4)'
-            ]
-            for pattern in video_patterns:
-                matches = re.findall(pattern, page_html, re.IGNORECASE)
-                for url in matches:
-                    video_url = clean_and_convert_url(url)
-                    if 'fragman' not in video_url.lower() and 'tanitim' not in video_url.lower():
-                        return video_url
-        
         return None
     except:
         return None
@@ -314,7 +323,6 @@ def update_showtv():
         else:
             print(f"\n[{idx}/{len(series_to_check)}] 🆕 {series['name']} (YENİ DİZİ!)")
         
-        # Burası güncellendi: series['name'] argümanı eklendi
         last_episode = get_last_episode_number(series['url'], series['name'])
         
         if not last_episode:
@@ -345,24 +353,16 @@ def update_showtv():
                         else:
                             print(f"    ℹ️  Yeni bölüm yok")
                             continue
-                
-                if target_episode == last_episode and target_episode > existing_last:
-                    video_url = verify_and_get_video_url(series['name'], target_episode)
-                elif target_episode == existing_last + 1:
-                    pass
                 else:
                     video_url = verify_and_get_video_url(series['name'], target_episode)
                 
                 if video_url:
-                    video_url = video_url.replace("//ht/", "/ht/").replace("com//", "com/")
-                    
                     new_episode = create_episode_object(
                         number=target_episode,
                         title=f"{target_episode}. Bölüm",
                         url=video_url
                     )
                     existing_series_map[series_id]["data"]["episodes"].append(new_episode)
-                    
                     existing_series_map[series_id]["data"]["episodes"] = sorted(
                         existing_series_map[series_id]["data"]["episodes"], 
                         key=lambda x: x.get("number", 0)
@@ -371,13 +371,13 @@ def update_showtv():
                     updated_count += 1
                     total_new_episodes += 1
                     print(f"          ✅ {target_episode}. Bölüm eklendi!")
+                    print(f"          🔗 URL: {video_url}")
                 else:
                     print(f"          ❌ Video bulunamadı")
             else:
                 print(f"    ℹ️  Yeni bölüm yok")
         else:
             print(f"    🆕 Yeni dizi ekleniyor...")
-            
             target_episode = last_episode
             video_url = verify_and_get_video_url(series['name'], target_episode)
             
@@ -390,8 +390,6 @@ def update_showtv():
                             break
             
             if video_url:
-                video_url = video_url.replace("//ht/", "/ht/").replace("com//", "com/")
-                
                 new_series_obj = {
                     "id": series_id,
                     "name": series['name'],
@@ -416,6 +414,7 @@ def update_showtv():
                 new_series_count += 1
                 total_new_episodes += 1
                 print(f"          ✅ Yeni dizi eklendi! ({target_episode}. Bölüm)")
+                print(f"          🔗 URL: {video_url}")
             else:
                 print(f"          ❌ Video bulunamadı")
         
@@ -423,7 +422,6 @@ def update_showtv():
     
     if updated_count > 0 or new_series_count > 0:
         save_data(existing_data)
-        
         elapsed_time = time.time() - start_time
         print(f"\n" + "=" * 60)
         print("✅ GÜNCELLEME TAMAMLANDI!")
