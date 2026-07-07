@@ -37,6 +37,16 @@
             "label": "İzleme Kaynağı"
           }
         ]
+      },
+      {
+        "number": 3,
+        "name": "3. Bölüm",
+        "sources": [
+          {
+            "url": "https://vmcdn.ciner.com.tr/ht/2026/07/03/B252CF3EFB848EA4F2914DE51099362E_1920x1080.mp4",
+            "label": "İzleme Kaynağı"
+          }
+        ]
       }
     ]
   },
