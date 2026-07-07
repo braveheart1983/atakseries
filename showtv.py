@@ -68,13 +68,39 @@ def get_series_list_fast():
         return []
 
 def get_last_episode_number(series_url):
-    """Sadece son bölüm numarasını al (HIZLI)"""
+    """Show TV güncel ld+json yapısından gerçek en son bölüm numarasını çeker"""
     try:
-        r = requests.get(series_url, headers=HEADERS, timeout=5)
-        soup = BeautifulSoup(r.content, "html.parser")
+        # URL'den dizi adını çıkarıp "tum_bolumler" sayfasına yönlendiriyoruz (en güncel liste oradadır)
+        # Örn: https://www.showtv.com.tr/dizi/tanitim/muhtemel-ask -> /dizi/tum_bolumler/muhtemel-ask
+        clean_url = series_url.replace("/dizi/tanitim/", "/dizi/tum_bolumler/")
         
+        r = requests.get(clean_url, headers=HEADERS, timeout=6)
+        if r.status_code != 200:
+            # Yedek olarak gelen orijinal URL'yi dene
+            r = requests.get(series_url, headers=HEADERS, timeout=5)
+            
         episode_numbers = []
         
+        # 1. Yöntem: ld+json içindeki tüm bölümlerin URL'lerinden sayıları topla
+        json_blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', r.text, re.DOTALL)
+        for block in json_blocks:
+            try:
+                data = json.loads(block.strip())
+                if data.get("@type") == "ItemList":
+                    for item in data.get("itemListElement", []):
+                        item_url = item.get("url", "")
+                        # URL'den 'bolum-X-izle' kısmındaki X sayısını yakala
+                        match = re.search(r'bolum-(\d+)-izle', item_url)
+                        if match:
+                            episode_numbers.append(int(match.group(1)))
+            except:
+                continue
+                
+        if episode_numbers:
+            return max(episode_numbers)
+            
+        # 2. Yöntem: HTML içindeki klasik seçeneğe geri dön (Orijinal yedek)
+        soup = BeautifulSoup(r.content, "html.parser")
         options = soup.find_all("option", attrs={"data-href": True})
         for opt in options:
             text = opt.text.strip()
@@ -84,35 +110,14 @@ def get_last_episode_number(series_url):
         
         if episode_numbers:
             return max(episode_numbers)
-        
-        # Son bölüm butonu
-        son_bolum_span = soup.find("span", string="Son Bölüm")
-        if son_bolum_span:
-            parent_a = son_bolum_span.find_parent("a")
-            if parent_a and parent_a.get("href"):
-                son_bolum_url = BASE_URL + parent_a.get("href")
-                try:
-                    r2 = requests.get(son_bolum_url, headers=HEADERS, timeout=3)
-                    soup2 = BeautifulSoup(r2.content, "html.parser")
-                    title = soup2.title.string if soup2.title else ""
-                    match = re.search(r'(\d+)\.?\s*Bölüm', title)
-                    if match:
-                        return int(match.group(1))
-                except:
-                    pass
-        
+            
         return None
     except:
         return None
 
 def verify_and_get_video_url(series_name, episode_num):
-    """Bölümü kontrol et ve video URL'sini al (GÜNCEL SİTE YAPISINA UYGUN)"""
+    """Bölümü kontrol et ve video URL'sini al"""
     try:
-        # Show TV'nin tüm bölümler listeleme sayfası URL formatı
-        series_slug = slugify(series_name)
-        # Eğer senin slugify fonksiyonun aradaki tireleri siliyorsa alternatif olarak dizi adına göre arama mantığı
-        # Ama standart yapı: https://www.showtv.com.tr/dizi/tum_bolumler/dizi-adi
-        # Orijinal slugify yapını bozmamak adına dizi adından temiz bir slug üretiyoruz:
         clean_slug = re.sub(r'[^a-z0-9]', '-', series_name.lower().replace('ı', 'i').replace('ğ', 'g').replace('ü', 'u').replace('ş', 's').replace('ö', 'o').replace('ç', 'c'))
         clean_slug = re.sub(r'-+', '-', clean_slug).strip('-')
         
@@ -125,7 +130,6 @@ def verify_and_get_video_url(series_name, episode_num):
         target_url = None
         
         if r.status_code == 200:
-            # HTML içindeki ld+json bloklarını tarayarak hedef bölümün gerçek linkini ara
             json_blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', r.text, re.DOTALL)
             for block in json_blocks:
                 try:
@@ -133,24 +137,20 @@ def verify_and_get_video_url(series_name, episode_num):
                     if data.get("@type") == "ItemList":
                         for item in data.get("itemListElement", []):
                             item_url = item.get("url", "")
-                            # "bolum-3-izle" gibi hedef bölüm ifadesini eşleştiriyoruz
                             if f"bolum-{episode_num}-izle" in item_url:
                                 target_url = f"{BASE_URL}{item_url}" if item_url.startswith("/") else item_url
                                 break
                 except:
                     continue
 
-        # Eğer ld+json içinde bulunamazsa yedek olarak eski tahmin yöntemini dene
         if not target_url:
             slug = slugify(series_name)
             target_url = f"{BASE_URL}/{slug}/{episode_num}-bolum/izle"
         
-        # Gerçek bölüm sayfasına istek at
         r_ep = requests.get(target_url, headers=headers, timeout=8)
         if r_ep.status_code in [200, 304]:
             page_html = r_ep.text
             
-            # 1. VideoObject -> contentUrl veya ld+json taraması (.mp4 veya .m3u8)
             content_url_match = re.search(r'"contentUrl":\s*"(.*?)"', page_html)
             if content_url_match:
                 video_url = content_url_match.group(1).replace("\\/", "/")
@@ -158,7 +158,6 @@ def verify_and_get_video_url(series_name, episode_num):
                     video_url = 'https:' + video_url
                 return video_url
             
-            # 2. Orijinal kodundaki data-hope-video kontrolü
             pattern = r'data-hope-video="([^"]+)"'
             match = re.search(pattern, page_html)
             if match:
@@ -175,7 +174,6 @@ def verify_and_get_video_url(series_name, episode_num):
                 except:
                     pass
             
-            # 3. Orijinal kodundaki Doğrudan video URL regex taramaları
             video_patterns = [
                 r'(https?://vmcdn\.ciner\.com\.tr/[^\s"\']+\.m3u8[^\s"\']*)',
                 r'(https?://vmcdn\.ciner\.com\.tr/[^\s"\']+\.mp4[^\s"\']*)',
@@ -205,11 +203,9 @@ def update_showtv():
     print("=" * 60)
     start_time = time.time()
     
-    # Mevcut veriyi yükle
     existing_data = load_existing_data()
     print(f"📂 Mevcut JSON'da {len(existing_data)} dizi var")
     
-    # Mevcut dizilerin ID'lerini ve son bölümlerini al
     existing_series_ids = {series.get("id") for series in existing_data}
     existing_series_map = {}
     for series in existing_data:
@@ -222,16 +218,13 @@ def update_showtv():
                 "last_episode": last_ep.get("number", 0) if last_ep else 0
             }
     
-    # Tüm dizileri al
     print("\n🔍 Web sitesi taranıyor...")
     all_series = get_series_list_fast()
     print(f"   {len(all_series)} dizi bulundu")
     print("-" * 40)
     
-    # 📌 SADECE KONTROL EDİLECEK DİZİLER
     series_to_check = []
     
-    # 1. Yeni diziler
     new_series = []
     for series in all_series:
         series_id = f"showtv_{slugify(series['name'])}"
@@ -242,7 +235,6 @@ def update_showtv():
         print(f"🆕 {len(new_series)} yeni dizi bulundu!")
         series_to_check.extend(new_series)
     
-    # 2. Son 5 güncel dizi
     existing_series_list = [s for s in all_series if f"showtv_{slugify(s['name'])}" in existing_series_ids]
     last_five = existing_series_list[:5]
     
@@ -254,7 +246,6 @@ def update_showtv():
             if series_id not in new_series_ids:
                 series_to_check.append(series)
     
-    # Benzersiz yap
     seen_names = set()
     unique_series = []
     for s in series_to_check:
@@ -278,7 +269,6 @@ def update_showtv():
         else:
             print(f"\n[{idx}/{len(series_to_check)}] 🆕 {series['name']} (YENİ DİZİ!)")
         
-        # Son bölüm numarasını al
         last_episode = get_last_episode_number(series['url'])
         
         if not last_episode:
@@ -291,10 +281,8 @@ def update_showtv():
             existing_last = existing_series_map[series_id]["last_episode"]
             
             if last_episode > existing_last:
-                # Yeni bölüm var!
                 target_episode = last_episode
                 
-                # Atlama kontrolü (2->4 atlamasın)
                 if last_episode > existing_last + 1:
                     possible_next = existing_last + 1
                     print(f"    🔍 {possible_next}. bölüm kontrol ediliyor...")
@@ -312,11 +300,9 @@ def update_showtv():
                             print(f"    ℹ️  Yeni bölüm yok")
                             continue
                 
-                # Video URL'sini al (eğer alınmadıysa)
                 if target_episode == last_episode and target_episode > existing_last:
                     video_url = verify_and_get_video_url(series['name'], target_episode)
                 elif target_episode == existing_last + 1:
-                    # Zaten video_url alındı
                     pass
                 else:
                     video_url = verify_and_get_video_url(series['name'], target_episode)
@@ -344,13 +330,11 @@ def update_showtv():
             else:
                 print(f"    ℹ️  Yeni bölüm yok")
         else:
-            # YENİ DİZİ
             print(f"    🆕 Yeni dizi ekleniyor...")
             
             target_episode = last_episode
             video_url = verify_and_get_video_url(series['name'], target_episode)
             
-            # Eğer son bölüm yoksa geriye doğru kontrol et
             if not video_url:
                 for ep in range(target_episode - 1, target_episode - 6, -1):
                     if ep > 0:
