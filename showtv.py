@@ -71,7 +71,6 @@ def get_series_list_fast():
         return []
 
 def get_last_episode_number(series_url, series_name):
-    """Show TV güncel sayfasından sadece O DİZİYE AİT gerçek en son bölüm numarasını çeker"""
     try:
         series_slug = re.sub(r'[^a-z0-9]', '-', series_name.lower().replace('ı', 'i').replace('ğ', 'g').replace('ü', 'u').replace('ş', 's').replace('ö', 'o').replace('ç', 'c'))
         series_slug = re.sub(r'-+', '-', series_slug).strip('-')
@@ -124,7 +123,7 @@ def get_last_episode_number(series_url, series_name):
         return None
 
 def verify_and_get_video_url(series_name, episode_num):
-    """Bölüm sayfasındaki iframe ve dinamik oynatıcıları sökerek video kaynağını bulur"""
+    """Show TV'nin HTPLAY şemasını simüle ederek gerçek imzalı/tokenlı m3u8 adresini çözer"""
     try:
         clean_slug = re.sub(r'[^a-z0-9]', '-', series_name.lower().replace('ı', 'i').replace('ğ', 'g').replace('ü', 'u').replace('ş', 's').replace('ö', 'o').replace('ç', 'c'))
         clean_slug = re.sub(r'-+', '-', clean_slug).strip('-')
@@ -148,81 +147,6 @@ def verify_and_get_video_url(series_name, episode_num):
                         target_urls.insert(0, full_href)
                         break
 
-        def clean_and_convert_url(raw_url):
-            if not raw_url:
-                return None
-            raw_url = raw_url.replace("\\/", "/").strip()
-            if raw_url.startswith('//'): 
-                raw_url = 'https:' + raw_url
-            
-            # Kalite uzantılarını ve video çözünürlük eklerini temizle (_1920x1080 vb.)
-            raw_url = re.sub(r'_\d+x\d+', '', raw_url)
-            
-            if ".mp4" in raw_url:
-                raw_url = raw_url.split(".mp4")[0] + ".m3u8"
-                
-            raw_url = raw_url.replace("//ht/", "/ht/").replace("com//", "com/")
-            return raw_url
-
-        def extract_from_html(html_content):
-            """Verilen HTML metni içerisindeki tüm olası video patternlerini tarar"""
-            # 1. __NEXT_DATA__
-            next_data_match = re.search(r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>', html_content, re.DOTALL)
-            if next_data_match:
-                try:
-                    found_urls = re.findall(r'(https?://[^\s"\']+\.(?:m3u8|mp4))', next_data_match.group(1))
-                    for f_url in found_urls:
-                        if 'fragman' not in f_url.lower() and 'tanitim' not in f_url.lower():
-                            return clean_and_convert_url(f_url)
-                except:
-                    pass
-
-            # 2. ld+json VideoObject
-            json_blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', html_content, re.DOTALL)
-            for block in json_blocks:
-                try:
-                    data = json.loads(block.strip())
-                    objects = [data] if isinstance(data, dict) else (data if isinstance(data, list) else [])
-                    for obj in objects:
-                        v_url = obj.get("contentUrl") or obj.get("embedUrl")
-                        if v_url:
-                            video_url = clean_and_convert_url(v_url)
-                            if 'fragman' not in video_url.lower() and 'tanitim' not in video_url.lower():
-                                return video_url
-                except:
-                    continue
-
-            # 3. data-hope-video
-            if 'data-hope-video' in html_content:
-                try:
-                    hope_match = re.search(r'data-hope-video="([^"]+)"', html_content)
-                    if hope_match:
-                        data_str = hope_match.group(1).replace('&quot;', '"').replace('&#39;', "'")
-                        v_data = json.loads(data_str)
-                        media = v_data.get("media", {})
-                        if "m3u8" in media and media["m3u8"]:
-                            return clean_and_convert_url(media["m3u8"][0]["src"])
-                        elif "mp4" in media and media["mp4"]:
-                            return clean_and_convert_url(media["mp4"][0]["src"])
-                except:
-                    pass
-
-            # 4. Doğrudan CDN Linkleri
-            video_patterns = [
-                r'(https?://vmcdn\.ciner\.com\.tr/[^\s"\']+\.m3u8[^\s"\']*)',
-                r'(https?://vmcdn\.ciner\.com\.tr/[^\s"\']+\.mp4[^\s"\']*)',
-                r'(https?://ht\.ciner\.com\.tr/[^\s"\']+\.m3u8[^\s"\']*)',
-                r'(https?://ht\.ciner\.com\.tr/[^\s"\']+\.mp4[^\s"\']*)'
-            ]
-            for pattern in video_patterns:
-                matches = re.findall(pattern, html_content, re.IGNORECASE)
-                for match_url in matches:
-                    video_url = clean_and_convert_url(match_url)
-                    if 'fragman' not in video_url.lower() and 'tanitim' not in video_url.lower():
-                        return video_url
-            return None
-
-        # Sayfaları sırayla gez
         for url in target_urls:
             try:
                 r_ep = requests.get(url, headers=HEADERS, timeout=8)
@@ -230,35 +154,62 @@ def verify_and_get_video_url(series_name, episode_num):
                     continue
                     
                 page_html = r_ep.text
+                video_id = None
                 
-                # Önce ana sayfada video var mı bak
-                result = extract_from_html(page_html)
-                if result:
-                    return result
+                # 1. STRATEJİ: HTML içindeki video_player_XXXXX divlerinden ID'yi yakala (HTPLAY Standardı)
+                player_div_match = re.search(r'id=["\']video_player_(\d+)["\']', page_html)
+                if player_div_match:
+                    video_id = player_div_match.group(1)
                 
-                # EĞER BULAMADIYSA: IFRAME AVLAYICI DEVREDE
-                soup_ep = BeautifulSoup(page_html, "html.parser")
-                iframes = soup_ep.find_all("iframe")
-                for iframe in iframes:
-                    iframe_src = iframe.get("src", "")
-                    if not iframe_src:
-                        continue
-                    
-                    if "ciner.com.tr" in iframe_src or "showtv.com.tr/bku" in iframe_src or "/video/" in iframe_src:
-                        if iframe_src.startswith("//"):
-                            iframe_src = "https:" + iframe_src
-                        
-                        # İframe'in içindeki gizli video sayfasına istek atıyoruz
+                # 2. STRATEJİ: HTPLAY.load script parametrelerinden ID'yi yakala
+                if not video_id:
+                    htplay_match = re.search(r'id\s*:\s*["\']?(\d+)["\']?\s*,\s*type\s*:\s*["\']video["\']', page_html)
+                    if htplay_match:
+                        video_id = htplay_match.group(1)
+                
+                # 3. STRATEJİ: Genel Sayfa İçeriğinden video id parametrelerini süz
+                if not video_id:
+                    id_match = re.search(r'["\']video_id["\']\s*:\s*["\']?(\d+)["\']?', page_html)
+                    if id_match:
+                        video_id = id_match.group(1)
+
+                # EĞER VİDEO ID BULUNDUYSA SHOWTV'NİN ÖZEL API'SİNE GİDİYORUZ
+                if video_id:
+                    bku_url = f"https://www.showtv.com.tr/bku/video/{video_id}"
+                    r_bku = requests.get(bku_url, headers=HEADERS, timeout=5)
+                    if r_bku.status_code == 200:
                         try:
-                            iframe_headers = HEADERS.copy()
-                            iframe_headers["Referer"] = url
-                            r_iframe = requests.get(iframe_src, headers=iframe_headers, timeout=5)
-                            if r_iframe.status_code == 200:
-                                iframe_result = extract_from_html(r_iframe.text)
-                                if iframe_result:
-                                    return iframe_result
+                            bku_data = r_bku.json()
+                            # HTPLAY JSON yapısından m3u8 listesini alıyoruz
+                            media = bku_data.get("media", {})
+                            m3u8_list = media.get("m3u8", [])
+                            if m3u8_list and "src" in m3u8_list[0]:
+                                video_url = m3u8_list[0]["src"].strip()
+                                if 'fragman' not in video_url.lower() and 'tanitim' not in video_url.lower():
+                                    return video_url
+                                    
+                            # Alternatif olarak mp4 var mı kontrolü
+                            mp4_list = media.get("mp4", [])
+                            if mp4_list and "src" in mp4_list[0]:
+                                video_url = mp4_list[0]["src"].strip()
+                                if ".mp4" in video_url:
+                                    video_url = re.sub(r'_\d+x\d+', '', video_url).replace(".mp4", ".m3u8")
+                                return video_url
                         except:
-                            continue
+                            pass
+
+                # YEDEK STRATEJİ: Eğer API çalışmazsa ham metinden tokenlı url'leri regex ile doğrudan cımbızla çek
+                video_patterns = [
+                    r'(https?://vmcdn\.ciner\.com\.tr/ht/[^\s"\']+\.m3u8\?[^\s"\']+)',
+                    r'(https?://ht\.ciner\.com\.tr/ht/[^\s"\']+\.m3u8\?[^\s"\']+)',
+                    r'(https?://vmcdn\.ciner\.com\.tr/[^\s"\']+\.m3u8[^\s"\']*)'
+                ]
+                for pattern in video_patterns:
+                    matches = re.findall(pattern, page_html, re.IGNORECASE)
+                    for match_url in matches:
+                        cleaned = match_url.replace("\\/", "/")
+                        if 'fragman' not in cleaned.lower() and 'tanitim' not in cleaned.lower():
+                            return cleaned
             except:
                 continue
                 
@@ -274,7 +225,7 @@ def create_episode_object(number, title, url):
     }
 
 def update_showtv():
-    print("🚀 ShowTV HIZLI GÜNCELLEYİCİ")
+    print("🚀 ShowTV HIZLI GÜNCELLEYİCİ (HTPLAY API MOD)")
     print("=" * 60)
     start_time = time.time()
     
