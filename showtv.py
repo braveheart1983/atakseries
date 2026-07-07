@@ -9,10 +9,8 @@ BASE_URL = "https://www.showtv.com.tr"
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-    "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
-    "Referer": "https://www.showtv.com.tr/",
-    "Origin": "https://www.showtv.com.tr"
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8"
 }
 
 GITHUB_RAW_URL = "https://raw.githubusercontent.com/braveheart1983/atakseries/main/diziler/showtv.json"
@@ -61,101 +59,78 @@ def get_series_list_fast():
     except:
         return []
 
-def get_last_episode_number(series_url, series_name):
-    """Sadece tam izleme bölümlerini yakalar, fragman ve tanıtım linklerini eler"""
+def scrape_episode_details_from_schema(series_url, series_name):
+    """Sayfa içerisindeki application/ld+json bloklarından net bölüm numarasını ve ham mp4 linkini söker"""
     try:
         series_slug = re.sub(r'[^a-z0-9]', '-', series_name.lower().replace('ı', 'i').replace('ğ', 'g').replace('ü', 'u').replace('ş', 's').replace('ö', 'o').replace('ç', 'c'))
         series_slug = re.sub(r'-+', '-', series_slug).strip('-')
         
+        # Tüm olası bölümler sayfasını kontrol et
         clean_url = series_url.replace("/dizi/tanitim/", "/dizi/tum_bolumler/")
-        r = requests.get(clean_url, headers=HEADERS, timeout=6)
+        r = requests.get(clean_url, headers=HEADERS, timeout=8)
         if r.status_code != 200:
             r = requests.get(series_url, headers=HEADERS, timeout=5)
             
-        episode_numbers = []
         soup = BeautifulSoup(r.content, "html.parser")
         
+        # İlk olarak ana 'tum_bolumler' sayfasındaki gerçek bölüm izleme linklerini toplayalım
+        episode_urls = []
         for a_tag in soup.find_all("a", href=True):
-            href = a_tag["href"].lower()
-            
-            # Kodu kandıran fragman, tanıtım, özet veya özel sahneleri tamamen bypass ediyoruz
-            if "fragman" in href or "tanitim" in href or "ozet" in href or "sahne" in href:
-                continue
-                
-            if series_slug in href:
-                # Sadece gerçek izleme url kalıplarından sayı süzüyoruz
-                match = re.search(r'(\d+)-bolum', href) or re.search(r'bolum/(\d+)', href) or re.search(r'bolum-(\d+)', href)
-                if match:
-                    episode_numbers.append(int(match.group(1)))
-                    
-        if episode_numbers:
-            return max(episode_numbers)
-        return None
-    except:
-        return None
+            href = a_tag["href"]
+            if series_slug in href.lower() and "izle" in href.lower():
+                if not any(x in href.lower() for x in ["fragman", "tanitim", "ozet", "sahne"]):
+                    full_url = href if href.startswith("http") else BASE_URL + href
+                    if full_url not in episode_urls:
+                        episode_urls.append(full_url)
+                        
+        # Eğer link bulamadıysa mevcut url'yi dene
+        if not episode_urls:
+            episode_urls.append(clean_url)
 
-def verify_and_get_video_url(series_name, episode_num):
-    """Ciner API'sinden doğrudan VLC uyumlu tokensız ham MP4 / M3U8 adresini söker"""
-    try:
-        clean_slug = re.sub(r'[^a-z0-9]', '-', series_name.lower().replace('ı', 'i').replace('ğ', 'g').replace('ü', 'u').replace('ş', 's').replace('ö', 'o').replace('ç', 'c'))
-        clean_slug = re.sub(r'-+', '-', clean_slug).strip('-')
-        
-        target_urls = [
-            f"{BASE_URL}/dizi/tum_bolumler/{clean_slug}/{episode_num}-bolum/izle",
-            f"{BASE_URL}/dizi/tum_bolumler/{clean_slug}/bolum/{episode_num}",
-            f"{BASE_URL}/{clean_slug}/{episode_num}-bolum/izle"
-        ]
+        max_episode_num = -1
+        best_mp4_url = None
 
-        for url in target_urls:
+        # Bulunan izleme sayfalarının içine girip l+json şemalarını ayıklıyoruz
+        for ep_url in episode_urls[:3]:  # Zaman kazanmak için en güncel ilk 3 linke bakması yeterli
             try:
-                r_ep = requests.get(url, headers=HEADERS, timeout=8)
-                if r_ep.status_code not in [200, 304]:
+                r_page = requests.get(ep_url, headers=HEADERS, timeout=6)
+                if r_page.status_code != 200:
                     continue
                     
-                page_html = r_ep.text
-                video_id = None
+                page_soup = BeautifulSoup(r_page.content, "html.parser")
+                scripts = page_soup.find_all("script", type="application/ld+json")
                 
-                data_id_match = re.search(r'data-id=["\'](\d+)["\']', page_html)
-                if data_id_match:
-                    video_id = data_id_match.group(1)
+                current_ep_num = None
+                current_mp4 = None
                 
-                if not video_id:
-                    player_div_match = re.search(r'id=["\']video_player_(\d+)["\']', page_html)
-                    if player_div_match:
-                        video_id = player_div_match.group(1)
-
-                if video_id:
-                    ciner_api_url = f"https://mo.ciner.com.tr/api/video/get/{video_id}"
-                    api_headers = HEADERS.copy()
-                    api_headers["Referer"] = url
-                    
-                    r_api = requests.get(ciner_api_url, headers=api_headers, timeout=6)
-                    if r_api.status_code == 200:
-                        api_data = r_api.json()
-                        media_node = api_data.get("data", {}).get("media", {})
+                for script in scripts:
+                    try:
+                        json_data = json.loads(script.string)
                         
-                        # 1. Tercih: VLC'de doğrudan açılan ham MP4 linki
-                        mp4_entries = media_node.get("mp4", [])
-                        if mp4_entries:
-                            for entry in mp4_entries:
-                                v_url = entry.get("src", "").strip().replace("\\/", "/")
-                                if v_url and ".mp4" in v_url:
-                                    if 'fragman' not in v_url.lower() and 'tanitim' not in v_url.lower():
-                                        return v_url
-
-                        # 2. Tercih: Tokensız temiz m3u8 linki
-                        m3u8_entries = media_node.get("m3u8", [])
-                        if m3u8_entries and "src" in m3u8_entries[0]:
-                            v_url = m3u8_entries[0]["src"].strip().replace("\\/", "/")
-                            if 'fragman' not in v_url.lower() and 'tanitim' not in v_url.lower():
-                                if "?" in v_url:
-                                    v_url = v_url.split("?")[0]
-                                return v_url
+                        # 1. Şema: TVEpisode yapısından kesin bölüm numarasını alıyoruz
+                        if json_data.get("@type") == "TVEpisode":
+                            if "episodeNumber" in json_data:
+                                current_ep_num = int(json_data["episodeNumber"])
+                                
+                        # 2. Şema: VideoObject yapısından doğrudan ham MP4 linkini (contentUrl) çekiyoruz
+                        if json_data.get("@type") == "VideoObject":
+                            if "contentUrl" in json_data:
+                                current_mp4 = json_data["contentUrl"].strip()
+                    except:
+                        continue
+                        
+                if current_ep_num and current_mp4:
+                    if current_ep_num > max_episode_num:
+                        max_episode_num = current_ep_num
+                        best_mp4_url = current_mp4
             except:
                 continue
-        return None
+
+        if max_episode_num != -1 and best_mp4_url:
+            return max_episode_num, best_mp4_url
+        return None, None
     except:
-        return None
+        return None, None
 
 def create_episode_object(number, title, url):
     return {
@@ -165,7 +140,7 @@ def create_episode_object(number, title, url):
     }
 
 def update_showtv():
-    print("🚀 ShowTV Otomatik Haftalık Güncelleyici Başlatıldı")
+    print("🚀 ShowTV ld+json Şema Sökücü Başlatıldı")
     print("=" * 60)
     
     existing_data = load_existing_data()
@@ -208,50 +183,44 @@ def update_showtv():
         series_id = f"showtv_{slugify(series['name'])}"
         print(f"\n[{idx}/{len(series_to_check)}] 📺 {series['name']}")
         
-        last_episode = get_last_episode_number(series['url'], series['name'])
-        if not last_episode:
-            print(f"    ⚠️  Sitede izleme bölümü saptanamadı.")
+        # Yeni şema analiz fonksiyonumuzu çağırıyoruz
+        last_episode, video_url = scrape_episode_details_from_schema(series['url'], series['name'])
+        
+        if not last_episode or not video_url:
+            print(f"    ⚠️  Siteden geçerli tam bölüm ve MP4 kaynağı saptanamadı.")
             continue
             
-        print(f"    📺 Sitedeki Son Bölüm: {last_episode}")
+        print(f"    📺 Sitedeki Gerçek Son Bölüm: {last_episode}")
         
         if series_id in existing_series_map:
             existing_last = existing_series_map[series_id]["last_episode"]
             
-            # Eğer sitedeki bölüm, senin github .json dosyasındaki son bölümden büyükse (Yeni hafta geldiyse!)
             if last_episode > existing_last:
-                video_url = verify_and_get_video_url(series['name'], last_episode)
-                if video_url:
-                    new_episode = create_episode_object(last_episode, f"{last_episode}. Bölüm", video_url)
-                    existing_series_map[series_id]["data"]["episodes"].append(new_episode)
-                    existing_series_map[series_id]["data"]["episodes"] = sorted(existing_series_map[series_id]["data"]["episodes"], key=lambda x: x.get("number", 0))
-                    updated_count += 1
-                    print(f"          ✅ {last_episode}. Bölüm JSON'a eklendi!\n          🔗 Ham URL: {video_url}")
-                else:
-                    print(f"          ❌ Video linki API'den süzülemedi.")
+                new_episode = create_episode_object(last_episode, f"{last_episode}. Bölüm", video_url)
+                existing_series_map[series_id]["data"]["episodes"].append(new_episode)
+                existing_series_map[series_id]["data"]["episodes"] = sorted(existing_series_map[series_id]["data"]["episodes"], key=lambda x: x.get("number", 0))
+                updated_count += 1
+                print(f"          ✅ {last_episode}. Bölüm JSON'a eklendi!\n          🔗 Doğrudan MP4 Linki: {video_url}")
             else:
-                print(f"    ℹ️  Yeni bölüm yok (JSON güncel, Son Bölüm: {existing_last})")
+                print(f"    ℹ️  Yeni bölüm yok (JSON güncel, Mevcut En Son: {existing_last})")
         else:
-            video_url = verify_and_get_video_url(series['name'], last_episode)
-            if video_url:
-                new_series_obj = {
-                    "id": series_id,
-                    "name": series['name'],
-                    "overview": f"{series['name']} dizisinin tüm bölümleri - Show TV",
-                    "poster": series['poster'], "logo": series['poster'], "backdrop": series['poster'],
-                    "year": "", "tmdb_score": 0, "genres": ["Dram", "Aile", "Komedi"], "categories": ["Show TV"], "cast": [],
-                    "episodes": [create_episode_object(last_episode, f"{last_episode}. Bölüm", video_url)]
-                }
-                existing_data.append(new_series_obj)
-                new_series_count += 1
-                print(f"          ✅ Yeni dizi JSON'a eklendi! ({last_episode}. Bölüm)\n          🔗 Ham URL: {video_url}")
-            else:
-                print(f"          ❌ Video linki API'den süzülemedi.")
+            new_series_obj = {
+                "id": series_id,
+                "name": series['name'],
+                "overview": f"{series['name']} dizisinin tüm bölümleri - Show TV",
+                "poster": series['poster'], "logo": series['poster'], "backdrop": series['poster'],
+                "year": "", "tmdb_score": 0, "genres": ["Dram", "Aile", "Komedi"], "categories": ["Show TV"], "cast": [],
+                "episodes": [create_episode_object(last_episode, f"{last_episode}. Bölüm", video_url)]
+            }
+            existing_data.append(new_series_obj)
+            new_series_count += 1
+            print(f"          ✅ Yeni dizi sıfırdan JSON'a işlendi! ({last_episode}. Bölüm)\n          🔗 Doğrudan MP4 Linki: {video_url}")
+            
         time.sleep(0.2)
         
     if updated_count > 0 or new_series_count > 0:
         save_data(existing_data)
-        print(f"\n============================================================\n✅ YENİ BÖLÜM OTOMATİK OLARAK JSON DOSYASINA YAZILDI!\n============================================================")
+        print(f"\n============================================================\n✅ KESİN ÇÖZÜM: YENİ BÖLÜM VE MP4 KAYNAĞI JSON'A YAZILDI!\n============================================================")
 
 if __name__ == "__main__":
     update_showtv()
