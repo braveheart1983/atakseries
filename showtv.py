@@ -8,7 +8,7 @@ import os
 BASE_URL = "https://www.showtv.com.tr"
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 }
 
 GITHUB_RAW_URL = "https://raw.githubusercontent.com/braveheart1983/atakseries/main/diziler/showtv.json"
@@ -106,20 +106,59 @@ def get_last_episode_number(series_url):
         return None
 
 def verify_and_get_video_url(series_name, episode_num):
-    """Bölümü kontrol et ve video URL'sini al (TEK SEFERDE)"""
+    """Bölümü kontrol et ve video URL'sini al (GÜNCEL SİTE YAPISINA UYGUN)"""
     try:
-        slug = slugify(series_name)
-        ep_url = f"{BASE_URL}/{slug}/{episode_num}-bolum/izle"
+        # Show TV'nin tüm bölümler listeleme sayfası URL formatı
+        series_slug = slugify(series_name)
+        # Eğer senin slugify fonksiyonun aradaki tireleri siliyorsa alternatif olarak dizi adına göre arama mantığı
+        # Ama standart yapı: https://www.showtv.com.tr/dizi/tum_bolumler/dizi-adi
+        # Orijinal slugify yapını bozmamak adına dizi adından temiz bir slug üretiyoruz:
+        clean_slug = re.sub(r'[^a-z0-9]', '-', series_name.lower().replace('ı', 'i').replace('ğ', 'g').replace('ü', 'u').replace('ş', 's').replace('ö', 'o').replace('ç', 'c'))
+        clean_slug = re.sub(r'-+', '-', clean_slug).strip('-')
+        
+        list_url = f"{BASE_URL}/dizi/tum_bolumler/{clean_slug}"
         
         headers = HEADERS.copy()
         headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
         
-        r = requests.get(ep_url, headers=headers, timeout=8)
-        if r.status_code in [200, 304]:
-            page_html = r.text
+        r = requests.get(list_url, headers=headers, timeout=8)
+        target_url = None
+        
+        if r.status_code == 200:
+            # HTML içindeki ld+json bloklarını tarayarak hedef bölümün gerçek linkini ara
+            json_blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', r.text, re.DOTALL)
+            for block in json_blocks:
+                try:
+                    data = json.loads(block.strip())
+                    if data.get("@type") == "ItemList":
+                        for item in data.get("itemListElement", []):
+                            item_url = item.get("url", "")
+                            # "bolum-3-izle" gibi hedef bölüm ifadesini eşleştiriyoruz
+                            if f"bolum-{episode_num}-izle" in item_url:
+                                target_url = f"{BASE_URL}{item_url}" if item_url.startswith("/") else item_url
+                                break
+                except:
+                    continue
+
+        # Eğer ld+json içinde bulunamazsa yedek olarak eski tahmin yöntemini dene
+        if not target_url:
+            slug = slugify(series_name)
+            target_url = f"{BASE_URL}/{slug}/{episode_num}-bolum/izle"
+        
+        # Gerçek bölüm sayfasına istek at
+        r_ep = requests.get(target_url, headers=headers, timeout=8)
+        if r_ep.status_code in [200, 304]:
+            page_html = r_ep.text
             
-            # Video URL'sini ara
-            # 1. data-hope-video
+            # 1. VideoObject -> contentUrl veya ld+json taraması (.mp4 veya .m3u8)
+            content_url_match = re.search(r'"contentUrl":\s*"(.*?)"', page_html)
+            if content_url_match:
+                video_url = content_url_match.group(1).replace("\\/", "/")
+                if video_url.startswith('//'):
+                    video_url = 'https:' + video_url
+                return video_url
+            
+            # 2. Orijinal kodundaki data-hope-video kontrolü
             pattern = r'data-hope-video="([^"]+)"'
             match = re.search(pattern, page_html)
             if match:
@@ -136,7 +175,7 @@ def verify_and_get_video_url(series_name, episode_num):
                 except:
                     pass
             
-            # 2. Doğrudan video URL'leri
+            # 3. Orijinal kodundaki Doğrudan video URL regex taramaları
             video_patterns = [
                 r'(https?://vmcdn\.ciner\.com\.tr/[^\s"\']+\.m3u8[^\s"\']*)',
                 r'(https?://vmcdn\.ciner\.com\.tr/[^\s"\']+\.mp4[^\s"\']*)',
