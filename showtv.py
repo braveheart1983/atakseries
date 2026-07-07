@@ -7,11 +7,13 @@ import os
 
 BASE_URL = "https://www.showtv.com.tr"
 
+# Gerçek bir tarayıcı gibi davranmak ve engelleri aşmak için en güncel header yapısı
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
     "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
-    "Referer": "https://www.showtv.com.tr/"
+    "Referer": "https://www.showtv.com.tr/",
+    "Origin": "https://www.showtv.com.tr"
 }
 
 GITHUB_RAW_URL = "https://raw.githubusercontent.com/braveheart1983/atakseries/main/diziler/showtv.json"
@@ -123,7 +125,7 @@ def get_last_episode_number(series_url, series_name):
         return None
 
 def verify_and_get_video_url(series_name, episode_num):
-    """Show TV'nin HTPLAY şemasını simüle ederek gerçek imzalı/tokenlı m3u8 adresini çözer"""
+    """Ciner/Habertürk gerçek HopePlayer API'sini kullanarak tokenlı m3u8'i söker"""
     try:
         clean_slug = re.sub(r'[^a-z0-9]', '-', series_name.lower().replace('ı', 'i').replace('ğ', 'g').replace('ü', 'u').replace('ş', 's').replace('ö', 'o').replace('ç', 'c'))
         clean_slug = re.sub(r'-+', '-', clean_slug).strip('-')
@@ -156,53 +158,54 @@ def verify_and_get_video_url(series_name, episode_num):
                 page_html = r_ep.text
                 video_id = None
                 
-                # 1. STRATEJİ: HTML içindeki video_player_XXXXX divlerinden ID'yi yakala (HTPLAY Standardı)
-                player_div_match = re.search(r'id=["\']video_player_(\d+)["\']', page_html)
-                if player_div_match:
-                    video_id = player_div_match.group(1)
+                # 1. STRATEJİ: data-id="XXXXX" özniteliğinden yakala (Senin txt dosyasındaki kesin eşleşme)
+                data_id_match = re.search(r'data-id=["\'](\d+)["\']', page_html)
+                if data_id_match:
+                    video_id = data_id_match.group(1)
                 
-                # 2. STRATEJİ: HTPLAY.load script parametrelerinden ID'yi yakala
+                # 2. STRATEJİ: video_player_XXXXX div id'sinden yakala
                 if not video_id:
-                    htplay_match = re.search(r'id\s*:\s*["\']?(\d+)["\']?\s*,\s*type\s*:\s*["\']video["\']', page_html)
-                    if htplay_match:
-                        video_id = htplay_match.group(1)
-                
-                # 3. STRATEJİ: Genel Sayfa İçeriğinden video id parametrelerini süz
-                if not video_id:
-                    id_match = re.search(r'["\']video_id["\']\s*:\s*["\']?(\d+)["\']?', page_html)
-                    if id_match:
-                        video_id = id_match.group(1)
+                    player_div_match = re.search(r'id=["\']video_player_(\d+)["\']', page_html)
+                    if player_div_match:
+                        video_id = player_div_match.group(1)
 
-                # EĞER VİDEO ID BULUNDUYSA SHOWTV'NİN ÖZEL API'SİNE GİDİYORUZ
+                # 🚀 İCRAAT NOKTASI: DOĞRUDAN HABERTÜRK/CINER KESİN VİDEO API'SİNE SORUYORUZ
                 if video_id:
-                    bku_url = f"https://www.showtv.com.tr/bku/video/{video_id}"
-                    r_bku = requests.get(bku_url, headers=HEADERS, timeout=5)
-                    if r_bku.status_code == 200:
+                    # Ciner Medya'nın HopePlayer için kullandığı ortak ana API endpoint'i
+                    ciner_api_url = f"https://mo.ciner.com.tr/api/video/get/{video_id}"
+                    
+                    api_headers = HEADERS.copy()
+                    api_headers["Referer"] = url
+                    
+                    r_api = requests.get(ciner_api_url, headers=api_headers, timeout=6)
+                    if r_api.status_code == 200:
                         try:
-                            bku_data = r_bku.json()
-                            # HTPLAY JSON yapısından m3u8 listesini alıyoruz
-                            media = bku_data.get("media", {})
-                            m3u8_list = media.get("m3u8", [])
-                            if m3u8_list and "src" in m3u8_list[0]:
-                                video_url = m3u8_list[0]["src"].strip()
-                                if 'fragman' not in video_url.lower() and 'tanitim' not in video_url.lower():
-                                    return video_url
+                            api_data = r_api.json()
+                            # API'den dönen hls/m3u8 data ağacını eşeliyoruz
+                            data_node = api_data.get("data", {})
+                            media_node = data_node.get("media", {})
+                            
+                            # m3u8 listesini kontrol et
+                            m3u8_entries = media_node.get("m3u8", [])
+                            if m3u8_entries and "src" in m3u8_entries[0]:
+                                v_url = m3u8_entries[0]["src"].strip()
+                                if 'fragman' not in v_url.lower() and 'tanitim' not in v_url.lower():
+                                    return v_url
                                     
-                            # Alternatif olarak mp4 var mı kontrolü
-                            mp4_list = media.get("mp4", [])
-                            if mp4_list and "src" in mp4_list[0]:
-                                video_url = mp4_list[0]["src"].strip()
-                                if ".mp4" in video_url:
-                                    video_url = re.sub(r'_\d+x\d+', '', video_url).replace(".mp4", ".m3u8")
-                                return video_url
+                            # Alternatif mp4 düğümü kontrolü
+                            mp4_entries = media_node.get("mp4", [])
+                            if mp4_entries and "src" in mp4_entries[0]:
+                                v_url = mp4_entries[0]["src"].strip()
+                                if ".mp4" in v_url:
+                                    v_url = re.sub(r'_\d+x\d+', '', v_url).replace(".mp4", ".m3u8")
+                                return v_url
                         except:
                             pass
 
-                # YEDEK STRATEJİ: Eğer API çalışmazsa ham metinden tokenlı url'leri regex ile doğrudan cımbızla çek
+                # YEDEK PLAN: Eğer API patlarsa ham sayfada kalmış olabilecek regex taraması
                 video_patterns = [
                     r'(https?://vmcdn\.ciner\.com\.tr/ht/[^\s"\']+\.m3u8\?[^\s"\']+)',
-                    r'(https?://ht\.ciner\.com\.tr/ht/[^\s"\']+\.m3u8\?[^\s"\']+)',
-                    r'(https?://vmcdn\.ciner\.com\.tr/[^\s"\']+\.m3u8[^\s"\']*)'
+                    r'(https?://ht\.ciner\.com\.tr/ht/[^\s"\']+\.m3u8\?[^\s"\']+)'
                 ]
                 for pattern in video_patterns:
                     matches = re.findall(pattern, page_html, re.IGNORECASE)
@@ -225,7 +228,7 @@ def create_episode_object(number, title, url):
     }
 
 def update_showtv():
-    print("🚀 ShowTV HIZLI GÜNCELLEYİCİ (HTPLAY API MOD)")
+    print("🚀 ShowTV HIZLI GÜNCELLEYİCİ (CINER REAL API MOD)")
     print("=" * 60)
     start_time = time.time()
     
