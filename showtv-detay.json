@@ -47,6 +47,16 @@
             "label": "İzleme Kaynağı"
           }
         ]
+      },
+      {
+        "number": 4,
+        "name": "4. Bölüm",
+        "sources": [
+          {
+            "url": "https://vmcdn.ciner.com.tr/ht/2026/07/10/A640C7BB0AF27333572A8694F235DA4E_1920x1080.mp4",
+            "label": "İzleme Kaynağı"
+          }
+        ]
       }
     ]
   },
