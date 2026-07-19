@@ -57,6 +57,16 @@
             "label": "İzleme Kaynağı"
           }
         ]
+      },
+      {
+        "number": 5,
+        "name": "5. Bölüm",
+        "sources": [
+          {
+            "url": "https://vmcdn.ciner.com.tr/ht/2026/07/16/4A621B546BFB49996DCC35F796115DF3_1920x1080.mp4",
+            "label": "İzleme Kaynağı"
+          }
+        ]
       }
     ]
   },
