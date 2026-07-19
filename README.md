@@ -10,3 +10,7 @@
 ### 📈 Son Güncellemeler (ATV)
 
 - 📺 **ATV / Altı Üstü İstanbul**: 5. Bölüm eklendi. (19.07.2026)
+
+### 📈 Son Güncellemeler (ShowTV)
+
+- 📺 **ShowTV / Muhtemel Aşk**: 5. Bölüm eklendi. (19.07.2026)
