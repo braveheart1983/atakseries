@@ -22,7 +22,6 @@ CATEGORY_MAP = {
     "netflix": ("Netflix", "netflix", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/netflix.png"),
     "puhutv": ("PuhuTV", "puhutv", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/Puhutv.jpg"),
     "star-tv": ("Star TV", "star-tv", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/Startv.png"),
-    "dmax": ("DMAX TV", "dmax-tv", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/dmax.jpg"),
     "tabii": ("Tabii", "tabii", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/tabii.png"),
     "tod": ("TOD", "tod", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/tod.png"),
     "yerli-diziler": ("Yerli Diziler", "yerli-diziler", "https://raw.githubusercontent.com/braveheart1983/atakseries/main/logolar/yerli.png"),
