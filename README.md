@@ -18,3 +18,7 @@
 ### 📈 Son Güncellemeler (ATV)
 
 - 📺 **ATV / Altı Üstü İstanbul**: 6. Bölüm eklendi. (26.07.2026)
+
+### 📈 Son Güncellemeler (ATV)
+
+- 📺 **ATV / Altı Üstü İstanbul**: 7. Bölüm eklendi. (02.08.2026)
