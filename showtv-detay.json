@@ -67,6 +67,16 @@
             "label": "İzleme Kaynağı"
           }
         ]
+      },
+      {
+        "number": 7,
+        "name": "7. Bölüm",
+        "sources": [
+          {
+            "url": "https://vmcdn.ciner.com.tr/ht/2026/07/30/50620ED0D2F4662B81940ECF16D1DB2C_1920x1080.mp4",
+            "label": "İzleme Kaynağı"
+          }
+        ]
       }
     ]
   },
@@ -25094,6 +25104,37 @@
         "sources": [
           {
             "url": "https://vmcdn.ciner.com.tr/ht/2020/04/07/F1C8030F18E85C5DE8335800D1638134.m3u8",
+            "label": "İzleme Kaynağı"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "showtv_gecesesleri",
+    "name": "Gece Sesleri",
+    "overview": "Gece Sesleri dizisinin tüm bölümleri - Show TV",
+    "poster": "https://mo.ciner.com.tr/assets/images/v3/transparent.gif",
+    "logo": "https://mo.ciner.com.tr/assets/images/v3/transparent.gif",
+    "backdrop": "https://mo.ciner.com.tr/assets/images/v3/transparent.gif",
+    "year": "",
+    "tmdb_score": 0,
+    "genres": [
+      "Dram",
+      "Aile",
+      "Komedi"
+    ],
+    "categories": [
+      "Show TV"
+    ],
+    "cast": [],
+    "episodes": [
+      {
+        "number": 26,
+        "name": "26. Bölüm",
+        "sources": [
+          {
+            "url": "https://vmcdn.ciner.com.tr/ht/2026/07/23/B38AAD1142D1A5B7BF358D496114A43F_640x360.mp4",
             "label": "İzleme Kaynağı"
           }
         ]

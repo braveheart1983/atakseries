@@ -503,5 +503,10 @@
     "id": "showtv_sevdacicegi",
     "name": "Sevda Çiçeği",
     "poster": "https://mo.ciner.com.tr/showtv/iu/300x300/sevda-cicegi.jpg"
+  },
+  {
+    "id": "showtv_gecesesleri",
+    "name": "Gece Sesleri",
+    "poster": "https://mo.ciner.com.tr/assets/images/v3/transparent.gif"
   }
 ]
