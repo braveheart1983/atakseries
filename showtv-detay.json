@@ -77,6 +77,16 @@
             "label": "İzleme Kaynağı"
           }
         ]
+      },
+      {
+        "number": 8,
+        "name": "8. Bölüm",
+        "sources": [
+          {
+            "url": "https://vmcdn.ciner.com.tr/ht/2026/08/06/4D356DFF652FA0237BADCBA3A46EA4EB_1920x1080.mp4",
+            "label": "İzleme Kaynağı"
+          }
+        ]
       }
     ]
   },
