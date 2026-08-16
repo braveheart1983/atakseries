@@ -87,6 +87,16 @@
             "label": "İzleme Kaynağı"
           }
         ]
+      },
+      {
+        "number": 9,
+        "name": "9. Bölüm",
+        "sources": [
+          {
+            "url": "https://vmcdn.ciner.com.tr/ht/2026/08/13/8B3AE4C37F85216693C6F5CFC775EA17_1920x1080.mp4",
+            "label": "İzleme Kaynağı"
+          }
+        ]
       }
     ]
   },
