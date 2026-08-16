@@ -19,3 +19,7 @@
 ### 📈 Son Güncellemeler (ATV)
 
 - 📺 **ATV / Altı Üstü İstanbul**: 9. Bölüm eklendi. (16.08.2026)
+
+### 📈 Son Güncellemeler (ShowTV)
+
+- 📺 **ShowTV / Muhtemel Aşk**: 9. Bölüm eklendi. (16.08.2026)
