@@ -97,6 +97,16 @@
             "label": "İzleme Kaynağı"
           }
         ]
+      },
+      {
+        "number": 10,
+        "name": "10. Bölüm",
+        "sources": [
+          {
+            "url": "https://vmcdn.ciner.com.tr/ht/2026/08/20/1FEDB27C49A7DC1EAF09435E96418BC0_1920x1080.mp4",
+            "label": "İzleme Kaynağı"
+          }
+        ]
       }
     ]
   },
