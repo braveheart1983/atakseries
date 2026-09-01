@@ -107,6 +107,16 @@
                         "label": "İzleme Kaynağı"
                     }
                 ]
+            },
+            {
+                "number": 11,
+                "name": "11. Bölüm",
+                "sources": [
+                    {
+                        "url": "https://vmcdn.ciner.com.tr/ht/2026/08/27/2FDF04BFEA6A0452769FE50B1A88A801_1920x1080.mp4",
+                        "label": "İzleme Kaynağı"
+                    }
+                ]
             }
         ]
     },
