@@ -31,3 +31,7 @@
 ### 📈 Son Güncellemeler (ShowTV)
 
 - 📺 **ShowTV / Muhtemel Aşk**: 10. Bölüm eklendi. (23.08.2026)
+
+### 📈 Son Güncellemeler (ATV)
+
+- 📺 **ATV / Altı Üstü İstanbul**: 12. Bölüm eklendi. (01.09.2026)
