@@ -60358,5 +60358,35 @@
                 ]
             }
         ]
+    },
+    {
+        "id": "atv_mercan-kosk",
+        "name": "Mercan Köşk",
+        "overview": "Mercan Köşk dizisinin tüm bölümleri - ATV",
+        "poster": "https://iatv.tmgrup.com.tr/2026/08/07/1786095084568.jpg",
+        "logo": "https://iatv.tmgrup.com.tr/2026/08/07/1786095084568.jpg",
+        "backdrop": "https://iatv.tmgrup.com.tr/2026/08/07/1786095084568.jpg",
+        "year": "",
+        "tmdb_score": 0,
+        "genres": [
+            "Dram",
+            "Aile"
+        ],
+        "categories": [
+            "ATV Dizileri"
+        ],
+        "cast": [],
+        "episodes": [
+            {
+                "number": 1,
+                "name": "1. Bölüm",
+                "sources": [
+                    {
+                        "url": "https://httxxkbiqd.erbvr.com/vms/2/c2/29/2c229ab3-858e-4db1-a2eb-9ad8cd9ba0f0/2c229ab3-858e-4db1-a2eb-9ad8cd9ba0f0_1080p_3000k.mp4",
+                        "label": "İzleme Kaynağı"
+                    }
+                ]
+            }
+        ]
     }
 ]
