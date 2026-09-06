@@ -117,6 +117,16 @@
             "label": "İzleme Kaynağı"
           }
         ]
+      },
+      {
+        "number": 12,
+        "name": "12. Bölüm",
+        "sources": [
+          {
+            "url": "https://vmcdn.ciner.com.tr/ht/2026/09/03/070D7829C1D067C98884D3C9986155BE_1920x1080.mp4",
+            "label": "İzleme Kaynağı"
+          }
+        ]
       }
     ]
   },
