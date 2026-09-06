@@ -43,3 +43,7 @@
 ### 📈 Son Güncellemeler (ATV)
 
 - 🆕 **ATV / Mercan Köşk**: Dizi ve 1. Bölüm sıfırdan listeye eklendi. (06.09.2026)
+
+### 📈 Son Güncellemeler (ShowTV)
+
+- 📺 **ShowTV / Muhtemel Aşk**: 12. Bölüm eklendi. (06.09.2026)
