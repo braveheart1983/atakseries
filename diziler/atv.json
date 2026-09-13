@@ -126,6 +126,16 @@
                         "label": "İzleme Kaynağı"
                     }
                 ]
+            },
+            {
+                "number": 13,
+                "name": "13. Bölüm",
+                "sources": [
+                    {
+                        "url": "https://httxxkbiqd.erbvr.com/vms/2/b3/8c/2b38c96b-30ef-47af-958a-6af048f46d1c/2b38c96b-30ef-47af-958a-6af048f46d1c_1080p_3000k.mp4",
+                        "label": "İzleme Kaynağı"
+                    }
+                ]
             }
         ]
     },
@@ -323,6 +333,16 @@
                 "sources": [
                     {
                         "url": "https://httxxkbiqd.erbvr.com/vms/5/8b/61/58b613a1-e04f-441d-8df3-f382d60af211/58b613a1-e04f-441d-8df3-f382d60af211_1080p_3000k.mp4",
+                        "label": "İzleme Kaynağı"
+                    }
+                ]
+            },
+            {
+                "number": 19,
+                "name": "19. Bölüm",
+                "sources": [
+                    {
+                        "url": "https://httxxkbiqd.erbvr.com/vms/2/0c/aa/20caa5ea-6872-4aa0-a54c-8b2f98406721/20caa5ea-6872-4aa0-a54c-8b2f98406721_1080p_3000k.mp4",
                         "label": "İzleme Kaynağı"
                     }
                 ]
@@ -60383,6 +60403,46 @@
                 "sources": [
                     {
                         "url": "https://httxxkbiqd.erbvr.com/vms/2/c2/29/2c229ab3-858e-4db1-a2eb-9ad8cd9ba0f0/2c229ab3-858e-4db1-a2eb-9ad8cd9ba0f0_1080p_3000k.mp4",
+                        "label": "İzleme Kaynağı"
+                    }
+                ]
+            },
+            {
+                "number": 2,
+                "name": "2. Bölüm",
+                "sources": [
+                    {
+                        "url": "https://httxxkbiqd.erbvr.com/vms/a/76/8d/a768d87e-a604-45d0-827d-04c79d0dc41f/a768d87e-a604-45d0-827d-04c79d0dc41f_1080p_3000k.mp4",
+                        "label": "İzleme Kaynağı"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "atv_ask-ve-taht",
+        "name": "Aşk ve Taht",
+        "overview": "Aşk ve Taht dizisinin tüm bölümleri - ATV",
+        "poster": "https://iatv.tmgrup.com.tr/2026/08/31/1788199524384.jpg",
+        "logo": "https://iatv.tmgrup.com.tr/2026/08/31/1788199524384.jpg",
+        "backdrop": "https://iatv.tmgrup.com.tr/2026/08/31/1788199524384.jpg",
+        "year": "",
+        "tmdb_score": 0,
+        "genres": [
+            "Dram",
+            "Aile"
+        ],
+        "categories": [
+            "ATV Dizileri"
+        ],
+        "cast": [],
+        "episodes": [
+            {
+                "number": 1,
+                "name": "1. Bölüm",
+                "sources": [
+                    {
+                        "url": "https://httxxkbiqd.erbvr.com/vms/d/04/2b/d042b7c6-6393-4737-b196-4a29d8bb48b7/d042b7c6-6393-4737-b196-4a29d8bb48b7_1080p_3000k.mp4",
                         "label": "İzleme Kaynağı"
                     }
                 ]

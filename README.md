@@ -47,3 +47,10 @@
 ### 📈 Son Güncellemeler (ShowTV)
 
 - 📺 **ShowTV / Muhtemel Aşk**: 12. Bölüm eklendi. (06.09.2026)
+
+### 📈 Son Güncellemeler (ATV)
+
+- 📺 **ATV / Altı Üstü İstanbul**: 13. Bölüm eklendi. (13.09.2026)
+- 📺 **ATV / Mercan Köşk**: 2. Bölüm eklendi. (13.09.2026)
+- 📺 **ATV / A.B.İ.**: 19. Bölüm eklendi. (13.09.2026)
+- 🆕 **ATV / Aşk ve Taht**: Dizi ve 1. Bölüm sıfırdan listeye eklendi. (13.09.2026)
