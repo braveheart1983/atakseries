@@ -54,3 +54,7 @@
 - 📺 **ATV / Mercan Köşk**: 2. Bölüm eklendi. (13.09.2026)
 - 📺 **ATV / A.B.İ.**: 19. Bölüm eklendi. (13.09.2026)
 - 🆕 **ATV / Aşk ve Taht**: Dizi ve 1. Bölüm sıfırdan listeye eklendi. (13.09.2026)
+
+### 📈 Son Güncellemeler (ShowTV)
+
+- 📺 **ShowTV / Muhtemel Aşk**: 13. Bölüm eklendi. (13.09.2026)
