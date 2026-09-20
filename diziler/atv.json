@@ -136,6 +136,16 @@
                         "label": "İzleme Kaynağı"
                     }
                 ]
+            },
+            {
+                "number": 14,
+                "name": "14. Bölüm",
+                "sources": [
+                    {
+                        "url": "https://httxxkbiqd.erbvr.com/vms/3/57/f3/357f34ff-81a7-4e5f-87cc-9be39e054869/357f34ff-81a7-4e5f-87cc-9be39e054869_1080p_3000k.mp4",
+                        "label": "İzleme Kaynağı"
+                    }
+                ]
             }
         ]
     },
@@ -343,6 +353,16 @@
                 "sources": [
                     {
                         "url": "https://httxxkbiqd.erbvr.com/vms/2/0c/aa/20caa5ea-6872-4aa0-a54c-8b2f98406721/20caa5ea-6872-4aa0-a54c-8b2f98406721_1080p_3000k.mp4",
+                        "label": "İzleme Kaynağı"
+                    }
+                ]
+            },
+            {
+                "number": 20,
+                "name": "20. Bölüm",
+                "sources": [
+                    {
+                        "url": "https://httxxkbiqd.erbvr.com/vms/5/54/ed/554ed9d9-bda7-49b1-8a9d-dafff6031897/554ed9d9-bda7-49b1-8a9d-dafff6031897_1080p_3000k.mp4",
                         "label": "İzleme Kaynağı"
                     }
                 ]
@@ -60416,6 +60436,16 @@
                         "label": "İzleme Kaynağı"
                     }
                 ]
+            },
+            {
+                "number": 3,
+                "name": "3. Bölüm",
+                "sources": [
+                    {
+                        "url": "https://httxxkbiqd.erbvr.com/vms/7/47/86/74786f5d-6011-44ec-a0ca-c792b8e1bbd5/74786f5d-6011-44ec-a0ca-c792b8e1bbd5_1080p_3000k.mp4",
+                        "label": "İzleme Kaynağı"
+                    }
+                ]
             }
         ]
     },
@@ -60443,6 +60473,46 @@
                 "sources": [
                     {
                         "url": "https://httxxkbiqd.erbvr.com/vms/d/04/2b/d042b7c6-6393-4737-b196-4a29d8bb48b7/d042b7c6-6393-4737-b196-4a29d8bb48b7_1080p_3000k.mp4",
+                        "label": "İzleme Kaynağı"
+                    }
+                ]
+            },
+            {
+                "number": 2,
+                "name": "2. Bölüm",
+                "sources": [
+                    {
+                        "url": "https://httxxkbiqd.erbvr.com/vms/7/05/e2/705e232c-5f9f-4b56-81b8-e12eab9459fe/705e232c-5f9f-4b56-81b8-e12eab9459fe_1080p_3000k.mp4",
+                        "label": "İzleme Kaynağı"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "atv_gunesin-dogdugu-yer",
+        "name": "Güneşin Doğduğu Yer",
+        "overview": "Güneşin Doğduğu Yer dizisinin tüm bölümleri - ATV",
+        "poster": "https://iatv.tmgrup.com.tr/2026/09/04/1788528392968.jpg",
+        "logo": "https://iatv.tmgrup.com.tr/2026/09/04/1788528392968.jpg",
+        "backdrop": "https://iatv.tmgrup.com.tr/2026/09/04/1788528392968.jpg",
+        "year": "",
+        "tmdb_score": 0,
+        "genres": [
+            "Dram",
+            "Aile"
+        ],
+        "categories": [
+            "ATV Dizileri"
+        ],
+        "cast": [],
+        "episodes": [
+            {
+                "number": 1,
+                "name": "1. Bölüm",
+                "sources": [
+                    {
+                        "url": "https://httxxkbiqd.erbvr.com/vms/4/f9/45/4f945289-b4ec-484e-acbc-fd4a4ba5bc5e/4f945289-b4ec-484e-acbc-fd4a4ba5bc5e_1080p_3000k.mp4",
                         "label": "İzleme Kaynağı"
                     }
                 ]
