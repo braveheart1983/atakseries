@@ -137,6 +137,16 @@
                         "label": "İzleme Kaynağı"
                     }
                 ]
+            },
+            {
+                "number": 14,
+                "name": "14. Bölüm",
+                "sources": [
+                    {
+                        "url": "https://vmcdn.ciner.com.tr/ht/2026/09/17/7A73CF815507B1252AD750F42F5A7255_1920x1080.mp4",
+                        "label": "İzleme Kaynağı"
+                    }
+                ]
             }
         ]
     },
@@ -25195,6 +25205,37 @@
                 "sources": [
                     {
                         "url": "https://vmcdn.ciner.com.tr/ht/2026/07/23/B38AAD1142D1A5B7BF358D496114A43F_640x360.mp4",
+                        "label": "İzleme Kaynağı"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "showtv_sevdanbirates",
+        "name": "Sevdan Bir Ateş",
+        "overview": "Sevdan Bir Ateş dizisinin tüm bölümleri - Show TV",
+        "poster": "https://mo.ciner.com.tr/showtv/iu/300x300/sevdan-bir-ates.jpg",
+        "logo": "https://mo.ciner.com.tr/showtv/iu/300x300/sevdan-bir-ates.jpg",
+        "backdrop": "https://mo.ciner.com.tr/showtv/iu/300x300/sevdan-bir-ates.jpg",
+        "year": "",
+        "tmdb_score": 0,
+        "genres": [
+            "Dram",
+            "Aile",
+            "Komedi"
+        ],
+        "categories": [
+            "Show TV"
+        ],
+        "cast": [],
+        "episodes": [
+            {
+                "number": 2,
+                "name": "2. Bölüm",
+                "sources": [
+                    {
+                        "url": "https://vmcdn.ciner.com.tr/ht/2026/09/16/EB8BA9C9EFD4B12995DA6ECE506F98E0_1920x1080.mp4",
                         "label": "İzleme Kaynağı"
                     }
                 ]
