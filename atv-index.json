@@ -5,6 +5,21 @@
     "poster": "https://iatv.tmgrup.com.tr/2026/06/11/1781172249796.jpg"
   },
   {
+    "id": "atv_mercan-kosk",
+    "name": "Mercan Köşk",
+    "poster": "https://iatv.tmgrup.com.tr/2026/08/07/1786095084568.jpg"
+  },
+  {
+    "id": "atv_ask-ve-taht",
+    "name": "Aşk ve Taht",
+    "poster": "https://iatv.tmgrup.com.tr/2026/08/31/1788199524384.jpg"
+  },
+  {
+    "id": "atv_gunesin-dogdugu-yer",
+    "name": "Güneşin Doğduğu Yer",
+    "poster": "https://iatv.tmgrup.com.tr/2026/09/04/1788528392968.jpg"
+  },
+  {
     "id": "atv_a-b-i",
     "name": "A B I",
     "poster": "https://iatv.tmgrup.com.tr/2025/11/24/1763986313791.jpg"
@@ -778,20 +793,5 @@
     "id": "atv_super-baba",
     "name": "Super Baba",
     "poster": "https://i.tmgrup.com.tr/atv/2021/04/09/20210409083755722.jpg"
-  },
-  {
-    "id": "atv_mercan-kosk",
-    "name": "Mercan Köşk",
-    "poster": "https://iatv.tmgrup.com.tr/2026/08/07/1786095084568.jpg"
-  },
-  {
-    "id": "atv_ask-ve-taht",
-    "name": "Aşk ve Taht",
-    "poster": "https://iatv.tmgrup.com.tr/2026/08/31/1788199524384.jpg"
-  },
-  {
-    "id": "atv_gunesin-dogdugu-yer",
-    "name": "Güneşin Doğduğu Yer",
-    "poster": "https://iatv.tmgrup.com.tr/2026/09/04/1788528392968.jpg"
   }
 ]
