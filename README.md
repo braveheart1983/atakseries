@@ -23,3 +23,8 @@
 - 📺 **ATV / Aşk ve Taht**: 3. Bölüm eklendi. (27.09.2026)
 - 📺 **ATV / Güneşin Doğduğu Yer**: 2. Bölüm eklendi. (27.09.2026)
 - 📺 **ATV / Mercan Köşk**: 4. Bölüm eklendi. (27.09.2026)
+
+### 📈 Son Güncellemeler (ShowTV)
+
+- 📺 **ShowTV / Sevdan Bir Ateş**: 3. Bölüm eklendi. (27.09.2026)
+- 📺 **ShowTV / Muhtemel Aşk**: 15. Bölüm eklendi. (27.09.2026)
