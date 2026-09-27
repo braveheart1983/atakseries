@@ -15,3 +15,11 @@
 
 - 🆕 **ShowTV / Sevdan Bir Ateş**: Dizi ve 2. Bölüm sıfırdan listeye eklendi. (20.09.2026)
 - 📺 **ShowTV / Muhtemel Aşk**: 14. Bölüm eklendi. (20.09.2026)
+
+### 📈 Son Güncellemeler (ATV)
+
+- 📺 **ATV / Altı Üstü İstanbul**: 15. Bölüm eklendi. (27.09.2026)
+- 📺 **ATV / A.B.İ.**: 21. Bölüm eklendi. (27.09.2026)
+- 📺 **ATV / Aşk ve Taht**: 3. Bölüm eklendi. (27.09.2026)
+- 📺 **ATV / Güneşin Doğduğu Yer**: 2. Bölüm eklendi. (27.09.2026)
+- 📺 **ATV / Mercan Köşk**: 4. Bölüm eklendi. (27.09.2026)
