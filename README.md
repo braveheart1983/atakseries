@@ -28,3 +28,10 @@
 
 - 📺 **ShowTV / Sevdan Bir Ateş**: 3. Bölüm eklendi. (27.09.2026)
 - 📺 **ShowTV / Muhtemel Aşk**: 15. Bölüm eklendi. (27.09.2026)
+
+### 📈 Son Güncellemeler (ATV)
+
+- 📺 **ATV / A.B.İ.**: 22. Bölüm eklendi. (04.10.2026)
+- 📺 **ATV / Aşk ve Taht**: 4. Bölüm eklendi. (04.10.2026)
+- 📺 **ATV / Güneşin Doğduğu Yer**: 3. Bölüm eklendi. (04.10.2026)
+- 📺 **ATV / Mercan Köşk**: 5. Bölüm eklendi. (04.10.2026)
