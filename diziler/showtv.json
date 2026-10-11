@@ -167,6 +167,16 @@
                         "label": "İzleme Kaynağı"
                     }
                 ]
+            },
+            {
+                "number": 17,
+                "name": "17. Bölüm",
+                "sources": [
+                    {
+                        "url": "https://vmcdn.ciner.com.tr/ht/2026/10/08/DB89187154C45ED2312DCE90012730EE_1920x1080.mp4",
+                        "label": "İzleme Kaynağı"
+                    }
+                ]
             }
         ]
     },
@@ -25276,6 +25286,16 @@
                 "sources": [
                     {
                         "url": "https://vmcdn.ciner.com.tr/ht/2026/10/01/0C07E8898606B3631688A32895FEC564_1920x1080.mp4",
+                        "label": "İzleme Kaynağı"
+                    }
+                ]
+            },
+            {
+                "number": 5,
+                "name": "5. Bölüm",
+                "sources": [
+                    {
+                        "url": "https://vmcdn.ciner.com.tr/ht/2026/10/07/B30086B5BB715D3EA5F22DEFFFB41C65_1920x1080.mp4",
                         "label": "İzleme Kaynağı"
                     }
                 ]
