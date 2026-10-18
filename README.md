@@ -17,3 +17,8 @@
 - 📺 **ATV / Altı Üstü İstanbul**: 16. Bölüm eklendi. (18.10.2026)
 - 📺 **ATV / Güneşin Doğduğu Yer**: 5. Bölüm eklendi. (18.10.2026)
 - 📺 **ATV / Mercan Köşk**: 7. Bölüm eklendi. (18.10.2026)
+
+### 📈 Son Güncellemeler (ShowTV)
+
+- 📺 **ShowTV / Sevdan Bir Ateş**: 6. Bölüm eklendi. (18.10.2026)
+- 📺 **ShowTV / Muhtemel Aşk**: 18. Bölüm eklendi. (18.10.2026)
