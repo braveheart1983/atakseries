@@ -32,3 +32,8 @@
 
 - 📺 **ATV / Altı Üstü İstanbul**: 18. Bölüm eklendi. (01.11.2026)
 - 📺 **ATV / Güneşin Doğduğu Yer**: 7. Bölüm eklendi. (01.11.2026)
+
+### 📈 Son Güncellemeler (ATV)
+
+- 📺 **ATV / Altı Üstü İstanbul**: 19. Bölüm eklendi. (08.11.2026)
+- 📺 **ATV / Güneşin Doğduğu Yer**: 8. Bölüm eklendi. (08.11.2026)
